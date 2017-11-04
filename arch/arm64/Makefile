@@ -63,6 +63,9 @@ KBUILD_IMAGE	:= Image.gz
 endif
 
 KBUILD_DTBS	:= dtbs
+ifeq ($(CONFIG_EXYNOS_DTBTOOL),y)
+KBUILD_DTBS	+= dtb-exynos.img
+endif
 
 all:	$(KBUILD_IMAGE) $(KBUILD_DTBS)
 
@@ -83,6 +86,9 @@ dtbs: scripts
 Image.gz-dtb: vmlinux scripts dtbs
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
+dtb-exynos.img: prepare scripts dtbs
+	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
+
 PHONY += vdso_install
 vdso_install:
 	$(Q)$(MAKE) $(build)=arch/arm64/kernel/vdso $@
@@ -92,12 +98,13 @@ archclean:
 	$(Q)$(MAKE) $(clean)=$(boot)
 
 define archhelp
-  echo  '* Image.gz      - Compressed kernel image (arch/$(ARCH)/boot/Image.gz)'
-  echo  '  Image         - Uncompressed kernel image (arch/$(ARCH)/boot/Image)'
-  echo  '* dtbs          - Build device tree blobs for enabled boards'
-  echo  '  install       - Install uncompressed kernel'
-  echo  '  zinstall      - Install compressed kernel'
-  echo  '                  Install using (your) ~/bin/installkernel or'
-  echo  '                  (distribution) /sbin/installkernel or'
-  echo  '                  install to $$(INSTALL_PATH) and run lilo'
+  echo  '* Image.gz       - Compressed kernel image (arch/$(ARCH)/boot/Image.gz)'
+  echo  '  Image          - Uncompressed kernel image (arch/$(ARCH)/boot/Image)'
+  echo  '  dtb-exynos.img - Build device tree image (arch/$(ARCH)/boot/dtb.img)'
+  echo  '* dtbs           - Build device tree blobs for enabled boards'
+  echo  '  install        - Install uncompressed kernel'
+  echo  '  zinstall       - Install compressed kernel'
+  echo  '                   Install using (your) ~/bin/installkernel or'
+  echo  '                   (distribution) /sbin/installkernel or'
+  echo  '                   install to $$(INSTALL_PATH) and run lilo'
 endef
