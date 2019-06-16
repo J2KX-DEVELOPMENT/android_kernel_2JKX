@@ -620,9 +620,7 @@ __setup("skip_initramfs", skip_initramfs_param);
 static int __init populate_rootfs(void)
 {
 	char *err;
-
-	if (do_skip_initramfs)
-		return default_rootfs();
+	bool skip_ramdisk;
 
 	err = unpack_to_rootfs(__initramfs_start, __initramfs_size);
 	if (err)
@@ -635,6 +633,7 @@ static int __init populate_rootfs(void)
 			initrd_end - initrd_start);
 		if (!err) {
 			free_initrd();
+			skip_ramdisk = true;
 			goto done;
 		} else {
 			clean_rootfs();
@@ -660,8 +659,10 @@ static int __init populate_rootfs(void)
 		printk(KERN_INFO "Unpacking initramfs...\n");
 		err = unpack_to_rootfs((char *)initrd_start,
 			initrd_end - initrd_start);
-		if (err)
+		if (err) {
 			printk(KERN_EMERG "Initramfs unpacking failed: %s\n", err);
+			skip_ramdisk = true;
+		}
 		free_initrd();
 #endif
 		/*
@@ -670,6 +671,6 @@ static int __init populate_rootfs(void)
 		 */
 		load_default_modules();
 	}
-	return 0;
+	return skip_ramdisk ? default_rootfs() : 0;
 }
 rootfs_initcall(populate_rootfs);
