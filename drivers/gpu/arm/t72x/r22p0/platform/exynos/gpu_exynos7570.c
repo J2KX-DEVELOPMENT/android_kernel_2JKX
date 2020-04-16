@@ -75,11 +75,11 @@ void __iomem *g3d1_outstanding_regs;
 
 /*  clk,vol,abb,min,max,down stay, pm_qos mem, pm_qos int, pm_qos cpu_kfc_min, pm_qos cpu_egl_max */
 static gpu_dvfs_info gpu_dvfs_table_default[] = {
-	{999, 900000, 0, 98, 100, 5, 0, 666000, 467000, 1430000, CPU_MAX},
-	{666, 900000, 0, 98,  99, 3, 0, 666000, 467000, 962000, CPU_MAX},
-	{553, 900000, 0, 90,  99, 5, 0, 666000, 467000, 757000, CPU_MAX},
-	{415, 900000, 0, 70,  98, 3, 0, 415000, 467000, 676000, CPU_MAX},
-	{150, 850000, 0, 10,  88, 1, 0, 415000, 467000, 546000, CPU_MAX},
+	{999, 900000, 0, 98, 100, 5, 0, 666000, 467000, 0, CPU_MAX},
+	{666, 900000, 0, 98,  99, 3, 0, 666000, 467000, 0, CPU_MAX},
+	{553, 900000, 0, 90,  99, 5, 0, 666000, 467000, 0, CPU_MAX},
+	{415, 900000, 0, 70,  98, 3, 0, 415000, 467000, 0, CPU_MAX},
+	{150, 850000, 0, 10,  88, 1, 0, 415000, 467000, 0, CPU_MAX},
 };
 
 static int mif_min_table[] = {
@@ -111,7 +111,7 @@ static gpu_attribute gpu_config_attributes[] = {
 	{GPU_DEFAULT_VOLTAGE, 900000},
 	{GPU_COLD_MINIMUM_VOL, 0},
 	{GPU_VOLTAGE_OFFSET_MARGIN, 25000},
-	{GPU_TMU_CONTROL, 1},
+	{GPU_TMU_CONTROL, 0},
 	{GPU_TEMP_THROTTLING1, 999},
 	{GPU_TEMP_THROTTLING2, 666},
 	{GPU_TEMP_THROTTLING3, 553},
