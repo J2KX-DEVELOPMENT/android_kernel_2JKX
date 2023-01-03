@@ -1,6 +1,7 @@
 #
 # Makefile for the kernel multimedia device drivers.
 #
+KBUILD_CFLAGS += -Wno-unused-variable
 
 media-objs	:= media-device.o media-devnode.o media-entity.o
 

@@ -159,7 +159,7 @@ enum {
 /*
  * Default period for DVFS sampling
  */
-#define DEFAULT_PM_DVFS_PERIOD 100 /* 100ms */
+#define DEFAULT_PM_DVFS_PERIOD 10 /* 10ms */
 
 /*
  * Power Management poweroff tick granuality. This is in nanoseconds to
@@ -169,7 +169,7 @@ enum {
  * -# Power off one or more shader cores
  * -# Power off the entire GPU
  */
-#define DEFAULT_PM_GPU_POWEROFF_TICK_NS (400000) /* 400us */
+#define DEFAULT_PM_GPU_POWEROFF_TICK_NS (40000) /* 40us */
 
 /*
  * Power Manager number of ticks before shader cores are powered off
