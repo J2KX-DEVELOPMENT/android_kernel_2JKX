@@ -582,14 +582,14 @@ struct disp_bootloader_fb_info {
 #define	DISP_EVENT_PRINT_MAX	256
 
 /* APIs below are used in the DECON/DSIM driver */
-#define DISP_SS_EVENT_START() ktime_t start = ktime_get()
-void DISP_SS_EVENT_LOG(disp_ss_event_t type, struct v4l2_subdev *sd, ktime_t time);
-void DISP_SS_EVENT_LOG_WINCON(struct v4l2_subdev *sd, struct decon_reg_data *regs);
-void DISP_SS_EVENT_LOG_UPDATE_PARAMS(struct v4l2_subdev *sd, struct decon_reg_data *regs);
-void DISP_SS_EVENT_LOG_CMD(struct v4l2_subdev *sd, u32 cmd_id, unsigned long data);
-void DISP_SS_EVENT_SHOW(struct seq_file *s, struct decon_device *decon, int base_idx, bool sync);
-void DISP_SS_EVENT_LOG_WIN_CONFIG(struct v4l2_subdev *sd, struct decon_win_config_data *win_data);
-void DISP_SS_EVENT_SIZE_ERR_LOG(struct v4l2_subdev *sd, struct disp_ss_size_info *info);
+#define DISP_SS_EVENT_START(...)
+#define DISP_SS_EVENT_LOG(...)
+#define DISP_SS_EVENT_LOG_WINCON(...)
+#define DISP_SS_EVENT_LOG_CMD(...) 
+#define DISP_SS_EVENT_SHOW(...) 
+#define DISP_SS_EVENT_LOG_UPDATE_PARAMS(...) 
+#define DISP_SS_EVENT_LOG_WIN_CONFIG(...) 
+#define DISP_SS_EVENT_SIZE_ERR_LOG(...) 
 #else /*!*/
 #define DISP_SS_EVENT_START(...) do { } while(0)
 #define DISP_SS_EVENT_LOG(...) do { } while(0)

@@ -56,8 +56,7 @@ struct kbasep_debug_assert_cb {
  * @sa KBASE_DEBUG_SKIP_TRACE, KBASE_DEBUG_SKIP_FUNCTION_NAME
  */
 #if !KBASE_DEBUG_SKIP_TRACE
-#define KBASEP_DEBUG_PRINT_TRACE \
-		"In file: " __FILE__ " line: " CSTD_STR2(__LINE__)
+#define KBASEP_DEBUG_PRINT_TRACE 
 #if !KBASE_DEBUG_SKIP_FUNCTION_NAME
 #define KBASEP_DEBUG_PRINT_FUNCTION __func__
 #else
@@ -77,12 +76,7 @@ struct kbasep_debug_assert_cb {
  */
 /* Select the correct system output function*/
 #ifdef CONFIG_MALI_DEBUG
-#define KBASEP_DEBUG_ASSERT_OUT(trace, function, ...)\
-		do { \
-			pr_err("Mali<ASSERT>: %s function:%s ", trace, function);\
-			pr_err(__VA_ARGS__);\
-			pr_err("\n");\
-		} while (false)
+#define KBASEP_DEBUG_ASSERT_OUT(trace, function, ...)
 #else
 #define KBASEP_DEBUG_ASSERT_OUT(trace, function, ...) CSTD_NOP()
 #endif
@@ -101,8 +95,7 @@ struct kbasep_debug_assert_cb {
  *
  * @param expr Boolean expression
  */
-#define KBASE_DEBUG_ASSERT(expr) \
-	KBASE_DEBUG_ASSERT_MSG(expr, #expr)
+#define KBASE_DEBUG_ASSERT(expr) 
 
 #if KBASE_DEBUG_DISABLE_ASSERTS
 #define KBASE_DEBUG_ASSERT_MSG(expr, ...) CSTD_NOP()
@@ -116,14 +109,7 @@ struct kbasep_debug_assert_cb {
 	 * @param expr Boolean expression
 	 * @param ...  Message to display when @a expr is false, as a format string followed by format arguments.
 	 */
-#define KBASE_DEBUG_ASSERT_MSG(expr, ...) \
-		do { \
-			if (!(expr)) { \
-				KBASEP_DEBUG_ASSERT_OUT(KBASEP_DEBUG_PRINT_TRACE, KBASEP_DEBUG_PRINT_FUNCTION, __VA_ARGS__);\
-				KBASE_CALL_ASSERT_HOOK();\
-				BUG();\
-			} \
-		} while (false)
+#define KBASE_DEBUG_ASSERT_MSG(expr, ...)
 #endif				/* KBASE_DEBUG_DISABLE_ASSERTS */
 
 /**

@@ -12,7 +12,7 @@
  */
 
 #define pr_fmt(fmt) "tzpc_test: " fmt
-#define DEBUG
+//#define DEBUG
 
 #include <linux/module.h>
 #include <linux/init.h>

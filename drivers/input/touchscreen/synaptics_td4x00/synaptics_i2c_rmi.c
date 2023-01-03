@@ -628,7 +628,7 @@ out:
 
 void synaptics_rmi4_f12_abs_report_print_log(struct synaptics_rmi4_data *rmi4_data)
 {
-	int ii;
+/*	int ii;
 
 	for (ii = 0; ii < MAX_NUMBER_OF_FINGERS ; ii++) {
 		switch (rmi4_data->finger[ii].print_type) {
@@ -662,7 +662,7 @@ void synaptics_rmi4_f12_abs_report_print_log(struct synaptics_rmi4_data *rmi4_da
 				rmi4_data->finger[ii].finger_status, rmi4_data->finger[ii].mcount, rmi4_data->ic_revision_of_ic,
 				rmi4_data->fw_version_of_ic);
 
-/*			input_info(true, &rmi4_data->i2c_client->dev,
+			input_info(true, &rmi4_data->i2c_client->dev,
 				"[%d][%s][%d] 0x%02x M[%d], Ver[%02X%02X, 0x%02X, 0x%02X/0x%02X/0x%02X]\n",
 				ii, rmi4_data->finger[ii].print_type == TOUCH_RELEASE ? "R" : "RA", rmi4_data->board->device_num,
 				rmi4_data->finger[ii].finger_status, rmi4_data->finger[ii].mcount, rmi4_data->ic_revision_of_ic,
@@ -673,7 +673,7 @@ void synaptics_rmi4_f12_abs_report_print_log(struct synaptics_rmi4_data *rmi4_da
 				rmi4_data->f51 == NULL ? 0 : rmi4_data->f51->general_control_2);
 #else
 				0, 0, 0);
-#endif*/
+#endif
 			rmi4_data->finger[ii].mcount = 0;
 			rmi4_data->finger[ii].state = 0;
 
@@ -686,7 +686,7 @@ void synaptics_rmi4_f12_abs_report_print_log(struct synaptics_rmi4_data *rmi4_da
 		}
 
 		rmi4_data->finger[ii].print_type = TOUCH_NONE;
-	}
+	}*/
 }
 
 static void synaptics_rmi4_release_all_finger(struct synaptics_rmi4_data *rmi4_data)
@@ -843,7 +843,7 @@ static int synaptics_rmi4_f11_abs_report(struct synaptics_rmi4_data *rmi4_data,
 					ABS_MT_TOUCH_MINOR, min(wx, wy));
 #endif
 
-			input_dbg(false, &rmi4_data->i2c_client->dev,
+/*			input_dbg(false, &rmi4_data->i2c_client->dev,
 					"%s: Finger %d:\n"
 					"status = 0x%02x\n"
 					"x = %d\n"
@@ -852,7 +852,7 @@ static int synaptics_rmi4_f11_abs_report(struct synaptics_rmi4_data *rmi4_data,
 					"wy = %d\n",
 					__func__, finger,
 					finger_status,
-					x, y, wx, wy);
+					x, y, wx, wy);*/
 
 			touch_count++;
 		}

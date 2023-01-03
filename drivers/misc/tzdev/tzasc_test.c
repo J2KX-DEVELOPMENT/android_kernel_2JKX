@@ -12,7 +12,7 @@
  */
 
 #define pr_fmt(fmt) "tzasc_test: " fmt
-#define DEBUG
+//#define DEBUG
 
 #include <linux/version.h> /* for linux kernel version */
 #include <linux/dma-mapping.h>

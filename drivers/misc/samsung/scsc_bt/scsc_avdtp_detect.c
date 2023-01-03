@@ -85,8 +85,7 @@
 
 #ifdef ENABLE_MODULE_TESTS_DEBUG
 #undef SCSC_TAG_DEBUG
-#define SCSC_TAG_DEBUG(tag, fmt, ...) \
-	fprintf(stdout, "%s:%d:%s(): " fmt, __FILE__, __LINE__, __func__, __VA_ARGS__)
+#define SCSC_TAG_DEBUG(tag, fmt, ...) 
 #endif
 
 /* Forward declarations */
