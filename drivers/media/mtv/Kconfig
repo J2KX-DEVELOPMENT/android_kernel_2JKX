@@ -86,5 +86,23 @@ config MTV_ANT_DET
 	depends on MTV
 	default n
 	bool "isdbt antenna detector"
+	
+# Hardware interfaces support
+
+config SMS_USB_DRV
+	bool "USB interface support"
+	depends on USB && DVB_CORE
+	select MEDIA_COMMON_OPTIONS
+	default n if USB
+	---help---
+	  Choose if you would like to have Siano's support for USB interface
+
+config SMS_SDIO_DRV
+	bool "SDIO interface support"
+	depends on DVB_CORE && HAS_DMA
+	depends on MMC
+	select MEDIA_COMMON_OPTIONS
+	---help---
+	  Choose if you would like to have Siano's support for SDIO interface
 
 source "drivers/media/mtv/sms3230/Kconfig"
