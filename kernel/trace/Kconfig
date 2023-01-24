@@ -618,5 +618,12 @@ config RING_BUFFER_STARTUP_TEST
 
 endif # FTRACE
 
+config FK_LOG
+	bool "FK_LOG"
+	default y
+	help
+		Disables logging in vendor drivers for production builds
+
 endif # TRACING_SUPPORT
+
 
