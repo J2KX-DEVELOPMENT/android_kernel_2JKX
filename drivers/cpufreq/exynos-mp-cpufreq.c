@@ -1975,7 +1975,7 @@ static int exynos_mp_cpufreq_parse_dt(struct device_node *np, cluster_type cl)
 				&ptr->max_idx_num))
 		return -ENODEV;
 
-	if (of_property_read_u32(np, (cl ? "2" : "2"),
+	if (of_property_read_u32(np, (cl ? "cl1_max_support_idx" : "cl0_max_support_idx"),
 				&ptr->max_support_idx))
 		return -ENODEV;
 
