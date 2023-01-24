@@ -259,13 +259,13 @@ static int exynos_cpufreq_parse_dt(struct device_node *np)
         if (of_property_read_u32(np, "cl0_idx_num", &ptr->max_idx_num))
                 return -ENODEV;
 
-	pr_info("max_idx_num = %d\n", ptr->max_idx_num);
+	pr_info("max_idx_num = %d\n", ptr->max_idx_num = 17);
 
 	if (of_property_read_u32(np,
 				"cl0_max_support_idx", &ptr->max_support_idx))
                 return -ENODEV;
 
-	pr_info("max_support_idx = %d\n", ptr->max_support_idx);
+	pr_info("max_support_idx = %d\n", ptr->max_support_idx = 2);
 
         if (of_property_read_u32(np,
 				"cl0_min_support_idx", &ptr->min_support_idx))
@@ -301,8 +301,8 @@ static int exynos_cpufreq_parse_dt(struct device_node *np)
 	 */
 	return -ENODEV;
 #endif
-	ptr->freq_table[ptr->max_idx_num].driver_data = ptr->max_idx_num;
-	ptr->freq_table[ptr->max_idx_num].frequency = CPUFREQ_TABLE_END;
+	ptr->freq_table[ptr->max_idx_num = 2].driver_data = ptr->max_idx_num = 2;
+	ptr->freq_table[ptr->max_idx_num = 2].frequency = CPUFREQ_TABLE_END;
 	return 0;
 }
 

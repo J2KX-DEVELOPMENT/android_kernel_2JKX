@@ -1547,8 +1547,8 @@
 			net_boost,table_size = <3>;
 			net_boost,table= <
 				30 1274000 0 415000 0 0 0
-				50 1378000 0 415000 0 0 0
-				90 1378000 0 666000 0 1 1
+				50 1430000 0 415000 0 0 0
+				90 1430000 0 666000 0 1 1
 				>;
 		};
 		boot_device@4 {
@@ -1557,8 +1557,8 @@
 			net_boost,table_size = <3>;
 			net_boost,table= <
 				10 1040000 0 415000 0 0 0
-				60 1378000 0 666000 0 1 1
-				120 1378000 0 666000 0 1 1
+				60 1430000 0 666000 0 1 1
+				120 1430000 0 666000 0 1 1
 				>;
 		 };
 		/*
@@ -1644,9 +1644,9 @@
 
 			/* Frequency table */
 			/* for level	:	1_Head 2_Tail*/
-			input_booster,cpu_freqs = <1378000 1040000>;
+			input_booster,cpu_freqs = <1430000 1040000>;
 			input_booster,hmp_boost = <0 0>;
-			input_booster,kfc_freqs = <1378000 1040000>;
+			input_booster,kfc_freqs = <1430000 1040000>;
 			input_booster,mif_freqs = <0 0>;
 			input_booster,int_freqs = <0 0>;
 
@@ -1739,9 +1739,9 @@
 
 			/* Frequency table */
 			/* for level	:	1_Head 2_Tail*/
-			input_booster,cpu_freqs = <1378000 829000>;
+			input_booster,cpu_freqs = <1430000 829000>;
 			input_booster,hmp_boost = <0 0>;
-			input_booster,kfc_freqs = <1378000 829000>;
+			input_booster,kfc_freqs = <1430000 829000>;
 			input_booster,mif_freqs = <0 0>;
 			input_booster,int_freqs = <0 0>;
 

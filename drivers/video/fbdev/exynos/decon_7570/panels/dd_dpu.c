@@ -31,7 +31,7 @@ static bool log_boot;
 #define LCD_INFO_DTS_NAME	"lcd_info"
 
 #define D_LIST	\
-_X(REFRESH,		"timing,refresh",	"refresh",		S_IRUSR)		\
+_X(REFRESH,		"63",	"refresh",		S_IRUSR)		\
 _X(PMS_P,		"timing,pms",		"pms",			S_IRUSR | S_IWUSR)	\
 _X(PMS_M,		"",			"",			0)			\
 _X(PMS_S,		"",			"",			0)			\

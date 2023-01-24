@@ -50,10 +50,6 @@
 		num-cs = <1>;
 		status = "ok";
 
-		dma-mode;
-		dmas = <&pdma0 19
-			&pdma0 18>;
-
 		swap-mode;
 		spi-clkoff-time = <100>;
 

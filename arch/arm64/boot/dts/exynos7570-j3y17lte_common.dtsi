@@ -42,6 +42,30 @@
 		status = "okay";
 	};
 
+	firmware {
+		android {
+			compatible = "android,firmware";
+			fstab {
+				compatible = "android,fstab";
+				system {
+					compatible = "android,system";
+					dev = "/dev/block/platform/13540000.dwmmc0/by-name/SYSTEM";
+					type = "ext4";
+					mnt_flags = "ro";
+					fsmgr_flags = "wait";
+				};
+				vendor {
+					compatible = "android,vendor";
+					dev = "/dev/block/platform/13540000.dwmmc0/by-name/VENDOR";
+					type = "ext4";
+					mnt_flags = "ro";
+					fsmgr_flags = "wait";
+				};
+
+			};
+		};
+	};
+	
 	dwmmc0@13540000 {
 		status = "okay";
 		num-slots = <1>;
@@ -254,7 +278,7 @@
 		resolution = <720 1280>;
 		dispif_resol = <720 1280>;
 		size = <62 110>;
-		timing,refresh = <60>;
+		timing,refresh = <65>;
 
 		/* dsim H porch : hbp, hfp, hsa */
 		timing,dsim_h-porch = <80 750 1>;
@@ -643,7 +667,7 @@
 			stk,irq-gpio = <&gpa1 0 0x00>;
 			stk,regulator_divided = <1>;
 			stk,vdd_always_on = <0>;
-			stk,state-reg = <0x2d>;
+			stk,state-reg = <0x2c>;
 			stk,psctrl-reg = <0x71>;
 			stk,ledctrl-reg = <0xBF>;
 			stk,wait-reg = <0x03>;
@@ -1645,8 +1669,8 @@
 			net_boost,table_size = <3>;
 			net_boost,table= <
 				30 1274000 0 415000 0 0 0
-				50 1378000 0 415000 0 0 0
-				90 1378000 0 666000 0 1 1
+				50 1430000 0 415000 0 0 0
+				90 1430000 0 666000 0 1 1
 				>;
 		};
 		boot_device@4 {
@@ -1655,8 +1679,8 @@
 			net_boost,table_size = <3>;
 			net_boost,table= <
 				10 1040000 0 415000 0 0 0
-				60 1378000 0 666000 0 1 1
-				120 1378000 0 666000 0 1 1
+				60 1430000 0 666000 0 1 1
+				120 1430000 0 666000 0 1 1
 				>;
 		 };
 		/*
@@ -1742,9 +1766,9 @@
 
 			/* Frequency table */
 			/* for level	:	1_Head 2_Tail*/
-			input_booster,cpu_freqs = <1378000 1040000>;
+			input_booster,cpu_freqs = <1430000 1040000>;
 			input_booster,hmp_boost = <0 0>;
-			input_booster,kfc_freqs = <1378000 1040000>;
+			input_booster,kfc_freqs = <1430000 1040000>;
 			input_booster,mif_freqs = <0 0>;
 			input_booster,int_freqs = <0 0>;
 
@@ -1837,9 +1861,9 @@
 
 			/* Frequency table */
 			/* for level	:	1_Head 2_Tail*/
-			input_booster,cpu_freqs = <1378000 829000>;
+			input_booster,cpu_freqs = <1430000 829000>;
 			input_booster,hmp_boost = <0 0>;
-			input_booster,kfc_freqs = <1378000 829000>;
+			input_booster,kfc_freqs = <1430000 829000>;
 			input_booster,mif_freqs = <0 0>;
 			input_booster,int_freqs = <0 0>;
 

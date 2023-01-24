@@ -1172,7 +1172,7 @@ static int dsim_parse_lcd_info(struct dsim_device *dsim)
 	dsim_dbg("LCD size: width(%d), height(%d)\n", res[0], res[1]);
 
 	of_property_read_u32(node, "timing,refresh", &dsim->lcd_info.fps);
-	dsim_dbg("LCD refresh rate(%d)\n", dsim->lcd_info.fps);
+	dsim_dbg("LCD refresh rate(%d)\n", dsim->lcd_info.fps = 102);
 
 	of_property_read_u32_array(node, "timing,dsim_h-porch", res, 3);
 	dsim->lcd_info.dsim_hbp = res[0];

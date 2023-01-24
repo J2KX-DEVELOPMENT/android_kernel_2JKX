@@ -127,20 +127,32 @@
 		battery,recharge_condition_vcell = <4230>;
 		/* battery,recharge_condition_vcell2 = <4340>; */
 
-		battery,charging_total_time = <21600>;
-		battery,recharging_total_time = <5400>;
-		battery,charging_reset_time = <0>;
+		battery,charging_by_single;
+		battery,standard_curr = <1900>;
+		battery,recharging_expired_time = <5400>;
+		battery,expired_time = <18000>; /*2nd EOC 150min */
 
 		battery,chg_float_voltage = <4300>;
 		/* battery,chg_float_voltage2 = <4380>; */
+
+		battery,swelling_high_temp_block = <410>;
+		battery,swelling_high_temp_recov = <390>;
+
+		battery,swelling_low_temp_2step_mode = <1>;
+		battery,swelling_low_temp_block_1st = <150>;
+		battery,swelling_low_temp_recov_1st = <200>;
+		battery,swelling_low_temp_block_2nd = <50>;
+		battery,swelling_low_temp_recov_2nd = <100>;
 
 		battery,swelling_high_temp_current = <1580>;
 		battery,swelling_low_temp_current = <1060>;
 		battery,swelling_low_temp_topoff = <270>;
 		battery,swelling_high_temp_topoff = <270>;
+
 		battery,swelling_drop_float_voltage = <4100>;
 		battery,swelling_high_rechg_voltage = <3950>;
 		battery,swelling_low_rechg_voltage = <3950>;
+		battery,swelling_block_time = <600>;
 
 		/* cycle, chg_float_voltage, recharge_condition_vcell, full_condition_vcell, full_condition_soc */
 		battery,age_data = <0 4300 4230 4200 93

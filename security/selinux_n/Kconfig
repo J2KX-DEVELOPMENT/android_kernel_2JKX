@@ -21,6 +21,27 @@ config SECURITY_SELINUX_BOOTPARAM
 	  necessarily enabled.
 
 	  If you are unsure how to answer this question, answer N.
+	  
+config SECURITY_SELINUX_FAKE_ENFORCE
+	bool "NSA SELinux Fake Enforcing"
+	depends on SECURITY_SELINUX_DEVELOP
+	default n
+	help
+	  This option will set SELinux to permissive with fake enforcing status.
+
+config SECURITY_SELINUX_ALWAYS_ENFORCE
+	bool "NSA SELinux Always Enforcing"
+	depends on SECURITY_SELINUX_DEVELOP
+	default n
+	help
+	  This option will prevent anything from setting SELinux to permissive.
+
+config SECURITY_SELINUX_NEVER_ENFORCE
+	bool "NSA SELinux Never Enforcing"
+	depends on SECURITY_SELINUX_DEVELOP
+	default n
+	help
+	  This option will prevent anything from setting SELinux to enforcing.	  
 
 config SECURITY_SELINUX_BOOTPARAM_VALUE
 	int "NSA SELinux boot parameter default value"
