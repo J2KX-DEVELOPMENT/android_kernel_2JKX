@@ -174,7 +174,7 @@ int fimc_is_dvfs_sel_static(struct fimc_is_device_ischain *device)
 	}
 
 	if (static_ctrl->scenario_cnt == 0) {
-		pr_debug("static_scenario's count is zero");
+		pr_no_debug("static_scenario's count is zero");
 		return -EINVAL;
 	}
 
@@ -240,7 +240,7 @@ int fimc_is_dvfs_sel_dynamic(struct fimc_is_device_ischain *device, struct fimc_
 	}
 
 	if (dynamic_ctrl->scenario_cnt == 0) {
-		pr_debug("dynamic_scenario's count is zero");
+		pr_no_debug("dynamic_scenario's count is zero");
 		return -EINVAL;
 	}
 

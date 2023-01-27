@@ -631,7 +631,7 @@ int get_calibrated_size(struct fimc_is_sensor_interface *itf,
 	*width = module->pixel_width;
 	*height = module->pixel_height;
 
-	pr_debug("%s, width(%d), height(%d)\n", __func__, *width, *height);
+	pr_no_debug("%s, width(%d), height(%d)\n", __func__, *width, *height);
 
 	return ret;
 }

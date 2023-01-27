@@ -471,7 +471,7 @@ static int parse_power_seq_data(struct exynos_platform_fimc_is_module *pdata, st
 		DT_READ_U32(sn_np, "sensor_scenario", sensor_scenario);
 		DT_READ_U32(sn_np, "gpio_scenario",gpio_scenario);
 
-		pr_info("power_seq[%s] : sensor_scenario=%d, gpio_scenario=%d\n",
+		pr_no_info("power_seq[%s] : sensor_scenario=%d, gpio_scenario=%d\n",
 			sn_np->name, sensor_scenario, gpio_scenario);
 
 		SET_PIN_INIT(pdata, sensor_scenario, gpio_scenario);
@@ -497,8 +497,8 @@ static int parse_power_seq_data(struct exynos_platform_fimc_is_module *pdata, st
 			DT_READ_U32(seq_np, "delay", sensor_pin.delay);
 			DT_READ_U32(seq_np, "voltage", sensor_pin.voltage);
 
-			pr_debug("power_seq node_name=%s\n", seq_np->full_name);
-			pr_info("power_seq SET_PIN: pin_name=%s, name=%s, act=%d, value=%d, delay=%d, voltage=%d\n",
+			pr_no_debug("power_seq node_name=%s\n", seq_np->full_name);
+			pr_no_info("power_seq SET_PIN: pin_name=%s, name=%s, act=%d, value=%d, delay=%d, voltage=%d\n",
 				pin_name, sensor_pin.name, sensor_pin.act, sensor_pin.value, sensor_pin.delay, sensor_pin.voltage);
 
 			SET_PIN_VOLTAGE(pdata, sensor_scenario, gpio_scenario, sensor_pin.pin, sensor_pin.name,
@@ -814,7 +814,7 @@ static int exynos_fimc_is_module_soc_pin_control(struct i2c_client *client,
 
 			if (value) {
 				if(voltage > 0) {
-					pr_info("%s : regulator_set_voltage(%d)\n",__func__, voltage);
+					pr_no_info("%s : regulator_set_voltage(%d)\n",__func__, voltage);
 					ret = regulator_set_voltage(regulator, voltage, voltage);
 					if(ret) {
 						pr_err("%s : regulator_set_voltage(%d) fail\n", __func__, ret);
@@ -926,7 +926,7 @@ static int exynos_fimc_is_module_soc_pin_debug(struct i2c_client *client,
 	case PIN_INPUT:
 	case PIN_RESET:
 		if (gpio_is_valid(pin))
-			pr_info("[@] pin %s : %d\n", name, gpio_get_value(pin));
+			pr_no_info("[@] pin %s : %d\n", name, gpio_get_value(pin));
 		break;
 	case PIN_FUNCTION:
 #if 0 // TEMP_CARMEN2
@@ -939,13 +939,13 @@ static int exynos_fimc_is_module_soc_pin_debug(struct i2c_client *client,
 
 			index = 0x60; /* GPC2 */
 			pin = base + index;
-			pr_info("[@] CON[0x%X] : 0x%X\n", index, readl((void *)pin));
-			pr_info("[@] DAT[0x%X] : 0x%X\n", index, readl((void *)(pin + 4)));
+			pr_no_info("[@] CON[0x%X] : 0x%X\n", index, readl((void *)pin));
+			pr_no_info("[@] DAT[0x%X] : 0x%X\n", index, readl((void *)(pin + 4)));
 
 			index = 0x160; /* GPD7 */
 			pin = base + index;
-			pr_info("[@] CON[0x%X] : 0x%X\n", index, readl((void *)pin));
-			pr_info("[@] DAT[0x%X] : 0x%X\n", index, readl((void *)(pin + 4)));
+			pr_no_info("[@] CON[0x%X] : 0x%X\n", index, readl((void *)pin));
+			pr_no_info("[@] DAT[0x%X] : 0x%X\n", index, readl((void *)(pin + 4)));
 
 			iounmap((void *)base);
 		}
@@ -969,7 +969,7 @@ static int exynos_fimc_is_module_soc_pin_debug(struct i2c_client *client,
 
 			regulator_put(regulator);
 
-			pr_info("[@] %s LDO : %d\n", name, voltage);
+			pr_no_info("[@] %s LDO : %d\n", name, voltage);
 		}
 		break;
 	default:

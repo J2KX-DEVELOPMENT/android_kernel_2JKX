@@ -289,7 +289,7 @@ int sensor_dw9804_actuator_init(struct v4l2_subdev *subdev, u32 val)
 
 #ifdef DEBUG_ACTUATOR_TIME
 	do_gettimeofday(&end);
-	pr_info("[%s] time %lu us", __func__, (end.tv_sec - st.tv_sec) * 1000000 + (end.tv_usec - st.tv_usec));
+	pr_no_info("[%s] time %lu us", __func__, (end.tv_sec - st.tv_sec) * 1000000 + (end.tv_usec - st.tv_usec));
 #endif
 
 p_err:
@@ -336,7 +336,7 @@ int sensor_dw9804_actuator_get_status(struct v4l2_subdev *subdev, u32 *info)
 	*info = ((val & 0x1) == 0) ? ACTUATOR_STATUS_NO_BUSY : ACTUATOR_STATUS_BUSY;
 #ifdef DEBUG_ACTUATOR_TIME
 	do_gettimeofday(&end);
-	pr_info("[%s] time %lu us", __func__, (end.tv_sec - st.tv_sec) * 1000000 + (end.tv_usec - st.tv_usec));
+	pr_no_info("[%s] time %lu us", __func__, (end.tv_sec - st.tv_sec) * 1000000 + (end.tv_usec - st.tv_usec));
 #endif
 
 p_err:
@@ -387,7 +387,7 @@ int sensor_dw9804_actuator_set_position(struct v4l2_subdev *subdev, u32 *info)
 
 #ifdef DEBUG_ACTUATOR_TIME
 	do_gettimeofday(&end);
-	pr_info("[%s] time %lu us", __func__, (end.tv_sec - st.tv_sec) * 1000000 + (end.tv_usec - st.tv_usec));
+	pr_no_info("[%s] time %lu us", __func__, (end.tv_sec - st.tv_sec) * 1000000 + (end.tv_usec - st.tv_usec));
 #endif
 p_err:
 	return ret;

@@ -45,7 +45,7 @@ static void flite_early_buf_done_start(struct v4l2_subdev *subdev)
 		/* timeout set : frameduration(ms) * early_buf_done_ratio(5~50%) */
 		u32 msec_timeout = ((1000 / framerate) *
 			(100 - (5 * device->early_buf_done_mode))) / 100;
-		pr_info("msec_timeout : %d \n" , msec_timeout);
+		pr_no_info("msec_timeout : %d \n" , msec_timeout);
 		hrtimer_start(&device->early_buf_timer,
 				ktime_set(0, msec_timeout * NSEC_PER_MSEC), HRTIMER_MODE_REL);
 	}

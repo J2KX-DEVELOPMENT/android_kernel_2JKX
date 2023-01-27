@@ -93,7 +93,7 @@
 		card-detect-delay = <200>;
 		data-timeout = <200>;
 		hto-timeout = <80>;
-		clock-frequency = <700000000>;
+		clock-frequency = <950000000>;
 		samsung,dw-mshc-ciu-div = <3>;
 		samsung,dw-mshc-txdt-crc-timer-fastlimit = <0x34>;
 		samsung,dw-mshc-txdt-crc-timer-initval = <0x38>;
@@ -149,7 +149,7 @@
 		card-detect-delay = <200>;
 		data-timeout = <200>;
 		hto-timeout = <80>;
-		clock-frequency = <700000000>;
+		clock-frequency = <950000000>;
 		samsung,dw-mshc-ciu-div = <3>;
 		samsung,dw-mshc-sdr-timing = <3 0 2 0>;
 		samsung,dw-mshc-ddr-timing = <3 0 2 1>;
@@ -1531,7 +1531,7 @@
 			net_boost,table= <  1 0 0 0 0 0 1
 					   20 829000 0 416000 100000 0 1
 					   50 1040000 0 825000 100000 0 1
-					  100 1430000 0 825000 100000 0 1>;
+					  100 1924000 0 825000 100000 0 1>;
 		};
 
 		boot_device@2 {
@@ -1548,7 +1548,7 @@
 			net_boost,table= <
 				30 1274000 0 415000 0 0 0
 				50 1430000 0 415000 0 0 0
-				90 1430000 0 666000 0 1 1
+				90 1924000 0 666000 0 1 1
 				>;
 		};
 		boot_device@4 {
@@ -1558,7 +1558,7 @@
 			net_boost,table= <
 				10 1040000 0 415000 0 0 0
 				60 1430000 0 666000 0 1 1
-				120 1430000 0 666000 0 1 1
+				120 1924000 0 666000 0 1 1
 				>;
 		 };
 		/*

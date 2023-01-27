@@ -125,7 +125,7 @@ static irqreturn_t fimc_is_csi_isr(int irq, void *data)
 					csi->instance, atomic_read(&csi->vvalid));
 		} else {
 			/* When vvalid is less than or equal ZERO */
-			pr_debug("CSI%d : Frame end without Frame start\n", csi->instance);
+			pr_no_debug("CSI%d : Frame end without Frame start\n", csi->instance);
 			atomic_dec(&csi->vvalid);
 		}
 
@@ -147,7 +147,7 @@ static irqreturn_t fimc_is_csi_isr(int irq, void *data)
 					csi->instance, abs(atomic_read(&csi->vvalid)));
 		} else {
 			/* When vvalid is bigger than ZERO */
-			pr_debug("CSI%d : Frame start without Frame end\n", csi->instance);
+			pr_no_debug("CSI%d : Frame start without Frame end\n", csi->instance);
 			atomic_inc(&csi->vvalid);
 		}
 

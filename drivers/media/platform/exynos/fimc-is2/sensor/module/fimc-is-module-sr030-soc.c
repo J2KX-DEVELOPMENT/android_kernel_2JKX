@@ -1872,7 +1872,7 @@ int sensor_sr030_s_again(struct v4l2_subdev *subdev, u64 sensitivity)
 {
 	int ret = 0;
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return ret;
 }

@@ -1941,8 +1941,8 @@ static int sc_s_ctrl(struct v4l2_ctrl *ctrl)
 		if (src_blend_fmt == SCALER_CFG_SRC_BLEND_FMT_INVALID) {
 			dev_err(ctx->sc_dev->dev,
 				"Unsupported src blend format:%d\n", ctrl->val);
-			pr_info("Supported fmt are... :\n");
-			pr_info("PIX_FMT_RGB32, PIX_FMT_BGR32, PIX_FMT_RGB444, \
+			pr_no_info("Supported fmt are... :\n");
+			pr_no_info("PIX_FMT_RGB32, PIX_FMT_BGR32, PIX_FMT_RGB444, \
 				 PIX_FMT_RGB555X, PIX_FMT_RGB565\n");
 			return -EINVAL;
 		}

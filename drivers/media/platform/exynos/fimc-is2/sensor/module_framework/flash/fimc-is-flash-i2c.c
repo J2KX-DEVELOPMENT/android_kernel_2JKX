@@ -401,7 +401,7 @@ p_err:
 static ssize_t show_rear_torch_flash(struct device *dev, struct device_attribute *attr,
 		char *buf)
 {
-	pr_info("[LED] %s , MAX STEP TORCH_LED:%d\n", __func__, TORCH_OUT_I_MAX - 1);
+	pr_no_info("[LED] %s , MAX STEP TORCH_LED:%d\n", __func__, TORCH_OUT_I_MAX - 1);
 	return sprintf(buf, "%d\n", TORCH_OUT_I_MAX - 1);
 }
 

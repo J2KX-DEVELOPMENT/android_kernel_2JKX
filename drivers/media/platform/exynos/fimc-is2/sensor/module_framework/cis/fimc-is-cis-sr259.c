@@ -198,7 +198,7 @@ static int sensor_sr259_wait_stream_off_status(cis_shared_data *cis_data)
 	while (timeout < STREAM_OFF_WAIT_TIME) {
 		if (cis_data->is_active_area == false &&
 				cis_data->stream_on == false) {
-			pr_debug("actual stream off\n");
+			pr_no_debug("actual stream off\n");
 			break;
 		}
 		timeout++;
@@ -270,7 +270,7 @@ int sensor_sr259_cis_init(struct v4l2_subdev *subdev)
 		goto p_err;
 
 	fimc_is_sensor_addr8_read8(client, 0x05, &data8);
-	pr_info("sensor_rev(%x)\n", data8);
+	pr_no_info("sensor_rev(%x)\n", data8);
 
 	sensor_sr259_cis_data_calculation(sensor_sr259_pllinfos[setfile_index], cis->cis_data);
 
@@ -370,7 +370,7 @@ static int sensor_sr259_cis_group_param_hold_func(struct v4l2_subdev *subdev, un
 	}
 
 	if (hold == cis->cis_data->group_param_hold) {
-		pr_debug("already group_param_hold (%d)\n", cis->cis_data->group_param_hold);
+		pr_no_debug("already group_param_hold (%d)\n", cis->cis_data->group_param_hold);
 		goto p_err;
 	}
 

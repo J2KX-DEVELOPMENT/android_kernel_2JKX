@@ -97,7 +97,7 @@ int exynos8890_fimc_is_preproc_mclk_on(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d", channel);
 
@@ -113,7 +113,7 @@ int exynos8890_fimc_is_preproc_mclk_off(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d", channel);
 
@@ -243,7 +243,7 @@ int exynos7880_fimc_is_preproc_mclk_on(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d_sclk", channel);
 
@@ -259,7 +259,7 @@ int exynos7880_fimc_is_preproc_mclk_off(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d_sclk", channel);
 

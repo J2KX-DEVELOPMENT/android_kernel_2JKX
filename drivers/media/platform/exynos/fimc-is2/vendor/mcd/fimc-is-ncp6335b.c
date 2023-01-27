@@ -97,7 +97,7 @@ static int ncp6335b_set_voltage(struct i2c_client *client, int vout)
 	if (ret < 0)
 		pr_err("[%s::%d] Write Error [%d]. vout 0x%X\n", __func__, __LINE__, ret, vout);
 
-	/*pr_info("%s: vout 0x%X\n", __func__, vout);*/
+	/*pr_no_info("%s: vout 0x%X\n", __func__, vout);*/
 
 	return ret;
 }
@@ -157,7 +157,7 @@ static int fimc_is_ncp6335b_probe(struct i2c_client *client,
 
 	BUG_ON(!fimc_is_dev);
 
-	pr_info("%s start\n",__func__);
+	pr_no_info("%s start\n",__func__);
 
 	core = (struct fimc_is_core *)dev_get_drvdata(fimc_is_dev);
 	if (!core) {
@@ -202,7 +202,7 @@ static int fimc_is_ncp6335b_probe(struct i2c_client *client,
 		goto err;
 	}
 
-	pr_info("%s %s: ncp6335b probed\n",
+	pr_no_info("%s %s: ncp6335b probed\n",
 		dev_driver_string(&client->dev), dev_name(&client->dev));
 
 err:

@@ -276,7 +276,7 @@
 	mdbg_common("[%d][PRE%d:V] ", fmt, ((struct fimc_is_device_preproc *)this->device)->instance, GET_SSX_ID(this->video), ##args)
 
 #define dbg_sensor(fmt, args...) \
-	pr_debug("[@][SSDRV] " fmt, ##args)
+	pr_no_debug("[@][SSDRV] " fmt, ##args)
 
 #define dbg_actuator(fmt, args...) \
 	dbg_sensor(fmt, ##args)
@@ -428,7 +428,7 @@
 
 /* log at probe */
 #define probe_info(fmt, ...)		\
-	pr_info("[@]" fmt, ##__VA_ARGS__)
+	pr_no_info("[@]" fmt, ##__VA_ARGS__)
 #define probe_err(fmt, args...)		\
 	pr_err("[@][ERR]%s:%d:" fmt "\n", __func__, __LINE__, ##args)
 #define probe_warn(fmt, args...)	\
@@ -443,8 +443,8 @@
 #else
 #define fimc_is_err(fmt, ...)	pr_err(fmt, ##__VA_ARGS__)
 #define fimc_is_warn(fmt, ...)	pr_warning(fmt, ##__VA_ARGS__)
-#define fimc_is_dbg(fmt, ...)	pr_info(fmt, ##__VA_ARGS__)
-#define fimc_is_info(fmt, ...)	pr_info(fmt, ##__VA_ARGS__)
+#define fimc_is_dbg(fmt, ...)	pr_no_info(fmt, ##__VA_ARGS__)
+#define fimc_is_info(fmt, ...)	pr_no_info(fmt, ##__VA_ARGS__)
 #define fimc_is_cont(fmt, ...)	pr_cont(fmt, ##__VA_ARGS__)
 #endif
 

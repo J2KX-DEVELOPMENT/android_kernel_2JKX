@@ -46,7 +46,7 @@ static int __init iram_vector_reserved_mem_setup(struct reserved_mem *rmem)
 	mali_balance.base = rmem->base;
 	mali_balance.size = rmem->size;
 
-	pr_info("%s: Reserved memory: %s:%#lx (Size: %#lx)\n",
+	pr_no_info("%s: Reserved memory: %s:%#lx (Size: %#lx)\n",
 			__func__, mali_balance.name, mali_balance.base, mali_balance.size);
 
 	return 0;

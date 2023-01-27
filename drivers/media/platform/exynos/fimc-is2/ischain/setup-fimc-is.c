@@ -225,7 +225,7 @@ ulong fimc_is_get_rate(struct device *dev,
 	}
 
 	frequency = clk_get_rate(clk);
-	pr_info("[@] %s : %ldMhz (enable_count : %d)\n", name, frequency/1000000, clk->enable_count);
+	pr_no_info("[@] %s : %ldMhz (enable_count : %d)\n", name, frequency/1000000, clk->enable_count);
 
 	return frequency;
 }
@@ -249,7 +249,7 @@ int  fimc_is_enable(struct device *dev,
 	}
 
 #ifdef DBG_DUMPCMU
-	pr_info("[@][ENABLE] %s : (enable_count : %d)\n", name, clk->enable_count);
+	pr_no_info("[@][ENABLE] %s : (enable_count : %d)\n", name, clk->enable_count);
 #endif
 
 	ret = clk_prepare_enable(clk);
@@ -281,7 +281,7 @@ int fimc_is_disable(struct device *dev,
 	clk_disable_unprepare(clk);
 
 #ifdef DBG_DUMPCMU
-	pr_info("[@][DISABLE] %s : (enable_count : %d)\n", name, clk->enable_count);
+	pr_no_info("[@][DISABLE] %s : (enable_count : %d)\n", name, clk->enable_count);
 #endif
 
 	return 0;
@@ -354,7 +354,7 @@ ulong fimc_is_get_rate_dt(struct device *dev,
 	}
 
 	rate_target = clk_get_rate(target);
-	pr_info("[@] %s : %ldMhz\n", conid, rate_target/1000000);
+	pr_no_info("[@] %s : %ldMhz\n", conid, rate_target/1000000);
 
 	return rate_target;
 }
@@ -664,7 +664,7 @@ int exynos8890_fimc_is_get_clk(struct device *dev)
 
 int exynos8890_fimc_is_cfg_clk(struct device *dev)
 {
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	/* Clock Gating */
 	exynos8890_fimc_is_uart_gate(dev, false);
@@ -1026,7 +1026,7 @@ int exynos7570_fimc_is_get_clk(struct device *dev)
 
 int exynos7570_fimc_is_cfg_clk(struct device *dev)
 {
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	/* Clock Gating */
 	exynos7570_fimc_is_uart_gate(dev, false);
@@ -1205,7 +1205,7 @@ int exynos7870_fimc_is_get_clk(struct device *dev)
 
 int exynos7870_fimc_is_cfg_clk(struct device *dev)
 {
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	/* Clock Gating */
 	exynos7870_fimc_is_uart_gate(dev, false);
@@ -1414,7 +1414,7 @@ int exynos7880_fimc_is_get_clk(struct device *dev)
 
 int exynos7880_fimc_is_cfg_clk(struct device *dev)
 {
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	/* Clock Gating */
 	exynos7880_fimc_is_uart_gate(dev, false);

@@ -2082,7 +2082,7 @@ static void interface_timer(unsigned long data)
 	BUG_ON(!itf->core);
 
 	if (!test_bit(IS_IF_STATE_OPEN, &itf->state)) {
-		pr_info("shot timer is terminated\n");
+		pr_no_info("shot timer is terminated\n");
 		return;
 	}
 

@@ -259,7 +259,7 @@ void __init exynos7570_clk_init(struct device_node *np)
 	if (cal_init())
 		pr_err("%s: unable to initialize power cal\n", __func__);
 	else
-		pr_info("%s: Exynos power cal initialized\n", __func__);
+		pr_no_info("%s: Exynos power cal initialized\n", __func__);
 
 	ctx = samsung_clk_init(np, reg_base, nr_clks);
 	if (!ctx)
@@ -283,6 +283,6 @@ void __init exynos7570_clk_init(struct device_node *np)
 
 	clk_register_fixed_factor(NULL, "pwm-clock", "gate_peri_sclk_pwm_motor",CLK_SET_RATE_PARENT, 1, 1);
 
-	pr_info("Exynos clock initialized\n");
+	pr_no_info("Exynos clock initialized\n");
 }
 CLK_OF_DECLARE(exynos7570_clk, "samsung,exynos7570-clock", exynos7570_clk_init);

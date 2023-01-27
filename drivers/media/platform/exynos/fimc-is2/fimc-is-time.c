@@ -303,7 +303,7 @@ void measure_time(struct fimc_is_interface_time *time,
 	time->time_tot += temp;
 	time->time_cnt++;
 
-	pr_info("cmd[%d][%d](%d) : curr(%d), max(%d), avg(%d)\n",
+	pr_no_info("cmd[%d][%d](%d) : curr(%d), max(%d), avg(%d)\n",
 		instance, group, time->cmd, temp, time->time_max, time->time_tot / time->time_cnt);
 }
 #endif

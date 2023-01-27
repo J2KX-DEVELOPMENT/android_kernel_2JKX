@@ -80,7 +80,7 @@ static int fimc_is_i2c0_probe(struct i2c_client *client,
 
 	core->client0 = client;
 
-	pr_info("%s %s: fimc_is_i2c0 driver probed!\n",
+	pr_no_info("%s %s: fimc_is_i2c0 driver probed!\n",
 		dev_driver_string(&client->dev), dev_name(&client->dev));
 
 	return 0;

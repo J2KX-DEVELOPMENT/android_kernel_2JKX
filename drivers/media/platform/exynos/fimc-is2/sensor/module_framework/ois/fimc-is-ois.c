@@ -37,13 +37,13 @@ int fimc_is_ois_fw_open(struct fimc_is_ois *ois, char *name)
 	snprintf(fw_name, sizeof(fw_name), "%s%s", FIMC_IS_OIS_SDCARD_PATH, name);
 	fp = filp_open(fw_name, O_RDONLY, 0);
 	if (IS_ERR_OR_NULL(fp)) {
-		pr_info("failed to open SDCARD fw!\n");
+		pr_no_info("failed to open SDCARD fw!\n");
 		goto request_fw;
 	}
 	fw_requested = 0;
 
 	fsize = fp->f_path.dentry->d_inode->i_size;
-	pr_info("start, file_path: %s, size: %ld Bytes\n", fw_name, fsize);
+	pr_no_info("start, file_path: %s, size: %ld Bytes\n", fw_name, fsize);
 
 	buf = vmalloc(fsize);
 	if (!buf) {
@@ -134,7 +134,7 @@ p_err:
 	if (ret < 0)
 		err("OIS firmware loading is fail\n");
 	else
-		pr_info("OIS: the FW were applied successfuly\n");
+		pr_no_info("OIS: the FW were applied successfuly\n");
 
 	return ret;
 }

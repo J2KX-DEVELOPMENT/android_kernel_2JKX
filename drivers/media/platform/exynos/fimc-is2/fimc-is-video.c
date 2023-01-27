@@ -459,7 +459,7 @@ static inline int vref_put(struct fimc_is_video *video,
 
 	ret = atomic_sub_and_test(1, &video->refcount);
 	if (ret)
-		pr_debug("closed all instacne");
+		pr_no_debug("closed all instacne");
 
 	return atomic_read(&video->refcount);
 }

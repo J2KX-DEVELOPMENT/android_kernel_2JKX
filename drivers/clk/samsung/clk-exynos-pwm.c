@@ -184,7 +184,7 @@ void __init exynos_pwm_clk_init(struct device_node *np)
 				pwm_tin4_p, ARRAY_SIZE(pwm_tin4_p), 0,
 				reg_base + REG_TCFG1, 19, 0, 0, &lock);
 
-	pr_info("Exynos: pwm: clock setup completed\n");
+	pr_no_info("Exynos: pwm: clock setup completed\n");
 }
 CLK_OF_DECLARE(exynos_pwm_clk, "samsung,exynos-pwm-clock",
 		exynos_pwm_clk_init);

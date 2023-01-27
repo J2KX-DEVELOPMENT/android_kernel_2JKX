@@ -17,7 +17,7 @@ int fimc_is_clk_gate_init(struct fimc_is_core *core)
 {
 	struct fimc_is_clk_gate_ctrl *gate_ctrl;
 
-	pr_info("%s\n",	__func__);
+	pr_no_info("%s\n",	__func__);
 
 	if (!core) {
 		err("core is NULL\n");
@@ -125,7 +125,7 @@ int fimc_is_clk_gate_set(struct fimc_is_core *core,
 	gate_ctrl = &core->resourcemgr.clk_gate_ctrl;
 	gate_info = gate_ctrl->gate_info;
 
-	pr_debug("%s in\n", __func__);
+	pr_no_debug("%s in\n", __func__);
 	spin_lock(&gate_ctrl->lock);
 
 	/* Set State */
@@ -158,12 +158,12 @@ int fimc_is_clk_gate_set(struct fimc_is_core *core,
 		for (i = 0; i < FIMC_IS_STREAM_COUNT; i++) {
 			if ((!test_bit(FIMC_IS_ISCHAIN_REPROCESSING, &core->ischain[i].state)) &&
 					(gate_ctrl->msk_lock_by_ischain[i])) {
-				pr_info("%s lock(on) due to instance(%d)\n", __func__, i);
+				pr_no_info("%s lock(on) due to instance(%d)\n", __func__, i);
 				goto exit;
 			}
 			/* don't off! if there is at least this group that is OTF */
 			if (fimc_is_group_otf(&core->ischain[i], group_id)) {
-				pr_debug("%s don't off!! this instance(%d) group(%d) is OTF\n",
+				pr_no_debug("%s don't off!! this instance(%d) group(%d) is OTF\n",
 					__func__, i, group_id);
 				goto exit;
 			}
@@ -177,7 +177,7 @@ int fimc_is_clk_gate_set(struct fimc_is_core *core,
 					is_on,
 					gate_ctrl->msk_state,
 					gate_info) < 0) {
-			pr_debug("%s user scenario is skip!! [%d] !!\n", __func__, group_id);
+			pr_no_debug("%s user scenario is skip!! [%d] !!\n", __func__, group_id);
 			goto exit;
 		}
 	}
@@ -225,7 +225,7 @@ int fimc_is_clk_gate_set(struct fimc_is_core *core,
 	}
 exit:
 	spin_unlock(&gate_ctrl->lock);
-	pr_debug("%s out\n", __func__);
+	pr_no_debug("%s out\n", __func__);
 
 	return ret;
 }

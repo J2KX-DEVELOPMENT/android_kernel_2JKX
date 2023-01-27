@@ -804,7 +804,7 @@ static void kbase_fence_timeout(unsigned long data)
 		kbase_fence_del_timer(katom);
 		return;
 	}
-	pr_info("Release fence is not signaled on [%p] for %d ms\n", katom->fence, KBASE_FENCE_TIMEOUT);
+	pr_no_info("Release fence is not signaled on [%p] for %d ms\n", katom->fence, KBASE_FENCE_TIMEOUT);
 
 #ifdef KBASE_FENCE_DUMP
 	kbase_fence_dump(katom->fence);
@@ -829,7 +829,7 @@ static void kbase_fence_timeout(unsigned long data)
 	}
 	spin_unlock_irqrestore(&katom->fence_lock, flags);
 
-	pr_info("Release fence is not signaled on [%p] for %d ms\n", katom->fence, KBASE_FENCE_TIMEOUT);
+	pr_no_info("Release fence is not signaled on [%p] for %d ms\n", katom->fence, KBASE_FENCE_TIMEOUT);
 #endif
 	return;
 }

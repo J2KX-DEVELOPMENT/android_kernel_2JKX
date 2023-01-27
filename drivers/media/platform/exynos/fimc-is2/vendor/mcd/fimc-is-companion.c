@@ -744,7 +744,7 @@ static int fimc_is_comp_read_i2c_cal(struct fimc_is_core *core, u32 addr)
 		err("wrong companion cal data addr\n");
 		return -EINVAL;
 	}
-	pr_info("===Camera: I2C read cal data, addr [0x%04x], size(%d)\n", addr,data_size);
+	pr_no_info("===Camera: I2C read cal data, addr [0x%04x], size(%d)\n", addr,data_size);
 	ret = fimc_is_comp_i2c_write(core->client0, 0x642C, 0x4000);
 	if (ret) {
 		err("fimc_is_comp_load_i2c_cal() i2c write fail");
@@ -757,7 +757,7 @@ static int fimc_is_comp_read_i2c_cal(struct fimc_is_core *core, u32 addr)
 	for (i = 0; i < data_size; i += 2) {
 		fimc_is_comp_spi_read(core->spi1, (void *)read_data, data1, 2);
 		data2 = read_data[0] << 8 | read_data[1] << 0;
-//		pr_info("===Camera: I2C read addr[0x%04x],data[0x%04x]\n", data1,data2);
+//		pr_no_info("===Camera: I2C read addr[0x%04x],data[0x%04x]\n", data1,data2);
 		if (ret) {
 				err("fimc_is_comp_i2c_setf_write() fail");
 				break;
@@ -1118,7 +1118,7 @@ int fimc_is_comp_loadcal(void *core_data)
 	}
 
 	if (!core->spi1.device) {
-		pr_debug("spi1 device is not available");
+		pr_no_debug("spi1 device is not available");
 		goto p_err;
 	}
 
@@ -1128,7 +1128,7 @@ int fimc_is_comp_loadcal(void *core_data)
 	}
 
 	if (!crc32_c1_check) {
-		pr_debug("CRC check fail.Do not apply cal data.");
+		pr_no_debug("CRC check fail.Do not apply cal data.");
 		return 0;
 	}
 
@@ -1336,7 +1336,7 @@ int fimc_is_comp_loadsetf(void *core_data)
 	struct fimc_is_from_info *sysfs_finfo;
 
 	if (!core->spi1.device) {
-		pr_debug("spi1 device is not available");
+		pr_no_debug("spi1 device is not available");
 		goto p_err;
 	}
 

@@ -109,12 +109,12 @@ void fimg2d_debug_command(struct fimg2d_bltcmd *cmd)
 	blt = &cmd->blt;
 
 	/* Common information */
-	pr_info("\n[%s] ctx: %p seq_no(%u)\n", __func__,
+	pr_no_info("\n[%s] ctx: %p seq_no(%u)\n", __func__,
 				cmd->ctx, cmd->blt.seq_no);
-	pr_info(" use fence: %d\n", blt->use_fence);
-	pr_info(" Update layer : 0x%lx\n", cmd->src_flag);
+	pr_no_info(" use fence: %d\n", blt->use_fence);
+	pr_no_info(" Update layer : 0x%lx\n", cmd->src_flag);
 	if (blt->dither)
-		pr_info(" dither: %d\n", blt->dither);
+		pr_no_info(" dither: %d\n", blt->dither);
 	/* End of common information */
 
 	/* Source information */
@@ -127,37 +127,37 @@ void fimg2d_debug_command(struct fimg2d_bltcmd *cmd)
 		r = &img->rect;
 		c = &cmd->dma_src[i].base;
 
-		pr_info(" SRC[%d] op: %s(%d)\n",
+		pr_no_info(" SRC[%d] op: %s(%d)\n",
 				i, opname(img->op), img->op);
-		pr_info(" SRC[%d] type: %d addr: 0x%lx\n",
+		pr_no_info(" SRC[%d] type: %d addr: 0x%lx\n",
 				i, img->addr.type, img->addr.start);
-		pr_info(" SRC[%d] width: %d height: %d ",
+		pr_no_info(" SRC[%d] width: %d height: %d ",
 				i, img->width, img->height);
-		pr_info(" SRC[%d] stride: %d order: %d format: %s(%d)\n",
+		pr_no_info(" SRC[%d] stride: %d order: %d format: %s(%d)\n",
 				i, img->stride, img->order,
 				cfname(img->fmt), img->fmt);
-		pr_info(" SRC[%d] rect LT(%d,%d) RB(%d,%d) WH(%d,%d)\n",
+		pr_no_info(" SRC[%d] rect LT(%d,%d) RB(%d,%d) WH(%d,%d)\n",
 				i, r->x1, r->y1, r->x2, r->y2,
 				rect_w(r), rect_h(r));
 
-		pr_info(" solid color: 0x%lx\n", p->solid_color);
-		pr_info(" g_alpha: 0x%x\n", p->g_alpha);
-		pr_info(" premultiplied: %d\n", p->premult);
+		pr_no_info(" solid color: 0x%lx\n", p->solid_color);
+		pr_no_info(" g_alpha: 0x%x\n", p->g_alpha);
+		pr_no_info(" premultiplied: %d\n", p->premult);
 
 		if (p->rotate)
-			pr_info(" rotate: %d\n", p->rotate);
+			pr_no_info(" rotate: %d\n", p->rotate);
 		if (p->repeat.mode) {
-			pr_info(" repeat: %d, pad color: 0x%lx\n",
+			pr_no_info(" repeat: %d, pad color: 0x%lx\n",
 					p->repeat.mode, p->repeat.pad_color);
 		}
 		if (p->scaling.mode) {
-			pr_info(" scaling %d, s:%d,%d d:%d,%d\n",
+			pr_no_info(" scaling %d, s:%d,%d d:%d,%d\n",
 					p->scaling.mode,
 					p->scaling.src_w, p->scaling.src_h,
 					p->scaling.dst_w, p->scaling.dst_h);
 		}
 		if (p->clipping.enable) {
-			pr_info(" clipping LT(%d,%d) RB(%d,%d) WH(%d,%d)\n",
+			pr_no_info(" clipping LT(%d,%d) RB(%d,%d) WH(%d,%d)\n",
 					p->clipping.x1, p->clipping.y1,
 					p->clipping.x2, p->clipping.y2,
 					rect_w(&p->clipping),
@@ -165,9 +165,9 @@ void fimg2d_debug_command(struct fimg2d_bltcmd *cmd)
 		}
 
 		if (c->size) {
-			pr_info(" SRC[%d] dma base addr: %#lx size: %zd cached: %zd\n",
+			pr_no_info(" SRC[%d] dma base addr: %#lx size: %zd cached: %zd\n",
 					i, c->addr, c->size, c->cached);
-			pr_info(" SRC[%d] dma iova: %#lx, offset: %zd\n",
+			pr_no_info(" SRC[%d] dma iova: %#lx, offset: %zd\n",
 					i, (unsigned long)c->iova, c->offset);
 		}
 
@@ -181,29 +181,29 @@ void fimg2d_debug_command(struct fimg2d_bltcmd *cmd)
 	r = &img->rect;
 	c = &cmd->dma_dst.base;
 
-	pr_info(" DST type: %d addr: 0x%lx\n",
+	pr_no_info(" DST type: %d addr: 0x%lx\n",
 			img->addr.type, img->addr.start);
-	pr_info(" DST width: %d height: %d stride: %d order: %d format: %s(%d)\n",
+	pr_no_info(" DST width: %d height: %d stride: %d order: %d format: %s(%d)\n",
 			img->width, img->height, img->stride, img->order,
 			cfname(img->fmt), img->fmt);
-	pr_info(" DST rect LT(%d,%d) RB(%d,%d) WH(%d,%d)\n",
+	pr_no_info(" DST rect LT(%d,%d) RB(%d,%d) WH(%d,%d)\n",
 			r->x1, r->y1, r->x2, r->y2,
 			rect_w(r), rect_h(r));
 
-	pr_info(" solid color: 0x%lx\n", p->solid_color);
-	pr_info(" g_alpha: 0x%x\n", p->g_alpha);
-	pr_info(" premultiplied: %d\n", p->premult);
+	pr_no_info(" solid color: 0x%lx\n", p->solid_color);
+	pr_no_info(" g_alpha: 0x%x\n", p->g_alpha);
+	pr_no_info(" premultiplied: %d\n", p->premult);
 
 	if (c->size) {
-		pr_info(" DST dma base addr: %#lx size: %zd cached: %zd\n",
+		pr_no_info(" DST dma base addr: %#lx size: %zd cached: %zd\n",
 				c->addr, c->size, c->cached);
-		pr_info(" DST dma iova: %#lx offset: %zd\n",
+		pr_no_info(" DST dma iova: %#lx offset: %zd\n",
 				(unsigned long)c->iova, c->offset);
 	}
 	/* End of destination */
 
 	if (cmd->dma_all)
-		pr_info(" dma size all: %zd bytes\n", cmd->dma_all);
+		pr_no_info(" dma size all: %zd bytes\n", cmd->dma_all);
 }
 
 void fimg2d_debug_command_simple(struct fimg2d_bltcmd *cmd)
@@ -221,20 +221,20 @@ void fimg2d_debug_command_simple(struct fimg2d_bltcmd *cmd)
 		scl = &img->param.scaling;
 		clp = &img->param.clipping;
 
-		pr_info("\n src[%d] whs(%d,%d,%d) rect(%d,%d,%d,%d) clip(%d,%d,%d,%d)\n",
+		pr_no_info("\n src[%d] whs(%d,%d,%d) rect(%d,%d,%d,%d) clip(%d,%d,%d,%d)\n",
 				i, img->width, img->height, img->stride,
 				img->rect.x1, img->rect.y1,
 				img->rect.x2, img->rect.y2,
 				clp->x1, clp->y1, clp->x2, clp->y2);
 		if (scl)
-			pr_info("scale wh(%d, %d) -> (%d, %d)\n",
+			pr_no_info("scale wh(%d, %d) -> (%d, %d)\n",
 				scl->src_w, scl->src_h,
 				scl->dst_w, scl->dst_h);
 	}
 
 	img = &cmd->image_dst;
 
-	pr_info("\n dst fs(%d,%d) rect(%d,%d,%d,%d)\n",
+	pr_no_info("\n dst fs(%d,%d) rect(%d,%d,%d,%d)\n",
 			img->width, img->height,
 			img->rect.x1, img->rect.y1,
 			img->rect.x2, img->rect.y2);
@@ -299,9 +299,9 @@ void fimg2d_perf_print(struct fimg2d_bltcmd *cmd)
 	for (i = 0; i < MAX_PERF_DESCS; i++) {
 		perf = &cmd->ctx->perf[i];
 		time = elapsed_usec(cmd->ctx, i);
-		pr_info("[FIMG2D PERF (%8s)] ctx(%#lx) seq(%d) %8ld   usec\n",
+		pr_no_info("[FIMG2D PERF (%8s)] ctx(%#lx) seq(%d) %8ld   usec\n",
 				perfname(i), (unsigned long)cmd->ctx,
 				perf->seq_no, time);
 	}
-	pr_info("[FIMG2D PERF ** seq(%d)]\n", cmd->blt.seq_no);
+	pr_no_info("[FIMG2D PERF ** seq(%d)]\n", cmd->blt.seq_no);
 }

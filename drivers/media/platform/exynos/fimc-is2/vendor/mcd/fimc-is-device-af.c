@@ -115,7 +115,7 @@ int fimc_is_af_i2c_write(struct i2c_client *client ,u8 addr, u8 data)
         buf[1] = data;
 
 #if 0
-        pr_info("%s : W(0x%02X%02X)\n",__func__, buf[0], buf[1]);
+        pr_no_info("%s : W(0x%02X%02X)\n",__func__, buf[0], buf[1]);
 #endif
 
         do {
@@ -162,7 +162,7 @@ int fimc_is_af_ldo_enable(char *name, bool on)
 
 	if (on) {
 		if (regulator_is_enabled(regulator)) {
-			pr_info("%s: regulator is already enabled\n", name);
+			pr_no_info("%s: regulator is already enabled\n", name);
 			goto exit;
 		}
 
@@ -173,7 +173,7 @@ int fimc_is_af_ldo_enable(char *name, bool on)
 		}
 	} else {
 		if (!regulator_is_enabled(regulator)) {
-			pr_info("%s: regulator is already disabled\n", name);
+			pr_no_info("%s: regulator is already disabled\n", name);
 			goto exit;
 		}
 
@@ -279,7 +279,7 @@ int16_t fimc_is_af_enable(void *device, bool onoff)
 
 	specific = core->vender.private_data;
 
-	pr_info("af_noise : running_rear_camera = %d, onoff = %d\n", specific->running_rear_camera, onoff);
+	pr_no_info("af_noise : running_rear_camera = %d, onoff = %d\n", specific->running_rear_camera, onoff);
 	if (!specific->running_rear_camera) {
 		if (specific->use_ois_hsi2c) {
 			fimc_is_af_i2c_config(af_device->client, true);
@@ -305,7 +305,7 @@ int16_t fimc_is_af_enable(void *device, bool onoff)
 				goto power_off;
 			}
 			af_noise_count++;
-			pr_info("af_noise : count = %d\n", af_noise_count);
+			pr_no_info("af_noise : count = %d\n", af_noise_count);
 		} else {
 			/* Check the Power Pins */
 			af_regulator = fimc_is_check_regulator_status("VDDAF_2.8V_CAM");
@@ -318,7 +318,7 @@ int16_t fimc_is_af_enable(void *device, bool onoff)
 				}
 				fimc_is_af_power(af_device, false);
 			} else {
-				pr_info("already power off.(%d)\n", __LINE__);
+				pr_no_info("already power off.(%d)\n", __LINE__);
 			}
 		}
 
@@ -340,7 +340,7 @@ power_off:
 		if (af_regulator && io_regulator) {
 			fimc_is_af_power(af_device, false);
 		} else {
-			pr_info("already power off.(%d)\n", __LINE__);
+			pr_no_info("already power off.(%d)\n", __LINE__);
 		}
 	}
 	return ret;
@@ -352,7 +352,7 @@ int16_t fimc_is_af_move_lens(struct fimc_is_core *core)
 	struct i2c_client *client = core->client2;
 	struct fimc_is_vender_specific *specific = core->vender.private_data;
 
-	pr_info("fimc_is_af_move_lens : running_rear_camera = %d\n", specific->running_rear_camera);
+	pr_no_info("fimc_is_af_move_lens : running_rear_camera = %d\n", specific->running_rear_camera);
 	if (!specific->running_rear_camera) {
 		if (specific->use_ois_hsi2c) {
 			fimc_is_af_i2c_config(client, true);

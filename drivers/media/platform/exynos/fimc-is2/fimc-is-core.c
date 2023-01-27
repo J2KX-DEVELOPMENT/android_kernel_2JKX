@@ -123,13 +123,13 @@ static struct notifier_block exynos_fimc_is_mif_throttling_nb = {
 
 static int fimc_is_suspend(struct device *dev)
 {
-	pr_debug("FIMC_IS Suspend\n");
+	pr_no_debug("FIMC_IS Suspend\n");
 	return 0;
 }
 
 static int fimc_is_resume(struct device *dev)
 {
-	pr_debug("FIMC_IS Resume\n");
+	pr_no_debug("FIMC_IS Resume\n");
 	return 0;
 }
 
@@ -597,7 +597,7 @@ static ssize_t store_clk_gate_mode(struct device *dev,
 		sysfs_debug.clk_gate_mode = CLOCK_GATE_MODE_FW;
 		break;
 	default:
-		pr_debug("%s: %c\n", __func__, buf[0]);
+		pr_no_debug("%s: %c\n", __func__, buf[0]);
 		break;
 	}
 #endif
@@ -625,7 +625,7 @@ static ssize_t store_en_clk_gate(struct device *dev,
 		sysfs_debug.clk_gate_mode = CLOCK_GATE_MODE_HOST;
 		break;
 	default:
-		pr_debug("%s: %c\n", __func__, buf[0]);
+		pr_no_debug("%s: %c\n", __func__, buf[0]);
 		break;
 	}
 #endif
@@ -639,7 +639,7 @@ static ssize_t store_en_clk_gate(struct device *dev,
 		sysfs_debug.en_clk_gate = true;
 		break;
 	default:
-		pr_debug("%s: %c\n", __func__, buf[0]);
+		pr_no_debug("%s: %c\n", __func__, buf[0]);
 		break;
 	}
 #endif
@@ -684,7 +684,7 @@ static ssize_t store_en_dvfs(struct device *dev,
 		sysfs_debug.en_dvfs = true;
 		break;
 	default:
-		pr_debug("%s: %c\n", __func__, buf[0]);
+		pr_no_debug("%s: %c\n", __func__, buf[0]);
 		break;
 	}
 #endif
@@ -726,7 +726,7 @@ static ssize_t store_debug_state(struct device *dev,
 	case '7':
 		break;
 	default:
-		pr_debug("%s: %c\n", __func__, buf[0]);
+		pr_no_debug("%s: %c\n", __func__, buf[0]);
 		break;
 	}
 

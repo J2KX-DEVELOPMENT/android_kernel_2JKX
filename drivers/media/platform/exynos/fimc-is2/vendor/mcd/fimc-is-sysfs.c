@@ -1295,7 +1295,7 @@ static ssize_t camera_rear_sensor_standby(struct device *dev,
 	case '1':
 		break;
 	default:
-		pr_debug("%s: %c\n", __func__, buf[0]);
+		pr_no_debug("%s: %c\n", __func__, buf[0]);
 		break;
 	}
 
@@ -1459,7 +1459,7 @@ static ssize_t camera_ois_power_store(struct device *dev,
 		msleep(150);
 		break;
 	default:
-		pr_debug("%s: %c\n", __func__, buf[0]);
+		pr_no_debug("%s: %c\n", __func__, buf[0]);
 		break;
 	}
 
@@ -1614,7 +1614,7 @@ static ssize_t camera_comp_ic_check_store(struct device *dev,
 		}
 		break;
 	default:
-		pr_debug("%s: %c\n", __func__, buf[0]);
+		pr_no_debug("%s: %c\n", __func__, buf[0]);
 		break;
 	}
 
@@ -1829,19 +1829,19 @@ int svc_cheating_prevent_device_file_create(struct kobject **obj)
 		/* try to create svc kobject */
 		data = kobject_create_and_add("svc", &devices_kset->kobj);
 		if (IS_ERR_OR_NULL(data))
-		        pr_info("Failed to create sys/devices/svc already exist svc : 0x%p\n", data);
+		        pr_no_info("Failed to create sys/devices/svc already exist svc : 0x%p\n", data);
 		else
-			pr_info("Success to create sys/devices/svc svc : 0x%p\n", data);
+			pr_no_info("Success to create sys/devices/svc svc : 0x%p\n", data);
 	} else {
 		data = (struct kobject *)svc_sd->priv;
-		pr_info("Success to find svc_sd : 0x%p svc : 0x%p\n", svc_sd, data);
+		pr_no_info("Success to find svc_sd : 0x%p svc : 0x%p\n", svc_sd, data);
 	}
 
 	Camera = kobject_create_and_add("Camera", data);
 	if (IS_ERR_OR_NULL(Camera))
-	        pr_info("Failed to create sys/devices/svc/Camera : 0x%p\n", Camera);
+	        pr_no_info("Failed to create sys/devices/svc/Camera : 0x%p\n", Camera);
 	else
-		pr_info("Success to create sys/devices/svc/Camera : 0x%p\n", Camera);
+		pr_no_info("Success to create sys/devices/svc/Camera : 0x%p\n", Camera);
 
 
 	*obj = Camera;

@@ -998,7 +998,7 @@ void sc_hwset_dst_addr(struct sc_dev *sc, struct sc_addr *addr)
 void sc_hwregs_dump(struct sc_dev *sc)
 {
 	dev_notice(sc->dev, "Dumping control registers...\n");
-	pr_notice("------------------------------------------------\n");
+	pr_no_notice("------------------------------------------------\n");
 
 	print_hex_dump(KERN_NOTICE, "", DUMP_PREFIX_ADDRESS, 16, 4,
 			sc->regs + 0x000, 0x044 - 0x000 + 4, false);
@@ -1068,7 +1068,7 @@ void sc_hwregs_dump(struct sc_dev *sc)
 			sc->regs + 0x1310, 0x1318 - 0x1310 + 4, false);
 	}
 
-	pr_notice("------------------------------------------------\n");
+	pr_no_notice("------------------------------------------------\n");
 }
 
 /* starts from the second status which is the begining of err status */

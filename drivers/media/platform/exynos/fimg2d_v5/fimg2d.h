@@ -80,7 +80,7 @@ enum debug_level {
 #define g2d_print(level, fmt, args...)				\
 	do {							\
 		if (g2d_debug >= level)				\
-			pr_info("[%s] " fmt, __func__, ##args);	\
+			pr_no_info("[%s] " fmt, __func__, ##args);	\
 	} while (0)
 
 #define fimg2d_err(fmt, args...)	g2d_print(DBG_ERR, fmt, ##args)

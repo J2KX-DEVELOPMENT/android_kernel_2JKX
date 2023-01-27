@@ -30,7 +30,7 @@ struct fimc_is_lib_support gPtr_lib_support;
 
 int fimc_is_log_write_console(char *str)
 {
-	pr_info("[@][LIB] %s", str);
+	pr_no_info("[@][LIB] %s", str);
 	return 0;
 }
 
@@ -178,12 +178,12 @@ static void print_track(struct lib_mem_track *track)
 	int i;
 #endif
 
-	pr_info("leak detected type: %d, addr: 0x%08lx, size: %zd, status: %d\n",
+	pr_no_info("leak detected type: %d, addr: 0x%08lx, size: %zd, status: %d\n",
 			track->type, track->addr, track->size, track->status);
 
 	when = track->alloc.when;
 	usec = do_div(when, NSEC_PER_SEC);
-	pr_info("\tallocated : [%5lu.%06lu] from: 0x%08lx, cpu: %d, pid: %d\n",
+	pr_no_info("\tallocated : [%5lu.%06lu] from: 0x%08lx, cpu: %d, pid: %d\n",
 			(ulong)when, usec / NSEC_PER_USEC,
 			track->alloc.lr-1, track->alloc.cpu, track->alloc.pid);
 #ifdef CONFIG_STACKTRACE
@@ -196,14 +196,14 @@ static void print_track(struct lib_mem_track *track)
 
 	when = track->free.when;
 	usec = do_div(when, NSEC_PER_SEC);
-	pr_info("\tfree:  [%5lu.%06lu] from: 0x%08lx, cpu: %d, pid: %d\n",
+	pr_no_info("\tfree:  [%5lu.%06lu] from: 0x%08lx, cpu: %d, pid: %d\n",
 			(ulong)when, usec / NSEC_PER_USEC,
 			track->free.lr-1, track->free.cpu, track->free.pid);
 
 #ifdef CONFIG_STACKTRACE
 	for (i = 0; i < MEM_TRACK_ADDRS_COUNT; i++)
 		if (track->free.addrs[i])
-			pr_info("\t%p\n", (void *)track->free.addrs[i]);
+			pr_no_info("\t%p\n", (void *)track->free.addrs[i]);
 		else
 			break;
 #endif

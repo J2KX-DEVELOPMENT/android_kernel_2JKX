@@ -1833,7 +1833,7 @@ static int hevc_probe(struct platform_device *pdev)
 	int i;
 #endif
 
-	pr_info("+ %s\n", __func__);
+	pr_no_info("+ %s\n", __func__);
 
 	dev_dbg(&pdev->dev, "%s()\n", __func__);
 	dev = devm_kzalloc(&pdev->dev, sizeof(struct hevc_dev), GFP_KERNEL);
@@ -2049,7 +2049,7 @@ static int hevc_probe(struct platform_device *pdev)
 		atomic_set(&dev->qos_req_cnt[i], 0);
 #endif
 
-	pr_debug("%s--\n", __func__);
+	pr_no_debug("%s--\n", __func__);
 	return 0;
 
 /* Deinit HEVC if probe had failed */

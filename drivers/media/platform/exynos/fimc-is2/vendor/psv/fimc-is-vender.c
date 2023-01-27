@@ -70,54 +70,54 @@ int fimc_is_vender_probe(struct fimc_is_vender *vender)
 
 #if defined(CONFIG_SOC_EXYNOS7880)
 	cfg->irq_mcsc = platform_get_irq(core->pdev, PDEV_IRQ_NUM_MCSC);
-	pr_info("MCSC IRQ number: %d\n", cfg->irq_mcsc);
+	pr_no_info("MCSC IRQ number: %d\n", cfg->irq_mcsc);
 	if (cfg->irq_mcsc < 0) {
 		err_vec("failed to get irq for %d", PDEV_IRQ_NUM_MCSC);
 		goto err_get_irq_mcsc;
 	}
 	cfg->irq_vra0 = platform_get_irq(core->pdev, PDEV_IRQ_NUM_VRA0);
-	pr_info("VRA IRQ number: %d\n", cfg->irq_vra0);
+	pr_no_info("VRA IRQ number: %d\n", cfg->irq_vra0);
 	if (cfg->irq_vra0 < 0) {
 		err_vec("failed to get irq for %d", PDEV_IRQ_NUM_VRA0);
 		goto err_get_irq_vra0;
 	}
 
 	cfg->irq_isp0 = platform_get_irq(core->pdev, PDEV_IRQ_NUM_ISP0);
-	pr_info("ISP IRQ number: %d\n", cfg->irq_isp0);
+	pr_no_info("ISP IRQ number: %d\n", cfg->irq_isp0);
 	if (cfg->irq_isp0 < 0) {
 		err_vec("failed to get irq for %d", PDEV_IRQ_NUM_ISP0);
 		goto err_get_irq_isp0;
 	}
 
 	cfg->irq_3aa0 = platform_get_irq(core->pdev, PDEV_IRQ_NUM_3AA0);
-	pr_info("ISP IRQ number: %d\n", cfg->irq_3aa0);
+	pr_no_info("ISP IRQ number: %d\n", cfg->irq_3aa0);
 	if (cfg->irq_3aa0 < 0) {
 		err_vec("failed to get irq for %d", PDEV_IRQ_NUM_3AA0);
 		goto err_get_irq_3aa0;
 	}
 #elif defined(CONFIG_SOC_EXYNOS7570)
 	cfg->irq_mcsc = platform_get_irq(core->pdev, PDEV_IRQ_NUM_MCSC);
-	pr_info("MCSC IRQ number: %d\n", cfg->irq_mcsc);
+	pr_no_info("MCSC IRQ number: %d\n", cfg->irq_mcsc);
 	if (cfg->irq_mcsc < 0) {
 		err_vec("failed to get irq for %d", PDEV_IRQ_NUM_MCSC);
 		goto err_get_irq_mcsc;
 	}
 	cfg->irq_vra1 = platform_get_irq(core->pdev, PDEV_IRQ_NUM_VRA1);
-	pr_info("VRA IRQ number: %d\n", cfg->irq_vra1);
+	pr_no_info("VRA IRQ number: %d\n", cfg->irq_vra1);
 	if (cfg->irq_vra1 < 0) {
 		err_vec("failed to get irq for %d", PDEV_IRQ_NUM_VRA1);
 		goto err_get_irq_vra0;
 	}
 
 	cfg->irq_isp0 = platform_get_irq(core->pdev, PDEV_IRQ_NUM_ISP0);
-	pr_info("ISP IRQ number: %d\n", cfg->irq_isp0);
+	pr_no_info("ISP IRQ number: %d\n", cfg->irq_isp0);
 	if (cfg->irq_isp0 < 0) {
 		err_vec("failed to get irq for %d", PDEV_IRQ_NUM_ISP0);
 		goto err_get_irq_isp0;
 	}
 
 	cfg->irq_mfcmcsc = platform_get_irq(core->pdev, PDEV_IRQ_NUM_MFCMCSC);
-	pr_info("ISP IRQ number: %d\n", cfg->irq_mfcmcsc);
+	pr_no_info("ISP IRQ number: %d\n", cfg->irq_mfcmcsc);
 	if (cfg->irq_mfcmcsc < 0) {
 		err_vec("failed to get irq for %d", PDEV_IRQ_NUM_MFCMCSC);
 		goto err_get_irq_mfcmcsc;

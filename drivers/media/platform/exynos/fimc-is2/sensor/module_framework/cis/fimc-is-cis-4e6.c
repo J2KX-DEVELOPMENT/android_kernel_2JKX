@@ -278,7 +278,7 @@ static int sensor_4e6_cis_group_param_hold_func(struct v4l2_subdev *subdev, unsi
 	}
 
 	if (hold == cis->cis_data->group_param_hold) {
-		pr_debug("already group_param_hold (%d)\n", cis->cis_data->group_param_hold);
+		pr_no_debug("already group_param_hold (%d)\n", cis->cis_data->group_param_hold);
 		goto p_err;
 	}
 

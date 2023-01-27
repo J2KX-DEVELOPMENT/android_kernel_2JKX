@@ -296,7 +296,7 @@ void tasklet_csis_str_otf(unsigned long data)
 	ischain = device->ischain;
 
 #ifdef TASKLET_MSG
-	pr_info("S%d\n", fcount);
+	pr_no_info("S%d\n", fcount);
 #endif
 
 	groupmgr = ischain->groupmgr;
@@ -402,7 +402,7 @@ void tasklet_csis_str_m2m(unsigned long data)
 	fcount = atomic_read(&csi->fcount);
 
 #ifdef TASKLET_MSG
-	pr_info("S%d\n", fcount);
+	pr_no_info("S%d\n", fcount);
 #endif
 	/* disable all virtual channel's dma */
 	csis_disable_all_vc_dma_buf(csi);
@@ -544,7 +544,7 @@ static void tasklet_csis_end(unsigned long data)
 	}
 
 #ifdef TASKLET_MSG
-	pr_info("E%d\n", atomic_read(&csi->fcount));
+	pr_no_info("E%d\n", atomic_read(&csi->fcount));
 #endif
 	for (vc = CSI_VIRTUAL_CH_0; vc < CSI_VIRTUAL_CH_MAX; vc++) {
 		if (test_bit((CSIS_BUF_ERR_VC0 + vc), &csi->state)) {
@@ -572,7 +572,7 @@ static void tasklet_csis_line(unsigned long data)
 	line_fcount = atomic_read(&csi->fcount) + 1;
 
 #ifdef TASKLET_MSG
-	pr_info("L%d(%d)\n", atomic_read(&csi->fcount), line_fcount);
+	pr_no_info("L%d(%d)\n", atomic_read(&csi->fcount), line_fcount);
 #endif
 	v4l2_subdev_notify(subdev, CSIS_NOTIFY_LINE, &line_fcount);
 }

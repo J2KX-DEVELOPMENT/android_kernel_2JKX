@@ -344,7 +344,7 @@ void tasklet_csis_str_otf(unsigned long data)
 	ischain = device->ischain;
 
 #ifdef TASKLET_MSG
-	pr_info("S%d\n", fcount);
+	pr_no_info("S%d\n", fcount);
 #endif
 
 	groupmgr = ischain->groupmgr;
@@ -437,7 +437,7 @@ void tasklet_csis_str_m2m(unsigned long data)
 	fcount = atomic_read(&csi->fcount);
 
 #ifdef TASKLET_MSG
-	pr_info("S%d\n", fcount);
+	pr_no_info("S%d\n", fcount);
 #endif
 	/* set other virtual channel's dma */
 	csis_s_all_vc_dma_buf(csi);
@@ -589,7 +589,7 @@ static void tasklet_csis_end(unsigned long data)
 	}
 
 #ifdef TASKLET_MSG
-	pr_info("E%d\n", atomic_read(&csi->fcount));
+	pr_no_info("E%d\n", atomic_read(&csi->fcount));
 #endif
 	v4l2_subdev_notify(subdev, CSIS_NOTIFY_FEND, NULL);
 }

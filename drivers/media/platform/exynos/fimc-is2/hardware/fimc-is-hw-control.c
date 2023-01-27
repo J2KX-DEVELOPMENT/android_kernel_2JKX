@@ -1257,7 +1257,7 @@ void fimc_is_hardware_force_stop(struct fimc_is_hardware *hardware,
 	framemgr = hw_ip->framemgr;
 	framemgr_late = hw_ip->hardware->framemgr_late;
 
-	pr_info("[@][HW][%d]complete_list (%d)(%d)(%d)\n", instance,
+	pr_no_info("[@][HW][%d]complete_list (%d)(%d)(%d)\n", instance,
 		framemgr->queued_count[FS_HW_WAIT_DONE],
 		framemgr->queued_count[FS_HW_CONFIGURE],
 		framemgr->queued_count[FS_HW_REQUEST]);
@@ -1323,7 +1323,7 @@ void fimc_is_hardware_force_stop(struct fimc_is_hardware *hardware,
 		msleep(1);
 	}
 
-	pr_info("[@][HW][%d]late_list (%d)(%d)(%d)\n",
+	pr_no_info("[@][HW][%d]late_list (%d)(%d)(%d)\n",
 		instance, framemgr_late->queued_count[FS_HW_WAIT_DONE],
 		framemgr_late->queued_count[FS_HW_CONFIGURE],
 		framemgr_late->queued_count[FS_HW_REQUEST]);

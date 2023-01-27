@@ -642,7 +642,7 @@ static int __init mfc_reserved_mem_setup(struct reserved_mem *rmem)
 	vm_mfc_fw.phys_addr = rmem->base;
 	vm_mfc_fw.size = rmem->size + PAGE_SIZE;
 	vm_area_add_early(&vm_mfc_fw);
-	pr_info("Fixed region for MFC FW: %#lx:%#lx\n",
+	pr_no_info("Fixed region for MFC FW: %#lx:%#lx\n",
 			(unsigned long)vm_mfc_fw.addr,
 			(unsigned long)vm_mfc_fw.size);
 	return 0;

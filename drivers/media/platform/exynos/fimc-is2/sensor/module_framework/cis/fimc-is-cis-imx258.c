@@ -206,13 +206,13 @@ int sensor_imx258_cis_init(struct v4l2_subdev *subdev)
 		err("sensor_imx258 Lot ID - read fail!!");
 		goto p_err;
 	} else {
-		pr_info("sensor_imx258 Lot ID (0x%x) : %s \n",
+		pr_no_info("sensor_imx258 Lot ID (0x%x) : %s \n",
 			data8, data8 == 0x10 ? "PDAF" : "Non PDAF");
 	}
 
 	sensor_imx258_cis_data_calculation(sensor_imx258_pllinfos[setfile_index], cis->cis_data);
 
-	pr_info("sensor_imx258_cis_init_reg start");
+	pr_no_info("sensor_imx258_cis_init_reg start");
 
 	ret = sensor_cis_set_registers(subdev, sensor_imx258_init_setfile,
 			sensor_imx258_init_setfile_size);
@@ -221,7 +221,7 @@ int sensor_imx258_cis_init(struct v4l2_subdev *subdev)
 		goto p_err;
 	}
 
-	pr_info("sensor_imx258_cis_init_reg end");
+	pr_no_info("sensor_imx258_cis_init_reg end");
 
 	setinfo.return_value = 0;
 	CALL_CISOPS(cis, cis_get_min_exposure_time, subdev, &setinfo.return_value);
@@ -315,7 +315,7 @@ static int sensor_imx258_cis_group_param_hold_func(struct v4l2_subdev *subdev, u
 	}
 
 	if (hold == cis->cis_data->group_param_hold) {
-		pr_debug("already group_param_hold (%d)\n", cis->cis_data->group_param_hold);
+		pr_no_debug("already group_param_hold (%d)\n", cis->cis_data->group_param_hold);
 		goto p_err;
 	}
 

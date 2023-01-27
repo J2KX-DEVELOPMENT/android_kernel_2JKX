@@ -34,7 +34,7 @@ static int exynos8890_fimc_is_csi_gate(struct device *dev, u32 instance, bool ma
 {
 	int ret = 0;
 
-	pr_debug("%s(instance : %d / mask : %d)\n", __func__, instance, mask);
+	pr_no_debug("%s(instance : %d / mask : %d)\n", __func__, instance, mask);
 
 	switch (instance) {
 	case 0:
@@ -254,7 +254,7 @@ int exynos8890_fimc_is_sensor_mclk_on(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d", channel);
 
@@ -270,7 +270,7 @@ int exynos8890_fimc_is_sensor_mclk_off(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d", channel);
 
@@ -318,7 +318,7 @@ int exynos7570_fimc_is_sensor_mclk_on(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "mif_isp_sensor%d", channel);
 
@@ -334,7 +334,7 @@ int exynos7570_fimc_is_sensor_mclk_off(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "mif_isp_sensor%d", channel);
 
@@ -347,7 +347,7 @@ static int exynos7870_fimc_is_csi_gate(struct device *dev, u32 instance, bool ma
 {
 	int ret = 0;
 
-	pr_debug("%s(instance : %d / mask : %d)\n", __func__, instance, mask);
+	pr_no_debug("%s(instance : %d / mask : %d)\n", __func__, instance, mask);
 
 	switch (instance) {
 	case 0:
@@ -428,7 +428,7 @@ int exynos7870_fimc_is_sensor_mclk_on(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d_sclk", channel);
 
@@ -444,7 +444,7 @@ int exynos7870_fimc_is_sensor_mclk_off(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d_sclk", channel);
 
@@ -458,7 +458,7 @@ static int exynos7880_fimc_is_csi_gate(struct device *dev, u32 instance, bool ma
 {
 	int ret = 0;
 
-	pr_debug("%s(instance : %d / mask : %d)\n", __func__, instance, mask);
+	pr_no_debug("%s(instance : %d / mask : %d)\n", __func__, instance, mask);
 
 	switch (instance) {
 	case 0:
@@ -573,7 +573,7 @@ int exynos7880_fimc_is_sensor_mclk_on(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d_sclk", channel);
 
@@ -589,7 +589,7 @@ int exynos7880_fimc_is_sensor_mclk_off(struct device *dev,
 {
 	char sclk_name[30];
 
-	pr_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
+	pr_no_debug("%s(scenario : %d / ch : %d)\n", __func__, scenario, channel);
 
 	snprintf(sclk_name, sizeof(sclk_name), "isp_sensor%d_sclk", channel);
 

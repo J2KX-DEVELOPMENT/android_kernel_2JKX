@@ -624,7 +624,7 @@ bool fimc_is_sec_check_front_otp_crc32(char *buf)
 					checksum, checksumFromOTP);
 	} else {
 		crc32_temp = crc32_header_temp = true;
-		pr_info("Camera: End checking CRC32 (0x%08X = 0x%08X)",
+		pr_no_info("Camera: End checking CRC32 (0x%08X = 0x%08X)",
 					checksum, checksumFromOTP);
 	}
 
@@ -1409,7 +1409,7 @@ int fimc_is_i2c_write(struct i2c_client *client, u16 addr, u8 data)
 	int ret = 0;
 
 	if (!client) {
-		pr_info("%s: client is null\n", __func__);
+		pr_no_info("%s: client is null\n", __func__);
 		return -ENODEV;
 	}
 
@@ -1424,7 +1424,7 @@ int fimc_is_i2c_write(struct i2c_client *client, u16 addr, u8 data)
 		if (likely(write_buf_size == ret))
 			break;
 
-		pr_info("%s: i2c_master_send failed(%d), try %d\n", __func__, ret, retries);
+		pr_no_info("%s: i2c_master_send failed(%d), try %d\n", __func__, ret, retries);
 		usleep_range(1000, 1000);
 	}
 
@@ -2127,7 +2127,7 @@ int fimc_is_sec_read_otprom_header(struct device *dev, int position)
 
 	otp_bank = data8;
 
-	pr_info("Camera: otp_bank = %d\n", otp_bank);
+	pr_no_info("Camera: otp_bank = %d\n", otp_bank);
 
 	switch(otp_bank) {
 	case 1 :
@@ -2208,7 +2208,7 @@ int fimc_is_sec_readcal_otprom(struct device *dev, int position)
 #endif
 		u16 start_addr = 0;
 
-	pr_info("fimc_is_sec_readcal_otprom E\n");
+	pr_no_info("fimc_is_sec_readcal_otprom E\n");
 
 		if (position == SENSOR_POSITION_FRONT) {
 #if defined(CONFIG_CAMERA_OTPROM_SUPPORT_FRONT)
@@ -2286,7 +2286,7 @@ int fimc_is_sec_readcal_otprom(struct device *dev, int position)
 
 		otp_bank = data8;
 
-		pr_info("Camera: otp_bank = %d\n", otp_bank);
+		pr_no_info("Camera: otp_bank = %d\n", otp_bank);
 
 		/* 3. selected page setting */
 		switch(otp_bank) {
@@ -2321,7 +2321,7 @@ int fimc_is_sec_readcal_otprom(struct device *dev, int position)
 #endif
 		otp_bank = data8;
 
-		pr_info("Camera: otp_bank = %d\n", otp_bank);
+		pr_no_info("Camera: otp_bank = %d\n", otp_bank);
 #if defined(CAMERA_OTPROM_SUPPORT_FRONT_HYNIX)
 		/* 3. selected page setting */
 		switch(otp_bank) {
@@ -2339,7 +2339,7 @@ int fimc_is_sec_readcal_otprom(struct device *dev, int position)
 			break;
 		}
 
-		pr_info("Camera: otp_start_addr = %x\n", start_addr);
+		pr_no_info("Camera: otp_start_addr = %x\n", start_addr);
 
 		ret = fimc_is_i2c_read_burst(client, finfo->cal_map_ver,
 				       OTP_HEADER_CAL_MAP_VER_START_ADDR_FRONT+start_addr,
@@ -2391,14 +2391,14 @@ crc_retry:
 		fimc_is_sensor_write8(client, OTP_SINGLE_READ, 0x01);
 
 		/* 5. full read cal data */
-		pr_info("Camera: I2C read full cal data\n\n");
+		pr_no_info("Camera: I2C read full cal data\n\n");
 		for (i = 0; i < OTP_USED_CAL_SIZE; i++) {
 			fimc_is_sensor_read8(client, OTP_SINGLE_READ_ADDR, &data8);
 			buf[i] = data8;
 		}
 #else
 		/* read cal data */
-		pr_info("Camera: I2C read cal data\n\n");
+		pr_no_info("Camera: I2C read cal data\n\n");
 #if defined(CAMERA_OTPROM_SUPPORT_FRONT_HYNIX)
 		fimc_is_i2c_read_burst(client, buf, start_addr, OTP_USED_CAL_SIZE);
 #else
@@ -2409,11 +2409,11 @@ crc_retry:
 
 		if (position == SENSOR_POSITION_FRONT) {
 #if defined(CONFIG_CAMERA_OTPROM_SUPPORT_FRONT)
-			pr_info("FRONT OTPROM header version = %s\n", finfo->header_ver);
+			pr_no_info("FRONT OTPROM header version = %s\n", finfo->header_ver);
 #if defined(OTP_HEADER_OEM_START_ADDR_FRONT)
 			finfo->oem_start_addr = *((u32 *)&buf[OTP_HEADER_OEM_START_ADDR_FRONT]) - start_addr;
 			finfo->oem_end_addr = *((u32 *)&buf[OTP_HEADER_OEM_END_ADDR_FRONT]) - start_addr;
-			pr_info("OEM start = 0x%08x, end = 0x%08x\n",
+			pr_no_info("OEM start = 0x%08x, end = 0x%08x\n",
 				(finfo->oem_start_addr), (finfo->oem_end_addr));
 #endif
 #if defined(OTP_HEADER_AWB_START_ADDR_FRONT)
@@ -2424,13 +2424,13 @@ crc_retry:
 			finfo->awb_start_addr = *((u32 *)&buf[OTP_HEADER_AWB_START_ADDR_FRONT]) - start_addr;
 			finfo->awb_end_addr = *((u32 *)&buf[OTP_HEADER_AWB_END_ADDR_FRONT]) - start_addr;
 #endif
-			pr_info("AWB start = 0x%08x, end = 0x%08x\n",
+			pr_no_info("AWB start = 0x%08x, end = 0x%08x\n",
 				(finfo->awb_start_addr), (finfo->awb_end_addr));
 #endif
 #if defined(OTP_HEADER_SHADING_START_ADDR_FRONT)
 			finfo->shading_start_addr = *((u32 *)&buf[OTP_HEADER_AP_SHADING_START_ADDR_FRONT]) - start_addr;
 			finfo->shading_end_addr = *((u32 *)&buf[OTP_HEADER_AP_SHADING_END_ADDR_FRONT]) - start_addr;
-			pr_info("Shading start = 0x%08x, end = 0x%08x\n",
+			pr_no_info("Shading start = 0x%08x, end = 0x%08x\n",
 				(finfo->shading_start_addr), (finfo->shading_end_addr));
 			if (finfo->shading_end_addr > 0x3AFF) {
 				err("Shading end_addr has error!! 0x%08x", finfo->shading_end_addr);
@@ -2477,11 +2477,11 @@ crc_retry:
 #if defined(CONFIG_CAMERA_OTPROM_SUPPORT_REAR)
 			finfo->oem_start_addr = *((u32 *)&buf[OTP_HEADER_OEM_START_ADDR]) - start_addr;
 			finfo->oem_end_addr = *((u32 *)&buf[OTP_HEADER_OEM_END_ADDR]) - start_addr;
-			pr_info("OEM start = 0x%08x, end = 0x%08x\n",
+			pr_no_info("OEM start = 0x%08x, end = 0x%08x\n",
 				(finfo->oem_start_addr), (finfo->oem_end_addr));
 			finfo->awb_start_addr = *((u32 *)&buf[OTP_HEADER_AWB_START_ADDR]) - start_addr;
 			finfo->awb_end_addr = *((u32 *)&buf[OTP_HEADER_AWB_END_ADDR]) - start_addr;
-			pr_info("AWB start = 0x%08x, end = 0x%08x\n",
+			pr_no_info("AWB start = 0x%08x, end = 0x%08x\n",
 				(finfo->awb_start_addr), (finfo->awb_end_addr));
 			finfo->shading_start_addr = *((u32 *)&buf[OTP_HEADER_AP_SHADING_START_ADDR]) - start_addr;
 			finfo->shading_end_addr = *((u32 *)&buf[OTP_HEADER_AP_SHADING_END_ADDR]) - start_addr;
@@ -2489,7 +2489,7 @@ crc_retry:
 				err("Shading end_addr has error!! 0x%08x", finfo->shading_end_addr);
 				finfo->setfile_end_addr = 0x1fff;
 			}
-			pr_info("Shading start = 0x%08x, end = 0x%08x\n",
+			pr_no_info("Shading start = 0x%08x, end = 0x%08x\n",
 				(finfo->shading_start_addr), (finfo->shading_end_addr));
 
 			/* HEARDER Data : Module/Manufacturer Information */
@@ -2523,28 +2523,28 @@ crc_retry:
 		}
 
 		if(finfo->cal_map_ver[0] != 'V') {
-			pr_info("Camera: Cal Map version read fail or there's no available data.\n");
+			pr_no_info("Camera: Cal Map version read fail or there's no available data.\n");
 			crc32_check_factory_front = false;
 			goto exit;
 		}
 
-		pr_info("Camera: OTPROM Cal map_version = %c%c%c%c\n", finfo->cal_map_ver[0],
+		pr_no_info("Camera: OTPROM Cal map_version = %c%c%c%c\n", finfo->cal_map_ver[0],
 				finfo->cal_map_ver[1], finfo->cal_map_ver[2], finfo->cal_map_ver[3]);
 
 		/* debug info dump */
-		pr_info("++++ OTPROM data info\n");
-		pr_info(" Header info\n");
-		pr_info(" Module info : %s\n", finfo->header_ver);
-		pr_info(" ID : %c\n", finfo->header_ver[FW_CORE_VER]);
-		pr_info(" Pixel num : %c%c\n", finfo->header_ver[FW_PIXEL_SIZE], finfo->header_ver[FW_PIXEL_SIZE+1]);
-		pr_info(" ISP ID : %c\n", finfo->header_ver[FW_ISP_COMPANY]);
-		pr_info(" Sensor Maker : %c\n", finfo->header_ver[FW_SENSOR_MAKER]);
-		pr_info(" Year : %c\n", finfo->header_ver[FW_PUB_YEAR]);
-		pr_info(" Month : %c\n", finfo->header_ver[FW_PUB_MON]);
-		pr_info(" Release num : %c%c\n", finfo->header_ver[FW_PUB_NUM], finfo->header_ver[FW_PUB_NUM+1]);
-		pr_info(" Manufacturer ID : %c\n", finfo->header_ver[FW_MODULE_COMPANY]);
-		pr_info(" Module ver : %c\n", finfo->header_ver[FW_VERSION_INFO]);
-		pr_info("---- OTPROM data info\n");
+		pr_no_info("++++ OTPROM data info\n");
+		pr_no_info(" Header info\n");
+		pr_no_info(" Module info : %s\n", finfo->header_ver);
+		pr_no_info(" ID : %c\n", finfo->header_ver[FW_CORE_VER]);
+		pr_no_info(" Pixel num : %c%c\n", finfo->header_ver[FW_PIXEL_SIZE], finfo->header_ver[FW_PIXEL_SIZE+1]);
+		pr_no_info(" ISP ID : %c\n", finfo->header_ver[FW_ISP_COMPANY]);
+		pr_no_info(" Sensor Maker : %c\n", finfo->header_ver[FW_SENSOR_MAKER]);
+		pr_no_info(" Year : %c\n", finfo->header_ver[FW_PUB_YEAR]);
+		pr_no_info(" Month : %c\n", finfo->header_ver[FW_PUB_MON]);
+		pr_no_info(" Release num : %c%c\n", finfo->header_ver[FW_PUB_NUM], finfo->header_ver[FW_PUB_NUM+1]);
+		pr_no_info(" Manufacturer ID : %c\n", finfo->header_ver[FW_MODULE_COMPANY]);
+		pr_no_info(" Module ver : %c\n", finfo->header_ver[FW_VERSION_INFO]);
+		pr_no_info("---- OTPROM data info\n");
 
 		/* CRC check */
 #if defined(CONFIG_CAMERA_OTPROM_SUPPORT_FRONT)
@@ -2619,20 +2619,20 @@ crc_retry:
 		set_fs(KERNEL_DS);
 		key_fp = filp_open("/data/media/0/1q2w3e4r.key", O_RDONLY, 0);
 		if (IS_ERR(key_fp)) {
-			pr_info("KEY does not exist.\n");
+			pr_no_info("KEY does not exist.\n");
 			key_fp = NULL;
 			goto key_err;
 		} else {
 			dump_fp = filp_open("/data/media/0/dump", O_RDONLY, 0);
 			if (IS_ERR(dump_fp)) {
-				pr_info("dump folder does not exist.\n");
+				pr_no_info("dump folder does not exist.\n");
 				dump_fp = NULL;
 				goto key_err;
 			} else {
-				pr_info("dump folder exist, Dump OTPROM cal data.\n");
+				pr_no_info("dump folder exist, Dump OTPROM cal data.\n");
 				if (write_data_to_file("/data/media/0/dump/otprom_cal.bin", buf,
 										OTP_USED_CAL_SIZE, &pos) < 0) {
-					pr_info("Failed to dump cal data.\n");
+					pr_no_info("Failed to dump cal data.\n");
 					goto dump_err;
 				}
 			}
@@ -2649,7 +2649,7 @@ crc_retry:
 	exit:
 		fimc_is_i2c_config(client, false);
 
-		pr_info("fimc_is_sec_readcal_otprom X\n");
+		pr_no_info("fimc_is_sec_readcal_otprom X\n");
 
 		return ret;
 	}

@@ -671,9 +671,9 @@ static int fimc_is_set_cmd(struct fimc_is_interface *itf,
 
 	lock_pid = atomic_read(&itf->lock_pid);
 	if (lock_pid && (lock_pid != current->pid)) {
-		pr_info("itf LOCK, %d(%d) wait\n", current->pid, msg->command);
+		pr_no_info("itf LOCK, %d(%d) wait\n", current->pid, msg->command);
 		wait_lock = wait_lockstate(itf);
-		pr_info("itf UNLOCK, %d(%d) go\n", current->pid, msg->command);
+		pr_no_info("itf UNLOCK, %d(%d) go\n", current->pid, msg->command);
 		if (wait_lock) {
 			err("wait_lockstate is fail, lock reset");
 			atomic_set(&itf->lock_pid, 0);
@@ -2615,7 +2615,7 @@ static void interface_timer(unsigned long data)
 	BUG_ON(!itf->core);
 
 	if (!test_bit(IS_IF_STATE_OPEN, &itf->state)) {
-		pr_info("shot timer is terminated\n");
+		pr_no_info("shot timer is terminated\n");
 		return;
 	}
 

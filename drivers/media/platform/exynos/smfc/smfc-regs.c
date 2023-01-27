@@ -512,8 +512,8 @@ void smfc_dump_registers(struct smfc_dev *smfc)
 	u32 val;
 
 	/* Register dump based on Istor */
-	pr_info("DUMPING REGISTERS OF H/W JPEG...\n");
-	pr_info("------------------------------------------------\n");
+	pr_no_info("DUMPING REGISTERS OF H/W JPEG...\n");
+	pr_no_info("------------------------------------------------\n");
 	/* JPEG_CNTL ~ FIFO_STATUS */
 	print_hex_dump(KERN_INFO, "", DUMP_PREFIX_ADDRESS, 16, 4,
 			smfc->reg + 0x000, 0xD4, false);
@@ -531,7 +531,7 @@ void smfc_dump_registers(struct smfc_dev *smfc)
 	if ((val == 512) &&
 		!(__raw_readl(smfc->reg + REG_MAIN_TABLE_SELECT)
 						& SMFC_TABLE_READ_OK_MASK)) {
-		pr_info("** FAILED TO READ HUFFMAN and QUANTIZER TABLES **\n");
+		pr_no_info("** FAILED TO READ HUFFMAN and QUANTIZER TABLES **\n");
 		return;
 	}
 

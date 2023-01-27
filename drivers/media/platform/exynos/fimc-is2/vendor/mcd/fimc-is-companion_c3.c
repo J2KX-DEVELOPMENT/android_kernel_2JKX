@@ -1394,7 +1394,7 @@ int fimc_is_comp_loadcal(void *core_data, int position)
 	}
 
 	if (!core->spi1.device) {
-		pr_debug("spi1 device is not available");
+		pr_no_debug("spi1 device is not available");
 		goto p_err;
 	}
 
@@ -1405,7 +1405,7 @@ int fimc_is_comp_loadcal(void *core_data, int position)
 
 	if ((!crc32_c1_check && (position == SENSOR_POSITION_REAR))
 	|| (!crc32_c1_check_front && (position == SENSOR_POSITION_FRONT))) {
-		pr_debug("CRC check fail.Do not apply cal data.");
+		pr_no_debug("CRC check fail.Do not apply cal data.");
 		return 0;
 	}
 
@@ -1879,7 +1879,7 @@ int fimc_is_comp_loadsetf(void *core_data)
 	struct fimc_is_from_info *sysfs_finfo;
 
 	if (!core->spi1.device) {
-		pr_debug("spi1 device is not available");
+		pr_no_debug("spi1 device is not available");
 		goto p_err;
 	}
 

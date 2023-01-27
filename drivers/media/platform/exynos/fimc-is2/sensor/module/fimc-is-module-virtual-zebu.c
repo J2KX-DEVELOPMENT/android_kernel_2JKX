@@ -65,24 +65,24 @@ static struct fimc_is_vci vci_virtual_zebu[] = {
 static int sensor_virtual_zebu_open(struct v4l2_subdev *sd,
 	struct v4l2_subdev_fh *fh)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 	return 0;
 }
 static int sensor_virtual_zebu_close(struct v4l2_subdev *sd,
 	struct v4l2_subdev_fh *fh)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 	return 0;
 }
 static int sensor_virtual_zebu_registered(struct v4l2_subdev *sd)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 	return 0;
 }
 
 static void sensor_virtual_zebu_unregistered(struct v4l2_subdev *sd)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 }
 
 static const struct v4l2_subdev_internal_ops internal_ops = {
@@ -106,7 +106,7 @@ static int sensor_virtual_zebu_s_stream(struct v4l2_subdev *subdev, int enable)
 	int ret = 0;
 	struct fimc_is_module_enum *sensor;
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	sensor = (struct fimc_is_module_enum *)v4l2_get_subdevdata(subdev);
 	if (!sensor) {
@@ -144,7 +144,7 @@ static int sensor_virtual_zebu_s_param(struct v4l2_subdev *subdev, struct v4l2_s
 	BUG_ON(!subdev);
 	BUG_ON(!param);
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	cp = &param->parm.capture;
 	tpf = &cp->timeperframe;

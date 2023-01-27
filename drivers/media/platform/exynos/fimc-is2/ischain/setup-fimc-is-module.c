@@ -210,7 +210,7 @@ static int exynos_fimc_is_module_pin_debug(struct device *dev,
 	case PIN_INPUT:
 	case PIN_RESET:
 		if (gpio_is_valid(pin))
-			pr_info("[@] pin %s : %d\n", name, gpio_get_value(pin));
+			pr_no_info("[@] pin %s : %d\n", name, gpio_get_value(pin));
 		break;
 	case PIN_FUNCTION:
 #if defined(CONFIG_SOC_EXYNOS7420) || defined(CONFIG_SOC_EXYNOS7890)
@@ -223,13 +223,13 @@ static int exynos_fimc_is_module_pin_debug(struct device *dev,
 
 			index = 0x60; /* GPC2 */
 			pin = base + index;
-			pr_info("[@] CON[0x%X] : 0x%X\n", index, readl((void *)pin));
-			pr_info("[@] DAT[0x%X] : 0x%X\n", index, readl((void *)(pin + 4)));
+			pr_no_info("[@] CON[0x%X] : 0x%X\n", index, readl((void *)pin));
+			pr_no_info("[@] DAT[0x%X] : 0x%X\n", index, readl((void *)(pin + 4)));
 
 			index = 0x160; /* GPD7 */
 			pin = base + index;
-			pr_info("[@] CON[0x%X] : 0x%X\n", index, readl((void *)pin));
-			pr_info("[@] DAT[0x%X] : 0x%X\n", index, readl((void *)(pin + 4)));
+			pr_no_info("[@] CON[0x%X] : 0x%X\n", index, readl((void *)pin));
+			pr_no_info("[@] DAT[0x%X] : 0x%X\n", index, readl((void *)(pin + 4)));
 
 			iounmap((void *)base);
 		}
@@ -253,7 +253,7 @@ static int exynos_fimc_is_module_pin_debug(struct device *dev,
 
 			regulator_put(regulator);
 
-			pr_info("[@] %s LDO : %d\n", name, voltage);
+			pr_no_info("[@] %s LDO : %d\n", name, voltage);
 		}
 		break;
 	default:

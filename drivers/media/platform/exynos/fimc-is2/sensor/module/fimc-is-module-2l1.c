@@ -85,7 +85,7 @@ static int sensor_2l1_init(struct v4l2_subdev *subdev, u32 val)
 
 	module = (struct fimc_is_module_enum *)v4l2_get_subdevdata(subdev);
 
-	pr_info("[MOD:D:%d] %s(%d)\n", module->sensor_id, __func__, val);
+	pr_no_info("[MOD:D:%d] %s(%d)\n", module->sensor_id, __func__, val);
 
 	return ret;
 }

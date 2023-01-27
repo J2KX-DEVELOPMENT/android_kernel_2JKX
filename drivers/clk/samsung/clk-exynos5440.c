@@ -125,7 +125,7 @@ static void __init exynos5440_clk_init(struct device_node *np)
 
 	samsung_clk_of_add_provider(np, ctx);
 
-	pr_info("Exynos5440: arm_clk = %ldHz\n", _get_rate("arm_clk"));
-	pr_info("exynos5440 clock initialization complete\n");
+	pr_no_info("Exynos5440: arm_clk = %ldHz\n", _get_rate("arm_clk"));
+	pr_no_info("exynos5440 clock initialization complete\n");
 }
 CLK_OF_DECLARE(exynos5440_clk, "samsung,exynos5440-clock", exynos5440_clk_init);

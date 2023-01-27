@@ -232,24 +232,24 @@ static struct fimc_is_sensor_cfg config_6d1[] = {
 static int sensor_6d1_open(struct v4l2_subdev *sd,
 	struct v4l2_subdev_fh *fh)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 	return 0;
 }
 static int sensor_6d1_close(struct v4l2_subdev *sd,
 	struct v4l2_subdev_fh *fh)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 	return 0;
 }
 static int sensor_6d1_registered(struct v4l2_subdev *sd)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 	return 0;
 }
 
 static void sensor_6d1_unregistered(struct v4l2_subdev *sd)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 }
 
 static const struct v4l2_subdev_internal_ops internal_ops = {
@@ -275,7 +275,7 @@ static int sensor_6d1_init(struct v4l2_subdev *subdev, u32 val)
 	module_6d1->system_clock = 146 * 1000 * 1000;
 	module_6d1->line_length_pck = 146 * 1000 * 1000;
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	/* sensor init */
 	for (i = 0; i < ARRAY_SIZE(setfile_vision_6d1); i++) {
@@ -283,7 +283,7 @@ static int sensor_6d1_init(struct v4l2_subdev *subdev, u32 val)
 				(u8)setfile_vision_6d1[i][1]);
 	}
 
-	pr_info("[MOD:D:%d] %s(%d)\n", module->id, __func__, val);
+	pr_no_info("[MOD:D:%d] %s(%d)\n", module->id, __func__, val);
 
 	return ret;
 }
@@ -297,7 +297,7 @@ static int sensor_6d1_s_stream(struct v4l2_subdev *subdev, int enable)
 	int ret = 0;
 	struct fimc_is_module_enum *sensor;
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	sensor = (struct fimc_is_module_enum *)v4l2_get_subdevdata(subdev);
 	if (!sensor) {
@@ -335,7 +335,7 @@ static int sensor_6d1_s_param(struct v4l2_subdev *subdev, struct v4l2_streamparm
 	BUG_ON(!subdev);
 	BUG_ON(!param);
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	cp = &param->parm.capture;
 	tpf = &cp->timeperframe;
@@ -469,7 +469,7 @@ int sensor_6d1_s_duration(struct v4l2_subdev *subdev, u64 duration)
 
 	BUG_ON(!subdev);
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	sensor = (struct fimc_is_module_enum *)v4l2_get_subdevdata(subdev);
 	if (unlikely(!sensor)) {
@@ -519,7 +519,7 @@ int sensor_6d1_s_exposure(struct v4l2_subdev *subdev, u64 exposure)
 
 	BUG_ON(!subdev);
 
-	pr_info("%s(%d)\n", __func__, (u32)exposure);
+	pr_no_info("%s(%d)\n", __func__, (u32)exposure);
 
 	sensor = (struct fimc_is_module_enum *)v4l2_get_subdevdata(subdev);
 	if (unlikely(!sensor)) {
@@ -559,7 +559,7 @@ int sensor_6d1_s_again(struct v4l2_subdev *subdev, u64 sensitivity)
 {
 	int ret = 0;
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return ret;
 }

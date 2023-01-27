@@ -166,7 +166,7 @@ static int fimc_is_fan53555_probe(struct i2c_client *client,
 
 	BUG_ON(!fimc_is_dev);
 
-	pr_info("%s start\n",__func__);
+	pr_no_info("%s start\n",__func__);
 
 	core = (struct fimc_is_core *)dev_get_drvdata(fimc_is_dev);
 	if (!core) {
@@ -207,7 +207,7 @@ static int fimc_is_fan53555_probe(struct i2c_client *client,
 	}
 
 	if (regulator_is_enabled(regulator)) {
-		pr_info("%s regulator is already enabled\n", power_name);
+		pr_no_info("%s regulator is already enabled\n", power_name);
 	} else {
 		ret = regulator_enable(regulator);
 		if (unlikely(ret)) {
@@ -246,7 +246,7 @@ static int fimc_is_fan53555_probe(struct i2c_client *client,
 	gpio_direction_output(gpio_comp_en,0);
 	gpio_free(gpio_comp_en);
 
-	pr_info(" %s end\n",__func__);
+	pr_no_info(" %s end\n",__func__);
 
 	return 0;
 

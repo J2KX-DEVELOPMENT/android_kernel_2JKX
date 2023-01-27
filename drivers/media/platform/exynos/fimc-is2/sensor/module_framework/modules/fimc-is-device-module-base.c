@@ -184,7 +184,7 @@ int sensor_module_init(struct v4l2_subdev *subdev, u32 val)
 		}
 	}
 
-	pr_info("[MOD:D:%d] %s(%d)\n", module->sensor_id, __func__, val);
+	pr_no_info("[MOD:D:%d] %s(%d)\n", module->sensor_id, __func__, val);
 
 p_err:
 	return ret;
@@ -555,7 +555,7 @@ int sensor_module_g_ext_ctrls(struct v4l2_subdev *subdev, struct v4l2_ext_contro
 	module = (struct fimc_is_module_enum *)v4l2_get_subdevdata(subdev);
 
 	/* TODO */
-	pr_info("[MOD:D:%d] %s Not implemented\n", module->sensor_id, __func__);
+	pr_no_info("[MOD:D:%d] %s Not implemented\n", module->sensor_id, __func__);
 
 	return ret;
 }
@@ -570,7 +570,7 @@ int sensor_module_s_ext_ctrls(struct v4l2_subdev *subdev, struct v4l2_ext_contro
 	module = (struct fimc_is_module_enum *)v4l2_get_subdevdata(subdev);
 
 	/* TODO */
-	pr_info("[MOD:D:%d] %s Not implemented\n", module->sensor_id, __func__);
+	pr_no_info("[MOD:D:%d] %s Not implemented\n", module->sensor_id, __func__);
 
 	return ret;
 }

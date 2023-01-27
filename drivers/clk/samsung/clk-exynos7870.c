@@ -327,6 +327,6 @@ void __init exynos7870_clk_init(struct device_node *np)
 
 	clk_register_fixed_factor(NULL, "pwm-clock", "gate_peri_sclk_pwm_motor", CLK_SET_RATE_PARENT, 1, 1);
 
-	pr_info("EXYNOS7870: Clock setup completed\n");
+	pr_no_info("EXYNOS7870: Clock setup completed\n");
 }
 CLK_OF_DECLARE(exynos7870_clks, "samsung,exynos7870-clock", exynos7870_clk_init);

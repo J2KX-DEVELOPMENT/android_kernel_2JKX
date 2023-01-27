@@ -3046,7 +3046,7 @@ static int s5p_mfc_probe(struct platform_device *pdev)
 
 	vb2_ion_attach_iommu(dev->alloc_ctx);
 
-	pr_debug("%s--\n", __func__);
+	pr_no_debug("%s--\n", __func__);
 	return 0;
 
 /* Deinit MFC if probe had failed */

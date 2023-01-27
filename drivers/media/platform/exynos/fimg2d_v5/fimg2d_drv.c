@@ -989,7 +989,7 @@ static char banner[] __initdata =
 
 static int __init fimg2d_register(void)
 {
-	pr_info("%s", banner);
+	pr_no_info("%s", banner);
 	return platform_driver_register(&fimg2d_driver);
 }
 

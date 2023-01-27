@@ -124,7 +124,7 @@ static int sensor_4e6_init(struct v4l2_subdev *subdev, u32 val)
 	module_4e6->system_clock = 146 * 1000 * 1000;
 	module_4e6->line_length_pck = 146 * 1000 * 1000;
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 	/* sensor init */
 	fimc_is_sensor_write8(client, 0x4200, 0x01);
 	fimc_is_sensor_write8(client, 0x4201, 0x24);
@@ -261,7 +261,7 @@ static int sensor_4e6_init(struct v4l2_subdev *subdev, u32 val)
 	fimc_is_sensor_write8(client, 0x746F, 0x01);
 	fimc_is_sensor_write8(client, 0x4100, 0x01);
 
-	pr_info("[MOD:D:%d] %s(%d)\n", module->sensor_id, __func__, val);
+	pr_no_info("[MOD:D:%d] %s(%d)\n", module->sensor_id, __func__, val);
 
 	return ret;
 }

@@ -34,7 +34,7 @@ extern int sc_log_level;
 #define sc_dbg(fmt, args...)						\
 	do {								\
 		if (sc_log_level)					\
-			pr_debug("[%s:%d] "				\
+			pr_no_debug("[%s:%d] "				\
 			fmt, __func__, __LINE__, ##args);		\
 	} while (0)
 
