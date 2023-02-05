@@ -198,7 +198,7 @@
 
 	i2c@138D0000 {
 		samsung,i2c-sda-delay = <100>;
-		samsung,i2c-max-bus-freq = <400000>;
+		samsung,i2c-max-bus-freq = <600000>;
 		status = "okay";
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -276,7 +276,7 @@
 		resolution = <540 960>;
 		size = <68 121>;
 		ddi_type = <0>;
-		timing,refresh = <75>;
+		timing,refresh = <120>;
 
 		/* dsim H porch : hbp, hfp, hsa */
 		timing,dsim_h-porch = <35 35 28>;

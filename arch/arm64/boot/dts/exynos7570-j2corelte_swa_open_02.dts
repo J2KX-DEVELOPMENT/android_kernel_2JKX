@@ -186,7 +186,7 @@
 
 	i2c@138D0000 {
 		samsung,i2c-sda-delay = <100>;
-		samsung,i2c-max-bus-freq = <400000>;
+		samsung,i2c-max-bus-freq = <600000>;
 		status = "okay";
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -268,7 +268,7 @@
 		status = "okay";
 		#address-cells = <1>;
 		#size-cells = <0>;
-		samsung,i2c-max-bus-freq = <400000>;
+		samsung,i2c-max-bus-freq = <600000>;
 		touchscreen@4b {
 			compatible = "synaptics,rmi4";
 			reg = <0x4b>;

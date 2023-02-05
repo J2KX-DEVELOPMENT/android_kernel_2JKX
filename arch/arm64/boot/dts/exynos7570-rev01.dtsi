@@ -268,7 +268,7 @@
 		use_delay_time = "false";
 
 		/* <initial_freq, default_qos, suspend_freq, min, max, reboot_freq> */
-		freq_info = <467000 415000 467000 415000 467000 415000>;
+		freq_info = <527000 415000 527000 415000 527000 415000>;
 
 		/* PM QoS */
 		boot_qos_timeout = <40>;
@@ -1032,7 +1032,7 @@
 				thrd_mb = <0>;
 				freq_mfc = <0>;
 				freq_int = <415000>;
-				freq_mif = <415000>;
+				freq_mif = <515000>;
 				freq_cpu = <0>;
 				freq_kfc = <0>;
 				has_enc_table = <0>;
@@ -1041,7 +1041,7 @@
 				thrd_mb = <244800>;
 				freq_mfc = <0>;
 				freq_int = <415000>;
-				freq_mif = <666000>;
+				freq_mif = <766000>;
 				freq_cpu = <0>;
 				freq_kfc = <0>;
 				has_enc_table = <0>;
