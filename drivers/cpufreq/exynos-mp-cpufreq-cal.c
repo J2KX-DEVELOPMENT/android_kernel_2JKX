@@ -27,8 +27,8 @@
 
 #include "../../drivers/soc/samsung/pwrcal/pwrcal.h"
 
-#if defined(CONFIG_SOC_EXYNOS8890)
-#include "../../drivers/soc/samsung/pwrcal/S5E8890/S5E8890-vclk.h"
+#if defined(CONFIG_SOC_EXYNOS7570)
+#include "../../drivers/soc/samsung/pwrcal/S5E7570/S5E7570-vclk.h"
 #elif defined(CONFIG_SOC_EXYNOS7870)
 #include "../../drivers/soc/samsung/pwrcal/S5E7870/S5E7870-vclk.h"
 #endif

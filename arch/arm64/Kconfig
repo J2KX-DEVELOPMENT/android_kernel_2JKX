@@ -881,7 +881,7 @@ config CMDLINE
 
 config CMDLINE_BOOTLOADER_FILTER
 	string "Filter bootloader kernel arguments"
-	default ""
+	default "DynSysLog="
 	help
 	  Provide a set of filters to remove specific command-line options
 	  at run time. If option has value you should add '=' at the end

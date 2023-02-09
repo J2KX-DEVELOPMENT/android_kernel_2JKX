@@ -46,8 +46,8 @@
 #define KBASE_PM_TIME_SHIFT			8
 
 /* MALI_SEC_INTEGRATION */
-#define MEM_FREE_LIMITS 16384
-#define MEM_FREE_DEFAULT 16384
+#define MEM_FREE_LIMITS 32768
+#define MEM_FREE_DEFAULT 32768
 
 uintptr_t gpu_get_callbacks(void);
 int gpu_vendor_dispatch(struct kbase_context *kctx, u32 flags);

@@ -18,17 +18,10 @@ extern unsigned int dfsdisp_rate_table[];
 extern unsigned int dfscam_rate_table[];
 
 static struct dfs_switch dfscpucl0_switches[] = {
-#ifdef CONFIG_SOC_EXYNOS7570_DUAL
-	{840000,	0,	0},
-	{840000 / 2,	0,	1},
-	{840000 / 3,	0,	2},
-	{840000 / 4,	0,	3},
-#else
-	{830000,	0,	0},
-	{830000 / 2,	0,	1},
-	{830000 / 3,	0,	2},
-	{830000 / 4,	0,	3},
-#endif
+	{850000,	0,	0},
+	{850000 / 2,	0,	1},
+	{850000 / 3,	0,	2},
+	{850000 / 4,	0,	3},
 };
 
 static struct dfs_table dfscpucl0_table = {
@@ -396,7 +389,7 @@ DFS(dvfs_g3d) = {
 	.vclk.type	= vclk_group_dfs,
 	.vclk.parent	= VCLK(pxmxdx_top),
 	.vclk.ref_count	= 0,
-	.vclk.vfreq	= 350000,
+	.vclk.vfreq	= 450000,
 	.vclk.name	= "dvfs_g3d",
 	.vclk.ops	= &dfs_ops,
 	.lock		= &dvfs_g3d_lock,

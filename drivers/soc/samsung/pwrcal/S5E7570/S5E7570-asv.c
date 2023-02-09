@@ -366,13 +366,13 @@ notfused:
 
 #ifdef PWRCAL_TARGET_LINUX
 #ifdef CONFIG_SOC_EXYNOS7570_DUAL
-	asv_dvfs_cpucl0->table->max_freq = 1014000;
+	asv_dvfs_cpucl0->table->max_freq = 2002000;
 	asv_dvfs_g3d->table->max_freq = 560000;
 	asv_dvfs_mif->table->max_freq = 676000;
 #else
-	asv_dvfs_cpucl0->table->max_freq = 1378000;
-	asv_dvfs_g3d->table->max_freq = 830000;
-	asv_dvfs_mif->table->max_freq = 830000;
+	asv_dvfs_cpucl0->table->max_freq = 2002000;
+	asv_dvfs_g3d->table->max_freq = 999000;
+	asv_dvfs_mif->table->max_freq = 999000;
 #endif
 #endif
 	return;

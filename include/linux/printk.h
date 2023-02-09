@@ -278,11 +278,11 @@ extern asmlinkage void dump_stack(void) __cold;
 })
 #else
 #define pr_no_notice(fmt, ...) \
-			printk(KERN_NOTICE pr_fmt(fmt), ##__VA_ARGS__)
+	printk(KERN_NOTICE pr_fmt(fmt), ##__VA_ARGS__)
 #define pr_no_info(fmt, ...) \
-			printk(KERN_INFO pr_fmt(fmt), ##__VA_ARGS__)
+	printk(KERN_INFO pr_fmt(fmt), ##__VA_ARGS__)
 #define pr_no_debug(fmt, ...) \
-	printk(KERN_DEBUG KLOG_MODNAME pr_fmt(fmt), ##__VA_ARGS__)
+	printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
 #endif
 
 #ifdef CONFIG_SEC_DEBUG_AUTO_SUMMARY
