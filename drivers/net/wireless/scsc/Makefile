@@ -9,6 +9,7 @@
 
 # Needed since this subdir is symlinked in the main Kernel tree
 # without this our samsung subdir is NOT cleaned.
+KBUILD_CFLAGS += -Wno-uninitialized
 clean-files := *.o *.ko
 
 obj-$(CONFIG_SCSC_WLAN) += scsc_wlan.o
