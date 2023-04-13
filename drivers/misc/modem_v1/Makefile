@@ -1,4 +1,5 @@
 # Makefile of modem_v1
+KBUILD_CFLAGS += -Wno-logical-not-parentheses
 
 EXTRA_CFLAGS += -Idrivers/misc/modem_v1 \
 		-DCONFIG_OPTION_REGION=\"$(PROJECT_REGION)\"

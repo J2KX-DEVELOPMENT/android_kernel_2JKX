@@ -921,10 +921,6 @@ static void user_ion_free_nolock(struct ion_client *client, struct ion_handle *h
 		WARN(1, "%s: invalid handle passed to free.\n", __func__);
 		return;
 	}
-	if (handle->user_ref_count <= 0) {
-		WARN(1, "%s: User does not have access!\n", __func__);
-		return;
-	}
 	user_ion_handle_put_nolock(handle);
 }
 
