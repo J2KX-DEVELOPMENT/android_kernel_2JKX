@@ -249,7 +249,7 @@
 		use_pd_off = "false";
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
-		volt_info = <25000 1150000 0 1200000>;
+		volt_info = <25000 1060000 0 1180000>;
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -285,7 +285,7 @@
 		use_pd_off = "false";
 		reg_name = "BUCK1";
 		/* <cold, cold_limit, min_cold, max_uV> */
-		volt_info = <25000 1150000 0 1200000>;
+		volt_info = <25000 1060000 0 1180000>;
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -321,7 +321,7 @@
 		use_pd_off = "false";
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
-		volt_info = <25000 1150000 0 1200000>;
+		volt_info = <25000 1060000 0 1180000>;
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -357,7 +357,7 @@
 		use_pd_off = "true";
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
-		volt_info = <25000 1150000 0 1200000>;
+		volt_info = <25000 1060000 0 1180000>;
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -1008,7 +1008,7 @@
 		samsung,power-domain = <&pd_mfcmscl>;
 		status = "ok";
 		ip_ver = <17>;
-		clock_rate = <515000000>;
+		clock_rate = <555000000>;
 		min_rate = <100000>;
 		num_qos_steps = <1>;
 		mfc_qos_table {
@@ -1016,7 +1016,7 @@
 				thrd_mb = <0>;
 				freq_mfc = <0>;
 				freq_int = <415000>;
-				freq_mif = <515000>;
+				freq_mif = <555000>;
 				freq_cpu = <0>;
 				freq_kfc = <0>;
 				has_enc_table = <0>;

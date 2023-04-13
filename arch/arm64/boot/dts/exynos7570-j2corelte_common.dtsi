@@ -93,7 +93,7 @@
 		card-detect-delay = <200>;
 		data-timeout = <200>;
 		hto-timeout = <80>;
-		clock-frequency = <1150000000>;
+		clock-frequency = <1250000000>;
 		samsung,dw-mshc-ciu-div = <3>;
 		samsung,dw-mshc-txdt-crc-timer-fastlimit = <0x34>;
 		samsung,dw-mshc-txdt-crc-timer-initval = <0x38>;
@@ -149,7 +149,7 @@
 		card-detect-delay = <200>;
 		data-timeout = <200>;
 		hto-timeout = <80>;
-		clock-frequency = <950000000>;
+		clock-frequency = <1050000000>;
 		samsung,dw-mshc-ciu-div = <3>;
 		samsung,dw-mshc-sdr-timing = <3 0 2 0>;
 		samsung,dw-mshc-ddr-timing = <3 0 2 1>;
@@ -703,7 +703,7 @@
 
 	hsi2c_4: hsi2c@138B0000 {
 		status = "okay";
-		clock-frequency = <600000>;
+		clock-frequency = <800000>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&hs_i2c4_bus>;
 		sec-nfc@27 {
@@ -981,7 +981,7 @@
 	hsi2c_2: hsi2c@138A0000 {
 		 gpios = <&gpf0 0 0 &gpf0 1 0>;
 		 status = "okay";
-		 clock-frequency = <600000>;
+		 clock-frequency = <800000>;
 
 		 pinctrl-names = "default", "on_i2c";
 		 pinctrl-0 = <&hs_i2c2_bus>;
@@ -1007,7 +1007,7 @@
 	hsi2c_3: hsi2c@138C0000 {
 		gpios = <&gpf0 2 0 &gpf0 3 0>;
 		status = "okay";
-		clock-frequency = <600000>;
+		clock-frequency = <800000>;
 
 		pinctrl-names = "default", "on_i2c";
 		pinctrl-0 = <&hs_i2c3_bus>;
