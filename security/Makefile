@@ -1,6 +1,7 @@
 #
 # Makefile for the kernel security code
 #
+KBUILD_CFLAGS += -Wno-maybe-uninitialized -Wno-array-bounds
 
 obj-$(CONFIG_KEYS)			+= keys/
 subdir-$(CONFIG_SECURITY_SELINUX)	+= selinux

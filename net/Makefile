@@ -4,7 +4,7 @@
 # 2 Sep 2000, Christoph Hellwig <hch@infradead.org>
 # Rewritten to use lists instead of if-statements.
 #
-
+KBUILD_CFLAGS += -Wno-maybe-uninitialized -Wno-array-bounds
 obj-y	:= nonet.o
 
 obj-$(CONFIG_NET)		:= socket.o core/
