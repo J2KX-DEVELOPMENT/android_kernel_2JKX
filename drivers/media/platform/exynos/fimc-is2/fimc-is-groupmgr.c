@@ -591,8 +591,8 @@ void fimc_is_group_unlock(struct fimc_is_group *group, unsigned long flags,
 		group = group->child;
 	}
 
-	if (leader_lock)
-		framemgr_x_barrier_irqr(ldr_framemgr, FMGR_IDX_20, flags);
+	if (leader_lock){
+		framemgr_x_barrier_irqr(ldr_framemgr, FMGR_IDX_20, flags);}
 }
 
 void fimc_is_group_subdev_cancel(struct fimc_is_group *group,
