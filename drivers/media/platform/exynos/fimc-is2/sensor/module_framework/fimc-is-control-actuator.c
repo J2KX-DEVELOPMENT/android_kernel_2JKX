@@ -77,7 +77,7 @@ p_err:
 
 int fimc_is_actuator_ctl_search_position(u32 position,
 		u32 *position_table,
-		enum fimc_is_actuator_direction direction,
+		u32 direction,
 		u32 *searched_pos)
 {
 	int middle = 0, left = 0;
