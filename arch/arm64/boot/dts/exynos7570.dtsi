@@ -249,7 +249,11 @@
 		use_pd_off = "false";
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
+<<<<<<< HEAD
 		volt_info = <25000 1250000 0 1300000>;
+=======
+		volt_info = <25000 1060000 0 1000000>;
+>>>>>>> 4dc0e07e (Misc kernel improvements)
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -285,7 +289,11 @@
 		use_pd_off = "false";
 		reg_name = "BUCK1";
 		/* <cold, cold_limit, min_cold, max_uV> */
+<<<<<<< HEAD
 		volt_info = <25000 1250000 0 1300000>;
+=======
+		volt_info = <25000 1060000 0 1000000>;
+>>>>>>> 4dc0e07e (Misc kernel improvements)
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -321,7 +329,11 @@
 		use_pd_off = "false";
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
+<<<<<<< HEAD
 		volt_info = <25000 1250000 0 1300000>;
+=======
+		volt_info = <25000 1060000 0 1000000>;
+>>>>>>> 4dc0e07e (Misc kernel improvements)
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -357,7 +369,11 @@
 		use_pd_off = "true";
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
+<<<<<<< HEAD
 		volt_info = <25000 1250000 0 1300000>;
+=======
+		volt_info = <25000 1060000 0 1000000>;
+>>>>>>> 4dc0e07e (Misc kernel improvements)
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";

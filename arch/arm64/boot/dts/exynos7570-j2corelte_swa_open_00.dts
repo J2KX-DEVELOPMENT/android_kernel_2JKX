@@ -106,8 +106,8 @@
 	tsp_avdd {
 		compatible = "regulator-fixed";
 		regulator-name = "tsp_avdd";
-		regulator-min-microvolt = <3300000>;
-		regulator-max-microvolt = <3300000>;
+		regulator-min-microvolt = <3200000>;
+		regulator-max-microvolt = <3200000>;
 		gpio = <&gpc2 3 0>;
 		regulator-boot-on;
 		enable-active-high;
