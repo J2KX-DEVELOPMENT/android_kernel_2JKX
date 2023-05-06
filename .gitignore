@@ -130,3 +130,5 @@ build.sh
 clang
 gcc-linaro-13.0.0-2022.10-x86_64_aarch64-linux-gnu.tar.xz
 gcc-linaro-13.0.0-2022.10-x86_64_aarch64-linux-gnu
+gcc-linaro-5.5.0-2017.10-x86_64_aarch64-linux-gnu.tar.xz
+gcc-linaro-5.5.0-2017.10-x86_64_aarch64-linux-gnu
