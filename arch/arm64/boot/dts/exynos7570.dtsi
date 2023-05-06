@@ -249,7 +249,7 @@
 		use_pd_off = "false";
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
-		volt_info = <25000 1060000 0 1180000>;
+		volt_info = <25000 1060000 0 1000000>;
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -285,7 +285,7 @@
 		use_pd_off = "false";
 		reg_name = "BUCK1";
 		/* <cold, cold_limit, min_cold, max_uV> */
-		volt_info = <25000 1060000 0 1180000>;
+		volt_info = <25000 1060000 0 1000000>;
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -321,7 +321,7 @@
 		use_pd_off = "false";
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
-		volt_info = <25000 1060000 0 1180000>;
+		volt_info = <25000 1060000 0 1000000>;
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -357,7 +357,7 @@
 		use_pd_off = "true";
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
-		volt_info = <25000 1060000 0 1180000>;
+		volt_info = <25000 1060000 0 1000000>;
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
