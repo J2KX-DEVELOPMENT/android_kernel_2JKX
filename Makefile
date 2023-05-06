@@ -657,10 +657,10 @@ include $(srctree)/arch/$(SRCARCH)/Makefile
 KBUILD_CFLAGS	+= $(call cc-option,-fno-delete-null-pointer-checks,)
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
-KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)  -mcpu=cortex-a53+crc+crypto -mtune=cortex-a53 -march=armv8-a+crc+crypto --param max-inline-insns-auto=4
+KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)  -mcpu=cortex-a53+crc+crypto -mtune=cortex-a53 -march=armv8-a+crc+crypto --param max-inline-insns-auto=4 -Wno-attribute-alias -Wno-packed-not-aligned -Wno-unused-const-variable -Wno-format-truncation -Wno-address-of-packed-member -Wno-stringop-overread -Wno-address -Wno-array-bounds -Wno-stringop-truncation -Wno-array-compare -Wno-sizeof-pointer-memaccess -Wno-missing-attributes -Wno-builtin-declaration-mismatch -Wno-memset-elt-size -Wno-stringop-overflow -Wno-duplicate-decl-specifier -Wno-misleading-indentation -Wno-attributes -Wno-switch-unreachable -Wno-int-in-bool-context -Wno-restrict -Wno-xor-used-as-pow -Wno-multistatement-macros -Wno-format-overflow -Wno-enum-int-mismatch -Wno-tautological-compare -Wno-sizeof-pointer-div
 else
-KBUILD_CFLAGS	+= -O3  -mcpu=cortex-a53+crc+crypto -mtune=cortex-a53 -march=armv8-a+crc+crypto --param max-inline-insns-auto=4
-KBUILD_CFLAGS += -Wno-maybe-uninitialized -Wno-array-bounds
+KBUILD_CFLAGS	+= -O3  -mcpu=cortex-a53+crc+crypto -mtune=cortex-a53 -march=armv8-a+crc+crypto --param max-inline-insns-auto=4 -Wno-attribute-alias -Wno-packed-not-aligned -Wno-unused-const-variable -Wno-format-truncation
+KBUILD_CFLAGS += -Wno-maybe-uninitialized -Wno-array-bounds -Wno-address-of-packed-member -Wno-stringop-overread -Wno-address -Wno-array-bounds -Wno-stringop-truncation -Wno-array-compare -Wno-sizeof-pointer-memaccess -Wno-missing-attributes -Wno-builtin-declaration-mismatch -Wno-memset-elt-size -Wno-stringop-overflow -Wno-duplicate-decl-specifier -Wno-misleading-indentation -Wno-attributes -Wno-switch-unreachable -Wno-int-in-bool-context -Wno-restrict -Wno-xor-used-as-pow -Wno-multistatement-macros -Wno-format-overflow -Wno-enum-int-mismatch -Wno-tautological-compare -Wno-sizeof-pointer-div
 endif
 
 # Tell gcc to never replace conditional load with a non-conditional one
