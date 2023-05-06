@@ -165,7 +165,7 @@ static int gpu_validate_attrib_data(struct exynos_context *platform)
 	data = gpu_get_attrib_data(attrib, GPU_MAX_CLOCK_LIMIT);
 	platform->gpu_max_clock_limit = data == 0 ? 830 : (u32) data;
 	data = gpu_get_attrib_data(attrib, GPU_MIN_CLOCK);
-	platform->gpu_min_clock = data == 0 ? 350 : (u32) data;
+	platform->gpu_min_clock = data == 0 ? 80 : (u32) data;
 	data = gpu_get_attrib_data(attrib, GPU_DVFS_BL_CONFIG_CLOCK);
 	platform->gpu_dvfs_config_clock = data == 0 ? 350 : (u32) data;
 	data = gpu_get_attrib_data(attrib, GPU_DVFS_START_CLOCK);
