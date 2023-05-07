@@ -254,29 +254,64 @@ extern asmlinkage void dump_stack(void) __cold;
 #ifdef CONFIG_FK_LOG
 #define pr_no_notice(fmt, ...) 				\
 ({							\
-	do {						\
-		if (0)					\
-			printk(fmt, ##__VA_ARGS__);	\
-	} while (0);					\
+	do {} while (0);					\
 	0;						\
 })
 #define pr_no_info(fmt, ...) 				\
 ({							\
-	do {						\
-		if (0)					\
-			printk(fmt, ##__VA_ARGS__);	\
-	} while (0);					\
+	do {} while (0);					\
 	0;						\
 })
 #define pr_no_debug(fmt, ...) 				\
 ({							\
-	do {						\
-		if (0)					\
-			printk(fmt, ##__VA_ARGS__);	\
-	} while (0);					\
+	do {} while (0);					\
+	0;						\
+})
+#define pr_no_emerg(fmt, ...)  				\
+({							\
+	do {} while (0);					\
+	0;						\
+})
+#define pr_no_alert(fmt, ...) 				\
+({							\
+	do {} while (0);					\
+	0;						\
+})
+#define pr_no_crit(fmt, ...) 				\
+({							\
+	do {} while (0);					\
+	0;						\
+})
+#define pr_no_err(fmt, ...) 				\
+({							\
+	do {} while (0);					\
+	0;						\
+})
+#define pr_no_warning(fmt, ...) 				\
+({							\
+	do {} while (0);					\
+	0;						\
+})
+#define pr_no_warn pr_no_warning
+#define pr_no_cont(fmt, ...) 				\
+({							\
+	do {} while (0);					\
 	0;						\
 })
 #else
+#define pr_no_emerg(fmt, ...) \
+	printk(KERN_EMERG pr_fmt(fmt), ##__VA_ARGS__)
+#define pr_no_alert(fmt, ...) \
+	printk(KERN_ALERT pr_fmt(fmt), ##__VA_ARGS__)
+#define pr_no_crit(fmt, ...) \
+	printk(KERN_CRIT pr_fmt(fmt), ##__VA_ARGS__)
+#define pr_no_err(fmt, ...) \
+	printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
+#define pr_no_warning(fmt, ...) \
+	printk(KERN_WARNING pr_fmt(fmt), ##__VA_ARGS__)
+#define pr_no_warn pr_no_warning
+#define pr_no_cont(fmt, ...) \
+	printk(KERN_CONT fmt, ##__VA_ARGS__)
 #define pr_no_notice(fmt, ...) \
 	printk(KERN_NOTICE pr_fmt(fmt), ##__VA_ARGS__)
 #define pr_no_info(fmt, ...) \
