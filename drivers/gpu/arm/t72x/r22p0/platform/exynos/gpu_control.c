@@ -37,6 +37,7 @@
 #include "mali_kbase_platform.h"
 #include "gpu_dvfs_handler.h"
 #include "gpu_control.h"
+#include "Overclock.h"
 
 static struct gpu_control_ops *ctr_ops;
 extern struct regulator *g3d_m_regulator;
@@ -280,7 +281,7 @@ int gpu_control_module_init(struct kbase_device *kbdev)
 
 #ifdef CONFIG_SOC_EXYNOS7570
 	if (platform->gpu_max_clock == 0) {
-		platform->gpu_max_clock = (u32)cal_dfs_get_max_freq(dvfs_g3d) / 1000;
+		platform->gpu_max_clock = MAX_FREQ;
 		GPU_LOG(DVFS_INFO, DUMMY, 0u, 0u, "Board. Max clock limit %d.\n", platform->gpu_max_clock);
 	}
 #endif

@@ -21,6 +21,7 @@
 #include "gpu_ipa.h"
 #include "gpu_control.h"
 #include "gpu_dvfs_handler.h"
+#include "Overclock.h"
 
 #define CREATE_TRACE_POINTS
 #include "mali_power.h"
@@ -63,11 +64,11 @@ static unsigned int gpu_ipa_dvfs_max_allowed_freq(struct kbase_device *kbdev)
 		return 0xffffffff;
 	}
 
-	max_step = gpu_dvfs_get_level(platform->gpu_max_clock);
+	max_step = gpu_dvfs_get_level(MAX_FREQ);
 
 	/* Account for Throttling Lock */
 #ifdef CONFIG_EXYNOS_THERMAL
-	max_thermal_step = gpu_dvfs_get_level(platform->gpu_max_clock);
+	max_thermal_step = gpu_dvfs_get_level(MAX_FREQ);
 #endif /* CONFIG_EXYNOS_THERMAL */
 	if (max_thermal_step <= gpu_dvfs_get_level(platform->gpu_min_clock) && max_thermal_step > max_step)
 		max_step = max_thermal_step;
@@ -154,7 +155,7 @@ int kbase_platform_dvfs_freq_to_power(int freq)
 		power = platform->power;
 		spin_unlock_irqrestore(&platform->gpu_dvfs_spinlock, flags);
 	} else {
-		for (level = gpu_dvfs_get_level(platform->gpu_max_clock); level <= gpu_dvfs_get_level(platform->gpu_min_clock); level++)
+		for (level = gpu_dvfs_get_level(MAX_FREQ); level <= gpu_dvfs_get_level(platform->gpu_min_clock); level++)
 			if (platform->table[level].clock == freq)
 				break;
 
@@ -186,7 +187,7 @@ int kbase_platform_dvfs_power_to_freq(int power)
 		return -1;
 	}
 
-	for (level = gpu_dvfs_get_level(platform->gpu_min_clock); level >= gpu_dvfs_get_level(platform->gpu_max_clock); level--) {
+	for (level = gpu_dvfs_get_level(platform->gpu_min_clock); level >= gpu_dvfs_get_level(MAX_FREQ); level--) {
 		vol = platform->table[level].voltage / 10000;
 		freq = platform->table[level].clock;
 		_power = div_u64((u64)platform->ipa_power_coeff_gpu * freq * vol * vol, 1000000);
@@ -267,5 +268,5 @@ int get_ipa_dvfs_max_freq(void)
 		return -ENODEV;
 	}
 
-	return platform->gpu_max_clock;
+	return MAX_FREQ;
 }

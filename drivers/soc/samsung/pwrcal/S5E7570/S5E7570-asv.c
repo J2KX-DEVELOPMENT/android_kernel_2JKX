@@ -652,8 +652,13 @@ static int dvfsg3d_get_asv_table(unsigned int *table)
 
 	max_lv = asv_dvfs_g3d->table->num_of_lv;
 
-	for (lv = 0; lv < max_lv; lv++)
-		table[lv] = get_asv_voltage(cal_asv_dvfs_g3d, lv);
+    /* G3D Voltage Override
+	Define Needed Voltages manually */
+	table[0] = 931200; // 999MHz
+	table[1] = 643200; // 666MHz
+	table[2] = 580000; // 553MHz
+	table[3] = 537500;  // 450MHz
+	table[4] = 500000;  // 80MHz
 
 	return max_lv;
 }

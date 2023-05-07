@@ -23,6 +23,7 @@
 #include "gpu_notifier.h"
 #include "gpu_dvfs_governor.h"
 #include "gpu_control.h"
+#include "Overclock.h"
 
 /* MALI_SEC_SECURE_RENDERING */
 #ifdef CONFIG_MALI_EXYNOS_SECURE_RENDERING
@@ -160,12 +161,9 @@ static int gpu_validate_attrib_data(struct exynos_context *platform)
 
 	platform->attrib = attrib;
 
-	data = gpu_get_attrib_data(attrib, GPU_MAX_CLOCK);
-	platform->gpu_max_clock = data == 0 ? 830 : (u32) data;
-	data = gpu_get_attrib_data(attrib, GPU_MAX_CLOCK_LIMIT);
-	platform->gpu_max_clock_limit = data == 0 ? 830 : (u32) data;
-	data = gpu_get_attrib_data(attrib, GPU_MIN_CLOCK);
-	platform->gpu_min_clock = data == 0 ? 80 : (u32) data;
+	platform->gpu_max_clock = MAX_FREQ;
+	platform->gpu_max_clock_limit = MAX_FREQ;
+	platform->gpu_min_clock = 80;
 	data = gpu_get_attrib_data(attrib, GPU_DVFS_BL_CONFIG_CLOCK);
 	platform->gpu_dvfs_config_clock = data == 0 ? 350 : (u32) data;
 	data = gpu_get_attrib_data(attrib, GPU_DVFS_START_CLOCK);
@@ -356,7 +354,7 @@ static int gpu_context_init(struct kbase_device *kbdev)
 	gpu_validate_attrib_data(platform);
 
 	core_props = &(kbdev->gpu_props.props.core_props);
-	core_props->gpu_freq_khz_max = platform->gpu_max_clock * 1000;
+	core_props->gpu_freq_khz_max = MAX_FREQ * 1000;
 
 	kbdev->vendor_callbacks = (struct kbase_vendor_callbacks *)gpu_get_callbacks();
 

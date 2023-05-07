@@ -20,6 +20,7 @@
 #include <mali_kbase_vinstr.h>
 #include "mali_kbase_platform.h"
 #include "gpu_hwcnt_sec.h"
+#include "Overclock.h"
 
 
 /* MALI_SEC_INTEGRATION */
@@ -249,7 +250,7 @@ void dvfs_hwcnt_utilization_equation(struct kbase_device *kbdev)
 		return;
 	}
 	if ((arith * 10 > ls * 14) && (ls < 40) && (total_util > 1000) && (total_util < 4800) &&
-			(platform->cur_clock >= platform->gpu_max_clock_limit)) {
+			(platform->cur_clock >= MAX_FREQ)) {
 		kbdev->hwcnt.cnt_for_bt_start++;
 		kbdev->hwcnt.cnt_for_bt_stop = 0;
 		if (kbdev->hwcnt.cnt_for_bt_start > platform->hwcnt_up_step) {

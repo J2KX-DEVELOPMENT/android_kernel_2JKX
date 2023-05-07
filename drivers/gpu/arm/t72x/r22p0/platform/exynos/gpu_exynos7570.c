@@ -168,12 +168,12 @@ void *gpu_get_config_attributes(void)
 
 uintptr_t gpu_get_max_freq(void)
 {
-	return gpu_get_attrib_data(gpu_config_attributes, GPU_MAX_CLOCK) * 1000;
+	return gpu_get_attrib_data(gpu_config_attributes, MAX_FREQ) * 1000;
 }
 
 uintptr_t gpu_get_min_freq(void)
 {
-	return gpu_get_attrib_data(gpu_config_attributes, GPU_MIN_CLOCK) * 1000;
+	return gpu_get_attrib_data(gpu_config_attributes, MIN_FREQ) * 1000;
 }
 
 struct clk *vclk_g3d;

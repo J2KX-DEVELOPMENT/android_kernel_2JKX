@@ -9,11 +9,11 @@
  * published by the Free Software FoundatIon.
  */
 
-#define MAX_FREQ 999
+#define MAX_FREQ 900
 #define HIGHSPEED_FREQ  666
 #define HIGHSPEED_LOAD 38
 #define MIN_FREQ 80
-#define MAX_FREQ2 999000
+#define MAX_FREQ2 900000
 #define MIN_FREQ2 80000
 
 /*
