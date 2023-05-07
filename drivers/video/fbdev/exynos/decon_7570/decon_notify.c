@@ -54,7 +54,7 @@ static int decon_notifier_event(struct notifier_block *this,
 		return NOTIFY_DONE;
 	}
 
-	pr_info("%s: %02lx\n", __func__, val);
+	pr_no_info("%s: %02lx\n", __func__, val);
 
 	decon_notifier_call_chain(val, v);
 

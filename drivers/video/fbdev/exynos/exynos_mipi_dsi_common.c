@@ -382,7 +382,7 @@ int exynos_mipi_dsi_rd_data(struct mipi_dsim_device *dsim, unsigned int data_id,
 
 	if (!wait_for_completion_interruptible_timeout(&dsim_rd_comp,
 				MIPI_FIFO_TIMEOUT)) {
-		pr_err("RX done interrupt timeout\n");
+		pr_no_err("RX done interrupt timeout\n");
 		mutex_unlock(&dsim->lock);
 		return 0;
 	}

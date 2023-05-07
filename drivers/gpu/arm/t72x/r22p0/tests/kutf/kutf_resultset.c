@@ -41,7 +41,7 @@ struct kutf_result_set *kutf_create_result_set(void)
 
 	set = kmalloc(sizeof(*set), GFP_KERNEL);
 	if (!set) {
-		pr_err("Failed to allocate resultset");
+		pr_no_err("Failed to allocate resultset");
 		goto fail_alloc;
 	}
 
@@ -68,7 +68,7 @@ int kutf_add_result(struct kutf_context *context,
 
 	new_result = kutf_mempool_alloc(mempool, sizeof(*new_result));
 	if (!new_result) {
-		pr_err("Result allocation failed\n");
+		pr_no_err("Result allocation failed\n");
 		return -ENOMEM;
 	}
 
@@ -90,7 +90,7 @@ int kutf_add_result(struct kutf_context *context,
 void kutf_destroy_result_set(struct kutf_result_set *set)
 {
 	if (!list_empty(&set->results))
-		pr_err("kutf_destroy_result_set: Unread results from test\n");
+		pr_no_err("kutf_destroy_result_set: Unread results from test\n");
 
 	kfree(set);
 }

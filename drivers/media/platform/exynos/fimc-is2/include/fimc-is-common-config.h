@@ -432,7 +432,7 @@
 #define probe_err(fmt, args...)		\
 	pr_err("[@][ERR]%s:%d:" fmt "\n", __func__, __LINE__, ##args)
 #define probe_warn(fmt, args...)	\
-	pr_warning("[@][WRN]" fmt "\n", ##args)
+	pr_no_warning("[@][WRN]" fmt "\n", ##args)
 
 #if defined(DEBUG_LOG_MEMORY)
 #define fimc_is_err(fmt, ...)	printk(KERN_DEBUG fmt, ##__VA_ARGS__)
@@ -442,7 +442,7 @@
 #define fimc_is_cont(fmt, ...)	printk(KERN_DEBUG fmt, ##__VA_ARGS__)
 #else
 #define fimc_is_err(fmt, ...)	pr_err(fmt, ##__VA_ARGS__)
-#define fimc_is_warn(fmt, ...)	pr_warning(fmt, ##__VA_ARGS__)
+#define fimc_is_warn(fmt, ...)	pr_no_warning(fmt, ##__VA_ARGS__)
 #define fimc_is_dbg(fmt, ...)	pr_no_info(fmt, ##__VA_ARGS__)
 #define fimc_is_info(fmt, ...)	pr_no_info(fmt, ##__VA_ARGS__)
 #define fimc_is_cont(fmt, ...)	pr_cont(fmt, ##__VA_ARGS__)

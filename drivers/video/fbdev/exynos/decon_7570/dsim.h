@@ -37,17 +37,17 @@
 
 #define dsim_err(fmt, ...)					\
 	do {							\
-		pr_err(pr_fmt("dsim: " fmt), ##__VA_ARGS__);		\
+		pr_no_err(pr_fmt("dsim: " fmt), ##__VA_ARGS__);		\
 	} while (0)
 
 #define dsim_info(fmt, ...)					\
 	do {							\
-		pr_info(pr_fmt("dsim: " fmt), ##__VA_ARGS__);		\
+		pr_no_info(pr_fmt("dsim: " fmt), ##__VA_ARGS__);		\
 	} while (0)
 
 #define dsim_dbg(fmt, ...)					\
 	do {							\
-		pr_debug(pr_fmt("dsim: " fmt), ##__VA_ARGS__);		\
+		pr_no_debug(pr_fmt("dsim: " fmt), ##__VA_ARGS__);		\
 	} while (0)
 
 #define call_panel_ops(q, op, args...)				\

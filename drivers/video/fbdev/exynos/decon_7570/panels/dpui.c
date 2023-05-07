@@ -129,7 +129,7 @@ int dpui_logging_register(struct notifier_block *n, enum dpui_type type)
 	int ret;
 
 	if (type <= DPUI_TYPE_NONE || type >= MAX_DPUI_TYPE) {
-		pr_err("%s out of dpui_type range (%d)\n", __func__, type);
+		pr_no_err("%s out of dpui_type range (%d)\n", __func__, type);
 		return -EINVAL;
 	}
 
@@ -138,12 +138,12 @@ int dpui_logging_register(struct notifier_block *n, enum dpui_type type)
 	else
 		ret = blocking_notifier_chain_register(&dpui_notifier_list, n);
 	if (ret < 0) {
-		pr_err("%s: blocking_notifier_chain_register error(%d)\n",
+		pr_no_err("%s: blocking_notifier_chain_register error(%d)\n",
 				__func__, ret);
 		return ret;
 	}
 
-	pr_info("%s register type %s\n", __func__, dpui_type_name[type]);
+	pr_no_info("%s register type %s\n", __func__, dpui_type_name[type]);
 	return 0;
 }
 EXPORT_SYMBOL_GPL(dpui_logging_register);
@@ -166,12 +166,12 @@ static bool is_dpui_var_u32(enum dpui_key key)
 void update_dpui_log(enum dpui_log_level level, enum dpui_type type)
 {
 	if (level < 0 || level >= MAX_DPUI_LOG_LEVEL) {
-		pr_err("%s invalid log level %d\n", __func__, level);
+		pr_no_err("%s invalid log level %d\n", __func__, level);
 		return;
 	}
 
 	dpui_logging_notify(level, type, &dpui);
-	pr_info("%s update dpui log(%d) done\n",
+	pr_no_info("%s update dpui log(%d) done\n",
 			__func__, level);
 }
 
@@ -180,7 +180,7 @@ void clear_dpui_log(enum dpui_log_level level, enum dpui_type type)
 	size_t i;
 
 	if (level < 0 || level >= MAX_DPUI_LOG_LEVEL) {
-		pr_err("%s invalid log level %d\n", __func__, level);
+		pr_no_err("%s invalid log level %d\n", __func__, level);
 		return;
 	}
 
@@ -193,24 +193,24 @@ void clear_dpui_log(enum dpui_log_level level, enum dpui_type type)
 	}
 	mutex_unlock(&dpui_lock);
 
-	pr_info("%s clear dpui log(%d) done\n",
+	pr_no_info("%s clear dpui log(%d) done\n",
 			__func__, level);
 }
 
 static int __get_dpui_field(enum dpui_key key, char *buf)
 {
 	if (!buf) {
-		pr_err("%s buf is null\n", __func__);
+		pr_no_err("%s buf is null\n", __func__);
 		return 0;
 	}
 
 	if (!DPUI_VALID_KEY(key)) {
-		pr_err("%s out of dpui_key range (%d)\n", __func__, key);
+		pr_no_err("%s out of dpui_key range (%d)\n", __func__, key);
 		return 0;
 	}
 
 	if (!dpui.field[key].initialized) {
-		pr_debug("%s DPUI:%s not initialized, so use default value\n",
+		pr_no_debug("%s DPUI:%s not initialized, so use default value\n",
 				__func__, dpui_key_name[key]);
 		return snprintf(buf, MAX_DPUI_KEY_LEN + MAX_DPUI_VAL_LEN,
 			"\"%s\":\"%s\"", dpui_key_name[key], dpui.field[key].default_value);
@@ -225,28 +225,28 @@ void print_dpui_field(enum dpui_key key)
 	char tbuf[MAX_DPUI_KEY_LEN + MAX_DPUI_VAL_LEN];
 
 	if (!DPUI_VALID_KEY(key)) {
-		pr_err("%s out of dpui_key range (%d)\n", __func__, key);
+		pr_no_err("%s out of dpui_key range (%d)\n", __func__, key);
 		return;
 	}
 
 	__get_dpui_field(key, tbuf);
-	pr_info("DPUI: %s\n", tbuf);
+	pr_no_info("DPUI: %s\n", tbuf);
 }
 
 static int __set_dpui_field(enum dpui_key key, char *buf, int size)
 {
 	if (!buf) {
-		pr_err("%s buf is null\n", __func__);
+		pr_no_err("%s buf is null\n", __func__);
 		return -EINVAL;
 	}
 
 	if (!DPUI_VALID_KEY(key)) {
-		pr_err("%s out of dpui_key range (%d)\n", __func__, key);
+		pr_no_err("%s out of dpui_key range (%d)\n", __func__, key);
 		return -EINVAL;
 	}
 
 	if (size > MAX_DPUI_VAL_LEN - 1) {
-		pr_err("%s exceed dpui value size (%d)\n", __func__, size);
+		pr_no_err("%s exceed dpui value size (%d)\n", __func__, size);
 		return -EINVAL;
 	}
 	memcpy(dpui.field[key].buf, buf, size);
@@ -261,18 +261,18 @@ static int __get_dpui_u32_field(enum dpui_key key, u32 *value)
 	int rc, cur_val;
 
 	if (value == NULL) {
-		pr_err("%s invalid value pointer\n", __func__);
+		pr_no_err("%s invalid value pointer\n", __func__);
 		return -EINVAL;
 	}
 
 	if (!DPUI_VALID_KEY(key)) {
-		pr_err("%s out of dpui_key range (%d)\n", __func__, key);
+		pr_no_err("%s out of dpui_key range (%d)\n", __func__, key);
 		return -EINVAL;
 	}
 
 	rc = kstrtouint(dpui.field[key].buf, (unsigned int)0, &cur_val);
 	if (rc < 0) {
-		pr_err("%s failed to get value\n", __func__);
+		pr_no_err("%s failed to get value\n", __func__);
 		return rc;
 	}
 
@@ -287,18 +287,18 @@ static int __set_dpui_u32_field(enum dpui_key key, u32 value)
 	int size;
 
 	if (!DPUI_VALID_KEY(key)) {
-		pr_err("%s out of dpui_key range (%d)\n", __func__, key);
+		pr_no_err("%s out of dpui_key range (%d)\n", __func__, key);
 		return -EINVAL;
 	}
 
 	if (!is_dpui_var_u32(key)) {
-		pr_err("%s invalid type %d\n", __func__, dpui.field[key].var_type);
+		pr_no_err("%s invalid type %d\n", __func__, dpui.field[key].var_type);
 		return -EINVAL;
 	}
 
 	size = snprintf(tbuf, MAX_DPUI_VAL_LEN, "%u", value);
 	if (size > MAX_DPUI_VAL_LEN) {
-		pr_err("%s exceed dpui value size (%d)\n", __func__, size);
+		pr_no_err("%s exceed dpui value size (%d)\n", __func__, size);
 		return -EINVAL;
 	}
 	__set_dpui_field(key, tbuf, size);
@@ -312,19 +312,19 @@ static int __inc_dpui_u32_field(enum dpui_key key, u32 value)
 	u32 cur_val = 0;
 
 	if (!DPUI_VALID_KEY(key)) {
-		pr_err("%s out of dpui_key range (%d)\n", __func__, key);
+		pr_no_err("%s out of dpui_key range (%d)\n", __func__, key);
 		return -EINVAL;
 	}
 
 	if (!is_dpui_var_u32(key)) {
-		pr_err("%s invalid type %d\n", __func__, dpui.field[key].var_type);
+		pr_no_err("%s invalid type %d\n", __func__, dpui.field[key].var_type);
 		return -EINVAL;
 	}
 
 	if (dpui.field[key].initialized) {
 		ret = __get_dpui_u32_field(key, &cur_val);
 		if (ret < 0) {
-			pr_err("%s failed to get u32 field (%d)\n", __func__, ret);
+			pr_no_err("%s failed to get u32 field (%d)\n", __func__, ret);
 			return -EINVAL;
 		}
 	}
@@ -395,12 +395,12 @@ int __get_dpui_log(char *buf, enum dpui_log_level level, enum dpui_type type)
 	char tbuf[MAX_DPUI_KEY_LEN + MAX_DPUI_VAL_LEN];
 
 	if (!buf) {
-		pr_err("%s buf is null\n", __func__);
+		pr_no_err("%s buf is null\n", __func__);
 		return -EINVAL;
 	}
 
 	if (level < 0 || level >= MAX_DPUI_LOG_LEVEL) {
-		pr_err("%s invalid log level %d\n", __func__, level);
+		pr_no_err("%s invalid log level %d\n", __func__, level);
 		return -EINVAL;
 	}
 

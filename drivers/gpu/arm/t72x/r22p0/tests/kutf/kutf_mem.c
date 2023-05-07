@@ -42,7 +42,7 @@ struct kutf_alloc_entry {
 int kutf_mempool_init(struct kutf_mempool *pool)
 {
 	if (!pool) {
-		pr_err("NULL pointer passed to %s\n", __func__);
+		pr_no_err("NULL pointer passed to %s\n", __func__);
 		return -1;
 	}
 
@@ -59,7 +59,7 @@ void kutf_mempool_destroy(struct kutf_mempool *pool)
 	struct list_head *tmp;
 
 	if (!pool) {
-		pr_err("NULL pointer passed to %s\n", __func__);
+		pr_no_err("NULL pointer passed to %s\n", __func__);
 		return;
 	}
 
@@ -81,7 +81,7 @@ void *kutf_mempool_alloc(struct kutf_mempool *pool, size_t size)
 	struct kutf_alloc_entry *ret;
 
 	if (!pool) {
-		pr_err("NULL pointer passed to %s\n", __func__);
+		pr_no_err("NULL pointer passed to %s\n", __func__);
 		goto fail_pool;
 	}
 
@@ -89,7 +89,7 @@ void *kutf_mempool_alloc(struct kutf_mempool *pool, size_t size)
 
 	ret = kmalloc(sizeof(*ret) + size, GFP_KERNEL);
 	if (!ret) {
-		pr_err("Failed to allocate memory\n");
+		pr_no_err("Failed to allocate memory\n");
 		goto fail_alloc;
 	}
 

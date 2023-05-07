@@ -263,7 +263,7 @@ static int universal7270_set_bias_level(struct snd_soc_card *card,
 	case SND_SOC_BIAS_PREPARE:
 		if (dapm->bias_level != SND_SOC_BIAS_STANDBY)
 			break;
-		pr_info("pll in audio codec is enabled\n");
+		pr_no_info("pll in audio codec is enabled\n");
 		ret = snd_soc_codec_set_pll(codec, LARGO_FLL1,
 					    ARIZONA_FLL_SRC_MCLK2,
 					    32768,
@@ -291,7 +291,7 @@ static int universal7270_set_bias_level_post(struct snd_soc_card *card,
 
 	switch (level) {
 	case SND_SOC_BIAS_STANDBY:
-		pr_info("pll in audio codec is disabled\n");
+		pr_no_info("pll in audio codec is disabled\n");
 		ret = snd_soc_codec_set_pll(codec, LARGO_FLL1, 0, 0, 0);
 		if (ret < 0) {
 			pr_err("Failed to stop FLL: %d\n", ret);
@@ -309,7 +309,7 @@ static int universal7270_set_bias_level_post(struct snd_soc_card *card,
 
 static void universal7270_ez2c_trigger(void)
 {
-	pr_warn("Ez2Control Triggered\n");
+	pr_no_warn("Ez2Control Triggered\n");
 }
 
 static int universal7270_late_probe(struct snd_soc_card *card)

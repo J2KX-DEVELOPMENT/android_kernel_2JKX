@@ -73,7 +73,7 @@ static int dummy_dma_hw_params(struct snd_pcm_substream *substream,
 	struct runtime_data *prtd = runtime->private_data;
 	unsigned long totbytes = params_buffer_bytes(params);
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
 
@@ -89,7 +89,7 @@ static int dummy_dma_hw_params(struct snd_pcm_substream *substream,
 		prtd->dma_period >>= 1;
 	spin_unlock_irq(&prtd->lock);
 
-	pr_info("Dummy DMA:%s:Addr=@0x%lx Total=%d PrdSz=%d(%d) #Prds=%d \n",
+	pr_no_info("Dummy DMA:%s:Addr=@0x%lx Total=%d PrdSz=%d(%d) #Prds=%d \n",
 		(substream->stream == SNDRV_PCM_STREAM_PLAYBACK) ? "P" : "C",
 		prtd->buf_start, (u32)runtime->dma_bytes,
 		params_period_bytes(params),(u32) prtd->dma_period,
@@ -110,12 +110,12 @@ static int dummy_dma_prepare(struct snd_pcm_substream *substream)
 	struct runtime_data *prtd = substream->runtime->private_data;
 	int ret = 0;
 
-	pr_debug("Entered %s +\n", __func__);
+	pr_no_debug("Entered %s +\n", __func__);
 
 	prtd->dma_loaded = 0;
 	prtd->buf_pos = prtd->buf_start;
 
-	pr_debug("Entered %s -\n", __func__);
+	pr_no_debug("Entered %s -\n", __func__);
 
 	return ret;
 }
@@ -126,10 +126,10 @@ static snd_pcm_uframes_t dummy_dma_pointer(struct snd_pcm_substream *substream)
 	struct runtime_data *prtd = runtime->private_data;
 	unsigned long res;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 	res = prtd->buf_pos - prtd->buf_start;
 
-	pr_debug("%s res = %lx\n", __func__, res);
+	pr_no_debug("%s res = %lx\n", __func__, res);
 
 	return bytes_to_frames(substream->runtime, res);
 }
@@ -138,7 +138,7 @@ static int dummy_dma_open(struct snd_pcm_substream *substream)
 {
 	struct snd_pcm_runtime *runtime = substream->runtime;
 
-	pr_info("Entered %s\n", __func__);
+	pr_no_info("Entered %s\n", __func__);
 
 	if (rd.opened)
 		return -EBUSY;
@@ -156,14 +156,14 @@ static int dummy_dma_open(struct snd_pcm_substream *substream)
 
 	rd.opened = true;
 
-	pr_info("%s: prtd = %p\n", __func__, &rd);
+	pr_no_info("%s: prtd = %p\n", __func__, &rd);
 
 	return 0;
 }
 
 static int dummy_dma_close(struct snd_pcm_substream *substream)
 {
-	pr_info("Entered %s\n", __func__);
+	pr_no_info("Entered %s\n", __func__);
 
 	rd.opened = false;
 
@@ -192,7 +192,7 @@ static int dummy_dma_trigger(struct snd_pcm_substream *substream, int cmd)
 	struct runtime_data *prtd = substream->runtime->private_data;
 	int ret = 0;
 
-	pr_info("Entered %s\n", __func__);
+	pr_no_info("Entered %s\n", __func__);
 
 	spin_lock(&prtd->lock);
 
@@ -267,7 +267,7 @@ static int preallocate_dma_buffer_of(struct snd_pcm *pcm, int stream,
 	dma_addr_t dma_addr;
 	size_t size = dma_hardware.buffer_bytes_max;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	buf->dev.type = SNDRV_DMA_TYPE_DEV;
 	buf->dev.dev = pcm->card->dev;
@@ -290,7 +290,7 @@ static void dummy_dma_free_dma_buffers(struct snd_pcm *pcm)
 	struct snd_pcm_substream *substream;
 	struct snd_dma_buffer *buf;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	substream = pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream;
 	if (!substream)
@@ -315,7 +315,7 @@ static int dummy_dma_new(struct snd_soc_pcm_runtime *rtd)
 	struct task_struct *ret_task;
 	int ret = 0;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	if (!card->dev->dma_mask)
 		card->dev->dma_mask = &dma_mask;
@@ -333,7 +333,7 @@ static int dummy_dma_new(struct snd_soc_pcm_runtime *rtd)
 
 	ret_task = kthread_run(compr_cap_kthr, &rd, "compr_cap_kthr");
 	if (IS_ERR(ret_task)) {
-		pr_info("%s: failed to create compr_cap thread(%ld)\n",
+		pr_no_info("%s: failed to create compr_cap thread(%ld)\n",
 				__func__, PTR_ERR(ret_task));
 		ret = PTR_ERR(ret_task);
 	} else {

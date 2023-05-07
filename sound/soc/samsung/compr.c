@@ -110,14 +110,14 @@ static int compr_event_handler(uint32_t cmd, uint32_t size, void* priv)
 	u64 bytes_available;
 	int ret;
 
-	pr_debug("%s: event handler cmd(%x)\n", __func__, cmd);
+	pr_no_debug("%s: event handler cmd(%x)\n", __func__, cmd);
 
 #ifdef AUDIO_PERF
 	prtd->start_time[ISR_T] = sched_clock();
 #endif
 	switch(cmd) {
 	case INTR_CREATED:
-		pr_debug("%s: offload instance is created\n", __func__);
+		pr_no_debug("%s: offload instance is created\n", __func__);
 		break;
 	case INTR_DECODED:
 		spin_lock(&prtd->lock);
@@ -142,11 +142,11 @@ static int compr_event_handler(uint32_t cmd, uint32_t size, void* priv)
 		bytes_available = prtd->received_total -
 					prtd->copied_total;
 
-		pr_debug("%s: current free bufsize(%llu)\n", __func__,
+		pr_no_debug("%s: current free bufsize(%llu)\n", __func__,
 			runtime->buffer_size - bytes_available);
 
 		if (bytes_available < runtime->fragment_size) {
-			pr_debug("%s: WRITE_DONE Insufficient data to send.(avail:%llu)\n",
+			pr_no_debug("%s: WRITE_DONE Insufficient data to send.(avail:%llu)\n",
 				__func__, bytes_available);
 		}
 		spin_unlock(&prtd->lock);
@@ -168,7 +168,7 @@ static int compr_event_handler(uint32_t cmd, uint32_t size, void* priv)
 			/* ALSA Framework callback to notify drain complete */
 			snd_compr_drain_notify(prtd->cstream);
 			atomic_set(&prtd->eos, 0);
-			pr_info("%s: DATA_CMD_EOS wake up\n", __func__);
+			pr_no_info("%s: DATA_CMD_EOS wake up\n", __func__);
 		}
 		break;
 	case INTR_DESTROY:
@@ -193,7 +193,7 @@ static int compr_config_substream(struct snd_compr_stream *cstream,
 	struct snd_soc_pcm_runtime *rtd = cstream->private_data;
 	int ret;
 
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	substream->pid = get_task_pid(current, PIDTYPE_PID);
 	substream->private_data = rtd;
@@ -359,7 +359,7 @@ static void compr_config_hw_params(struct snd_pcm_hw_params *params,
 	u64 fmt;
 	int acodec_rate = 48000;
 
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	fmt = ffs(SNDRV_PCM_FMTBIT_S16_LE) - 1;
 	snd_mask_set(hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT), fmt);
@@ -374,7 +374,7 @@ static void compr_config_hw_params(struct snd_pcm_hw_params *params,
 		acodec_rate = 48000;
 #endif
 
-	pr_info("%s input_SR %d PCM_HW_PARAM_RATE %d \n", __func__,
+	pr_no_info("%s input_SR %d PCM_HW_PARAM_RATE %d \n", __func__,
 			compr_params->codec.sample_rate, acodec_rate);
 	hw_param_interval(params, SNDRV_PCM_HW_PARAM_RATE)->min = acodec_rate;
 }
@@ -387,7 +387,7 @@ static int compr_open(struct snd_compr_stream *cstream)
 	struct snd_pcm_substream *substream;
 	int ret;
 
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	prtd = kzalloc(sizeof(struct runtime_data), GFP_KERNEL);
 	if (prtd == NULL)
@@ -462,10 +462,10 @@ static int compr_free(struct snd_compr_stream *cstream)
 	u64 playback_time, total_time = 0;
 	int idx;
 #endif
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	if (!prtd) {
-		pr_info("compress dai has already freed.\n");
+		pr_no_info("compress dai has already freed.\n");
 		return 0;
 	}
 
@@ -479,7 +479,7 @@ static int compr_free(struct snd_compr_stream *cstream)
 		/* ALSA Framework callback to notify drain complete */
 		snd_compr_drain_notify(cstream);
 		atomic_set(&prtd->eos, 0);
-		pr_debug("%s Call Drain notify to wakeup\n", __func__);
+		pr_no_debug("%s Call Drain notify to wakeup\n", __func__);
 	}
 
 	if (atomic_read(&prtd->created)) {
@@ -529,9 +529,9 @@ static int compr_free(struct snd_compr_stream *cstream)
 	for (idx = 0; idx < TOTAL_TIMES; idx++) {
 		total_time += prtd->total_time[idx];
 	}
-	pr_debug("%s: measure the audio waken time : %llu\n", __func__,
+	pr_no_debug("%s: measure the audio waken time : %llu\n", __func__,
 		total_time);
-	pr_debug("%s: may be the ap sleep time : (%llu/%llu)\n", __func__,
+	pr_no_debug("%s: may be the ap sleep time : (%llu/%llu)\n", __func__,
 		playback_time - total_time, playback_time);
 #endif
 	kfree(prtd->ap);
@@ -548,11 +548,11 @@ static int compr_set_params(struct snd_compr_stream *cstream,
 	unsigned long flags;
 	int ret;
 
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	compr_config_hw_params(&prtd->hw_params, params);
 
-	pr_debug("%s, cpu_dai name = %s\n",
+	pr_no_debug("%s, cpu_dai name = %s\n",
 			__func__, rtd->cpu_dai->name);
 
 	/* startup -> hw_params */
@@ -608,7 +608,7 @@ static int compr_set_params(struct snd_compr_stream *cstream,
 	atomic_set(&prtd->created, 1);
 	spin_unlock_irqrestore(&prtd->lock, flags);
 
-	pr_info("%s: sample rate:%ld, channels:%ld\n", __func__,
+	pr_no_info("%s: sample rate:%ld, channels:%ld\n", __func__,
 		prtd->ap->sample_rate, prtd->ap->num_channels);
 	return 0;
 }
@@ -616,15 +616,15 @@ static int compr_set_params(struct snd_compr_stream *cstream,
 static int compr_set_metadata(struct snd_compr_stream *cstream,
 			      struct snd_compr_metadata *metadata)
 {
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	if (!metadata || !cstream)
 		return -EINVAL;
 
 	if (metadata->key == SNDRV_COMPRESS_ENCODER_PADDING) {
-		pr_debug("%s, got encoder padding %u", __func__, metadata->value[0]);
+		pr_no_debug("%s, got encoder padding %u", __func__, metadata->value[0]);
 	} else if (metadata->key == SNDRV_COMPRESS_ENCODER_DELAY) {
-		pr_debug("%s, got encoder delay %u", __func__, metadata->value[0]);
+		pr_no_debug("%s, got encoder delay %u", __func__, metadata->value[0]);
 	}
 
 	return 0;
@@ -637,7 +637,7 @@ static int compr_trigger(struct snd_compr_stream *cstream, int cmd)
 	unsigned long flags;
 	int ret;
 
-	pr_debug("%s: trigger cmd(%d)\n", __func__, cmd);
+	pr_no_debug("%s: trigger cmd(%d)\n", __func__, cmd);
 
 	/* platform -> codec -> cpu */
 	if (cstream->direction != SND_COMPRESS_PLAYBACK) {
@@ -647,7 +647,7 @@ static int compr_trigger(struct snd_compr_stream *cstream, int cmd)
 
 	switch (cmd) {
 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-		pr_info("%s: SNDRV_PCM_TRIGGER_PAUSE_PUSH\n", __func__);
+		pr_no_info("%s: SNDRV_PCM_TRIGGER_PAUSE_PUSH\n", __func__);
 
 		spin_lock_irqsave(&prtd->lock, flags);
 		ret = esa_compr_send_cmd(CMD_COMPR_PAUSE, prtd->ap);
@@ -661,7 +661,7 @@ static int compr_trigger(struct snd_compr_stream *cstream, int cmd)
 		atomic_set(&prtd->start, 0);
 		break;
 	case SNDRV_PCM_TRIGGER_STOP:
-		pr_info("%s: SNDRV_PCM_TRIGGER_STOP\n", __func__);
+		pr_no_info("%s: SNDRV_PCM_TRIGGER_STOP\n", __func__);
 
 		spin_lock_irqsave(&prtd->lock, flags);
 
@@ -669,10 +669,10 @@ static int compr_trigger(struct snd_compr_stream *cstream, int cmd)
 			/* ALSA Framework callback to notify drain complete */
 			snd_compr_drain_notify(cstream);
 			atomic_set(&prtd->eos, 0);
-			pr_debug("%s: interrupt drain and eos wait queues", __func__);
+			pr_no_debug("%s: interrupt drain and eos wait queues", __func__);
 		}
 
-		pr_debug("CMD_STOP\n");
+		pr_no_debug("CMD_STOP\n");
 		prtd->stop_ack = 0;
 		ret = esa_compr_send_cmd(CMD_COMPR_STOP, prtd->ap);
 		if (ret) {
@@ -708,9 +708,9 @@ static int compr_trigger(struct snd_compr_stream *cstream, int cmd)
 	case SNDRV_PCM_TRIGGER_START:
 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
 		if (SNDRV_PCM_TRIGGER_START == cmd)
-			pr_info("%s: SNDRV_PCM_TRIGGER_START\n", __func__);
+			pr_no_info("%s: SNDRV_PCM_TRIGGER_START\n", __func__);
 		else if (SNDRV_PCM_TRIGGER_PAUSE_RELEASE == cmd)
-			pr_info("%s: SNDRV_PCM_TRIGGER_PAUSE_RELEASE\n", __func__);
+			pr_no_info("%s: SNDRV_PCM_TRIGGER_PAUSE_RELEASE\n", __func__);
 
 		ret = compr_dai_cmd(prtd, cmd);
 		if (ret) {
@@ -728,13 +728,13 @@ static int compr_trigger(struct snd_compr_stream *cstream, int cmd)
 		spin_unlock_irqrestore(&prtd->lock, flags);
 		break;
 	case SND_COMPR_TRIGGER_NEXT_TRACK:
-		pr_info("%s: SND_COMPR_TRIGGER_NEXT_TRACK\n", __func__);
+		pr_no_info("%s: SND_COMPR_TRIGGER_NEXT_TRACK\n", __func__);
 		break;
 	case SND_COMPR_TRIGGER_PARTIAL_DRAIN:
-		pr_info("%s: SND_COMPR_TRIGGER_PARTIAL_DRAIN\n", __func__);
+		pr_no_info("%s: SND_COMPR_TRIGGER_PARTIAL_DRAIN\n", __func__);
 	case SND_COMPR_TRIGGER_DRAIN:
 		if (SND_COMPR_TRIGGER_DRAIN == cmd)
-			pr_info("%s: SND_COMPR_TRIGGER_DRAIN\n", __func__);
+			pr_no_info("%s: SND_COMPR_TRIGGER_DRAIN\n", __func__);
 		/* Make sure all the data is sent to F/W before sending EOS */
 		spin_lock_irqsave(&prtd->lock, flags);
 #ifdef AUDIO_PERF
@@ -749,7 +749,7 @@ static int compr_trigger(struct snd_compr_stream *cstream, int cmd)
 		}
 
 		atomic_set(&prtd->eos, 1);
-		pr_debug("%s: CMD_EOS\n", __func__);
+		pr_no_debug("%s: CMD_EOS\n", __func__);
 		ret = esa_compr_send_cmd(CMD_COMPR_EOS, prtd->ap);
 		if (ret) {
 			pr_err("%s: can't send eos (%d)\n", __func__, ret);
@@ -762,7 +762,7 @@ static int compr_trigger(struct snd_compr_stream *cstream, int cmd)
 		prtd->total_time[DRAIN_T] +=
 	        prtd->end_time[DRAIN_T] - prtd->start_time[DRAIN_T];
 #endif
-		pr_info("%s: Out of %s Drain", __func__,
+		pr_no_info("%s: Out of %s Drain", __func__,
 			(cmd == SND_COMPR_TRIGGER_DRAIN ? "Full" : "Partial"));
 		break;
 	default:
@@ -782,7 +782,7 @@ static int compr_pointer(struct snd_compr_stream *cstream,
 	int pcm_size, bytes_available;
 	int num_channel;
 
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 #ifdef AUDIO_PERF
 	prtd->start_time[POINTER_T] = sched_clock();
 #endif
@@ -808,7 +808,7 @@ static int compr_pointer(struct snd_compr_stream *cstream,
 
 		timestamp.pcm_io_frames = (snd_pcm_uframes_t)div64_u64(pcm_size,
 			2 * num_channel);
-		pr_debug("%s: pcm_size(%u), frame_count(%u), copied_total(%llu), \
+		pr_no_debug("%s: pcm_size(%u), frame_count(%u), copied_total(%llu), \
 			free_size(%llu)\n", __func__, pcm_size,
 			timestamp.pcm_io_frames, prtd->copied_total,
 			runtime->buffer_size - bytes_available);
@@ -833,7 +833,7 @@ static int compr_copy(struct snd_compr_stream *cstream, char __user* buf, size_t
 	void *dstn;
 	int ret;
 
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 #ifdef AUDIO_PERF
 	prtd->start_time[WRITE_T] = sched_clock();
 #endif
@@ -848,7 +848,7 @@ static int compr_copy(struct snd_compr_stream *cstream, char __user* buf, size_t
 		return 0;
 	}
 
-	pr_debug("copying %ld at %lld\n",
+	pr_no_debug("copying %ld at %lld\n",
 			(unsigned long)bytes, prtd->app_pointer);
 
 	dstn = prtd->buffer + prtd->app_pointer;
@@ -873,7 +873,7 @@ static int compr_copy(struct snd_compr_stream *cstream, char __user* buf, size_t
 	bytes_available = prtd->received_total - prtd->copied_total;
 	spin_unlock_irqrestore(&prtd->lock, flags);
 
-	pr_debug("%s: bytes_received(%llu), free_size(%llu)\n",
+	pr_no_debug("%s: bytes_received(%llu), free_size(%llu)\n",
 		__func__, prtd->received_total,
 		runtime->buffer_size - bytes_available);
 
@@ -884,16 +884,16 @@ static int compr_copy(struct snd_compr_stream *cstream, char __user* buf, size_t
 		u64 pointer = div64_u64(prtd->copied_total,
 			runtime->buffer_size);
 		pointer = prtd->copied_total - (pointer * runtime->buffer_size);
-		pr_info("%s: bytes to write offset in buffer(%d/%llu)\n",
+		pr_no_info("%s: bytes to write offset in buffer(%d/%llu)\n",
 			__func__, prtd->byte_offset, prtd->app_pointer);
-		pr_info("%s: [%2llx][%2llx][%2llx][%2llx] (%d)\n",
+		pr_no_info("%s: [%2llx][%2llx][%2llx][%2llx] (%d)\n",
 			__func__, (u64)(((char*)prtd->buffer)[pointer]),
 			(u64)(((char*)prtd->buffer)[pointer + 1]),
 			(u64)(((char*)prtd->buffer)[pointer + 2]),
 			(u64)(((char*)prtd->buffer)[pointer + 3]),
 			bytes);
 #endif
-		pr_debug("%s: needs to be copied to the buffer = %llu\n",
+		pr_no_debug("%s: needs to be copied to the buffer = %llu\n",
 			__func__, bytes_available);
 
 		ret = esa_compr_send_buffer(bytes, prtd->ap);
@@ -917,7 +917,7 @@ static int compr_get_caps(struct snd_compr_stream *cstream,
 	struct snd_compr_runtime *runtime = cstream->runtime;
 	struct runtime_data *prtd = runtime->private_data;
 
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	memcpy(caps, prtd->compr_cap, sizeof(struct snd_compr_caps));
 
@@ -927,7 +927,7 @@ static int compr_get_caps(struct snd_compr_stream *cstream,
 static int compr_get_codec_caps(struct snd_compr_stream *cstream,
 				struct snd_compr_codec_caps *codec)
 {
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	return 0;
 }

@@ -191,7 +191,7 @@ static int mdnie_calibration(int *r)
 		}
 	}
 
-	pr_info("%d, %d, %d, %d, tune%d\n", r[1], r[2], r[3], r[4], ret);
+	pr_no_info("%d, %d, %d, %d, tune%d\n", r[1], r[2], r[3], r[4], ret);
 
 	return ret;
 }
@@ -902,7 +902,7 @@ static int mdnie_check_info(struct mdnie_info *mdnie)
 	table = mdnie->tune->main_table ? &mdnie->tune->main_table[mdnie->scenario][mdnie->mode] : NULL;
 
 	if (!table) {
-		pr_err("%s: failed to get initial mdnie table\n", __func__);
+		pr_no_err("%s: failed to get initial mdnie table\n", __func__);
 		ret = -EINVAL;
 		goto exit;
 	}
@@ -912,13 +912,13 @@ static int mdnie_check_info(struct mdnie_info *mdnie)
 		limit = max(scr_info->cr, max3(scr_info->wr, scr_info->wg, scr_info->wb));
 
 		if (index >= MDNIE_IDX_MAX) {
-			pr_err("%s: invalid scr_info index. %d\n", __func__, index);
+			pr_no_err("%s: invalid scr_info index. %d\n", __func__, index);
 			ret = -EINVAL;
 			goto exit;
 		}
 
 		if (limit >= table->seq[index].len) {
-			pr_err("%s: invalid scr_info limit. %d, %d\n", __func__, limit, table->seq[index].len);
+			pr_no_err("%s: invalid scr_info limit. %d, %d\n", __func__, limit, table->seq[index].len);
 			ret = -EINVAL;
 			goto exit;
 		}
@@ -929,13 +929,13 @@ static int mdnie_check_info(struct mdnie_info *mdnie)
 		limit = scr_info->cr + night_info->max_w - 1;
 
 		if (index >= MDNIE_IDX_MAX) {
-			pr_err("%s: invalid night_info index. %d\n", __func__, index);
+			pr_no_err("%s: invalid night_info index. %d\n", __func__, index);
 			ret = -EINVAL;
 			goto exit;
 		}
 
 		if (limit >= table->seq[index].len) {
-			pr_err("%s: invalid night_info offset. %d, %d\n", __func__, limit, table->seq[index].len);
+			pr_no_err("%s: invalid night_info offset. %d, %d\n", __func__, limit, table->seq[index].len);
 			ret = -EINVAL;
 			goto exit;
 		}
@@ -943,15 +943,15 @@ static int mdnie_check_info(struct mdnie_info *mdnie)
 
 exit:
 	if (ret < 0)
-		pr_info("%s: skip to use mdnie\n", __func__);
+		pr_no_info("%s: skip to use mdnie\n", __func__);
 	else {
 		if (!scr_info) {
-			pr_info("%s: mdnie tune scr info as default\n", __func__);
+			pr_no_info("%s: mdnie tune scr info as default\n", __func__);
 			mdnie->tune->scr_info = &default_scr_info;
 		}
 
 		if (!night_info) {
-			pr_info("%s: mdnie tune night info as default\n", __func__);
+			pr_no_info("%s: mdnie tune night info as default\n", __func__);
 			mdnie->tune->night_info = &default_night_info;
 		}
 	}
@@ -967,13 +967,13 @@ int mdnie_register(struct device *p, void *data, mdnie_w w, mdnie_r r,
 	static unsigned int mdnie_no;
 
 	if (!tune) {
-		pr_err("failed to get mdnie tune\n");
+		pr_no_err("failed to get mdnie tune\n");
 		goto exit0;
 	}
 
 	mdnie = kzalloc(sizeof(struct mdnie_info), GFP_KERNEL);
 	if (!mdnie) {
-		pr_err("failed to allocate mdnie\n");
+		pr_no_err("failed to allocate mdnie\n");
 		ret = -ENOMEM;
 		goto exit0;
 	}
@@ -1005,7 +1005,7 @@ int mdnie_register(struct device *p, void *data, mdnie_w w, mdnie_r r,
 	if (IS_ERR_OR_NULL(mdnie_class)) {
 		mdnie_class = class_create(THIS_MODULE, "mdnie");
 		if (IS_ERR_OR_NULL(mdnie_class)) {
-			pr_err("failed to create mdnie class\n");
+			pr_no_err("failed to create mdnie class\n");
 			ret = -EINVAL;
 			goto exit1;
 		}
@@ -1015,7 +1015,7 @@ int mdnie_register(struct device *p, void *data, mdnie_w w, mdnie_r r,
 
 	mdnie->dev = device_create(mdnie_class, p, 0, &mdnie, !mdnie_no ? "mdnie" : "mdnie%d", mdnie_no);
 	if (IS_ERR_OR_NULL(mdnie->dev)) {
-		pr_err("failed to create mdnie device\n");
+		pr_no_err("failed to create mdnie device\n");
 		ret = -EINVAL;
 		goto exit2;
 	}
@@ -1023,7 +1023,7 @@ int mdnie_register(struct device *p, void *data, mdnie_w w, mdnie_r r,
 	if (tune->scr_info->cr && tune->scr_info->wr && tune->scr_info->wg && tune->scr_info->wb) {
 		ret = sysfs_create_files(&mdnie->dev->kobj, mdnie_scr_attrs);
 		if (ret < 0) {
-			pr_err("failed to create mdnie scr attributes\n");
+			pr_no_err("failed to create mdnie scr attributes\n");
 			goto exit3;
 		}
 	}

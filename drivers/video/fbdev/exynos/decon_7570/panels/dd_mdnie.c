@@ -23,7 +23,7 @@
 #include "mdnie.h"
 #include "dd.h"
 
-#define dbg_info(fmt, ...)	pr_info(pr_fmt("%s: %3d: %s: " fmt), "mdnie mdnie", __LINE__, __func__, ##__VA_ARGS__)
+#define dbg_info(fmt, ...)	pr_no_info(pr_fmt("%s: %3d: %s: " fmt), "mdnie mdnie", __LINE__, __func__, ##__VA_ARGS__)
 #define dbg_warn(fmt, ...)	pr_warn(pr_fmt("%s: %3d: %s: " fmt), "mdnie mdnie", __LINE__, __func__, ##__VA_ARGS__)
 
 #define MDNIE_TUNING_PATH	"/data/mdnie/"

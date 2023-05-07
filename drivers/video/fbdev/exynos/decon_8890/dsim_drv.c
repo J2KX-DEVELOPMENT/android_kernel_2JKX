@@ -335,9 +335,9 @@ static int dsim_partial_area_command(struct dsim_device *dsim, void *arg)
 	retry = 2;
 	while (dsim_write_data(dsim, MIPI_DSI_DCS_LONG_WRITE,
 				(unsigned long)data_2a, ARRAY_SIZE(data_2a)) != 0) {
-		pr_info("%s:fail to write window update size a.\n", __func__);
+		pr_no_info("%s:fail to write window update size a.\n", __func__);
 		if (--retry <= 0) {
-			pr_err("%s: size-a:failed: exceed retry count\n", __func__);
+			pr_no_err("%s: size-a:failed: exceed retry count\n", __func__);
 			return -1;
 		}
 	}
@@ -345,9 +345,9 @@ static int dsim_partial_area_command(struct dsim_device *dsim, void *arg)
 	retry = 2;
 	while (dsim_write_data(dsim, MIPI_DSI_DCS_LONG_WRITE,
 				(unsigned long)data_2b, ARRAY_SIZE(data_2b)) != 0) {
-		pr_err("fail to write window update size b.\n");
+		pr_no_err("fail to write window update size b.\n");
 		if (--retry <= 0) {
-			pr_err("%s: size-b:failed: exceed retry count\n", __func__);
+			pr_no_err("%s: size-b:failed: exceed retry count\n", __func__);
 			return -1;
 		}
 	}
@@ -1455,7 +1455,7 @@ static int __init dsim_init(void)
 {
 	int ret = platform_driver_register(&dsim_driver);
 	if (ret)
-		pr_err("mipi_dsi driver register failed\n");
+		pr_no_err("mipi_dsi driver register failed\n");
 
 	return ret;
 }

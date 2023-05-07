@@ -49,7 +49,7 @@ static void decon_oneshot_underrun_log(struct decon_device *decon)
 		return;
 
 	if (decon->underrun_stat.underrun_cnt > DECON_UNDERRUN_THRESHOLD) {
-		pr_err("underrun (level %d), bw(%llu), mif(%ld), chmap(0x%x), win(0x%lx), aclk(%ld)\n",
+		pr_no_err("underrun (level %d), bw(%llu), mif(%ld), chmap(0x%x), win(0x%lx), aclk(%ld)\n",
 			decon->underrun_stat.fifo_level,
 			decon->underrun_stat.prev_bw,
 			decon->underrun_stat.mif_pll / MHZ,
@@ -339,7 +339,7 @@ static u32 wincon(u32 bits_per_pixel, u32 transp_length)
 		}
 		break;
 	default:
-		pr_err("%d bpp doesn't support\n", bits_per_pixel);
+		pr_no_err("%d bpp doesn't support\n", bits_per_pixel);
 		break;
 	}
 

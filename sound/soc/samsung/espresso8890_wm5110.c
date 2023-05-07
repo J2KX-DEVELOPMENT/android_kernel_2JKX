@@ -155,7 +155,7 @@ static int arizona_put_impedance_volsw(struct snd_kcontrol *kcontrol,
 
 static void espresso_enable_mclk(bool on)
 {
-	pr_debug("%s: %s\n", __func__, on ? "on" : "off");
+	pr_no_debug("%s: %s\n", __func__, on ? "on" : "off");
 
 	clkout_enabled = on;
 #if 0
@@ -529,7 +529,7 @@ static int set_aud_pll_rate(unsigned long rate)
 
 	rate += 20;		/* margin */
 	clk_set_rate(fout_aud_pll, rate);
-	pr_debug("%s: aud_pll rate = %ld\n",
+	pr_no_debug("%s: aud_pll rate = %ld\n",
 		__func__, clk_get_rate(fout_aud_pll));
 out:
 	clk_put(fout_aud_pll);

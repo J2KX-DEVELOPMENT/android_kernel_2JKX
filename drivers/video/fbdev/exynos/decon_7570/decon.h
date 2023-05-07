@@ -89,7 +89,7 @@ extern int decon_log_level;
 #define decon_win_update_dbg(fmt, ...)					\
 	do {								\
 		if (decon_log_level >= DECON_LOG_LEVEL_DBG)				\
-			pr_info(pr_fmt("decon: " fmt), ##__VA_ARGS__);		\
+			pr_no_info(pr_fmt("decon: " fmt), ##__VA_ARGS__);		\
 	} while (0)
 #else
 #define decon_win_update_dbg(fmt, ...) (while (0))
@@ -98,7 +98,7 @@ extern int decon_log_level;
 #define decon_err(fmt, ...)							\
 	do {									\
 		if (decon_log_level >= DECON_LOG_LEVEL_ERR)					\
-			pr_err(pr_fmt("decon: " fmt), ##__VA_ARGS__);			\
+			pr_no_err(pr_fmt("decon: " fmt), ##__VA_ARGS__);			\
 	} while (0)
 
 #define decon_warn(fmt, ...)							\
@@ -110,13 +110,13 @@ extern int decon_log_level;
 #define decon_info(fmt, ...)							\
 	do {									\
 		if (decon_log_level >= DECON_LOG_LEVEL_INFO)					\
-			pr_info(pr_fmt("decon: " fmt), ##__VA_ARGS__);			\
+			pr_no_info(pr_fmt("decon: " fmt), ##__VA_ARGS__);			\
 	} while (0)
 
 #define decon_dbg(fmt, ...)							\
 	do {									\
 		if (decon_log_level >= DECON_LOG_LEVEL_DBG)					\
-			pr_info(pr_fmt("decon: " fmt), ##__VA_ARGS__);			\
+			pr_no_info(pr_fmt("decon: " fmt), ##__VA_ARGS__);			\
 	} while (0)
 
 /*

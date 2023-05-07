@@ -51,7 +51,7 @@ static int s3c2412_i2s_probe(struct snd_soc_dai *dai)
 {
 	int ret;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	samsung_asoc_init_dma_data(dai, &s3c2412_i2s_pcm_stereo_out,
 		&s3c2412_i2s_pcm_stereo_in);
@@ -97,10 +97,10 @@ static int s3c2412_i2s_hw_params(struct snd_pcm_substream *substream,
 	struct s3c_i2sv2_info *i2s = snd_soc_dai_get_drvdata(cpu_dai);
 	u32 iismod;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	iismod = readl(i2s->regs + S3C2412_IISMOD);
-	pr_debug("%s: r: IISMOD: %x\n", __func__, iismod);
+	pr_no_debug("%s: r: IISMOD: %x\n", __func__, iismod);
 
 	switch (params_width(params)) {
 	case 8:
@@ -112,7 +112,7 @@ static int s3c2412_i2s_hw_params(struct snd_pcm_substream *substream,
 	}
 
 	writel(iismod, i2s->regs + S3C2412_IISMOD);
-	pr_debug("%s: w: IISMOD: %x\n", __func__, iismod);
+	pr_no_debug("%s: w: IISMOD: %x\n", __func__, iismod);
 
 	return 0;
 }

@@ -20,7 +20,7 @@
  */
 #define APLL_FREQ(f, a0, a1, a2, a3, a4, a5, a6, a7, b0, b1, b2, m, p, s) \
 	{ \
-		.freq = (f) * 1000, \
+		.freq = (f) * 1100, \
 		.clk_div_cpu0 = ((a0) | (a1) << 4 | (a2) << 8 | (a3) << 12 | \
 			(a4) << 16 | (a5) << 20 | (a6) << 24 | (a7) << 28), \
 		.clk_div_cpu1 = (b0 << 0 | b1 << 4 | b2 << 8), \
@@ -30,7 +30,7 @@
 /* APLL Macro for Atlas Frequency in ISTOR */
 #define APLL_ATLAS_FREQ(f, a0, a1, a2, a3, a4, a5, b0, b1, b2, m, p, s) \
 	{ \
-		.freq = (f) * 1000, \
+		.freq = (f) * 1100, \
 		.clk_div_cpu0 = ((a0) | (a1) << 4 | (a2) << 8 | (a3) << 12 | \
 			(a4) << 20 | (a5) << 26), \
 		.clk_div_cpu1 = (b0 << 0 | b1 << 4 | b2 << 8), \
@@ -154,8 +154,8 @@ typedef enum {
 extern int exynos_cpufreq_regulator_register_notifier(cluster_type cluster);
 
 #define COLD_VOLT_OFFSET	25000
-#define LIMIT_COLD_VOLTAGE	1350000
-#define MIN_COLD_VOLTAGE	950000
+#define LIMIT_COLD_VOLTAGE	1250000
+#define MIN_COLD_VOLTAGE	900000
 #define NR_CLUST0_CPUS		4
 #define NR_CLUST1_CPUS		4
 #define CL0_POLICY_CPU		0

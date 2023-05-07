@@ -54,7 +54,7 @@
 * = this means you write to 0x01(address) with 0x02(value) and you assign read address as 0x1 when you cat this sysfs next time
 */
 
-#define dbg_info(fmt, ...)	pr_info(pr_fmt("%s: %3d: %s: " fmt), "backlight panel", __LINE__, __func__, ##__VA_ARGS__)
+#define dbg_info(fmt, ...)	pr_no_info(pr_fmt("%s: %3d: %s: " fmt), "backlight panel", __LINE__, __func__, ##__VA_ARGS__)
 #define dbg_warn(fmt, ...)	pr_warn(pr_fmt("%s: %3d: %s: " fmt), "backlight panel", __LINE__, __func__, ##__VA_ARGS__)
 
 #define BL_POINTS	\

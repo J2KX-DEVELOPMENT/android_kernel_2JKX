@@ -225,7 +225,7 @@ static int __init smartq_init(void)
 	int ret;
 
 	if (!machine_is_smartq7() && !machine_is_smartq5()) {
-		pr_info("Only SmartQ is supported by this ASoC driver\n");
+		pr_no_info("Only SmartQ is supported by this ASoC driver\n");
 		return -ENODEV;
 	}
 

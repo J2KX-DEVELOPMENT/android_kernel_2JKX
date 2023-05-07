@@ -38,7 +38,7 @@
 #define MAX_EFFCMD_NUM		10
 
 #define LPEFF_DEBUG_HEADER	"[lpeff]"
-#define lpeff_prinfo(s, ...)	pr_info( LPEFF_DEBUG_HEADER s, ##__VA_ARGS__ )
+#define lpeff_prinfo(s, ...)	pr_no_info( LPEFF_DEBUG_HEADER s, ##__VA_ARGS__ )
 #define lpeff_prerr(s, ...)	pr_err( LPEFF_DEBUG_HEADER s, ##__VA_ARGS__ )
 
 extern struct mutex esa_mutex;

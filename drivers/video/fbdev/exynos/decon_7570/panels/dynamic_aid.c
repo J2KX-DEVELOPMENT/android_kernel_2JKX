@@ -317,19 +317,19 @@ int dynamic_aid(struct dynamic_aid_param_t param, int **gamma)
 
 	d_aid.point_voltages = kzalloc(sizeof(struct rgb64_t)*d_aid.iv_max, GFP_KERNEL);
 	if (!d_aid.point_voltages) {
-		pr_err("failed to allocate point_voltages\n");
+		pr_no_err("failed to allocate point_voltages\n");
 		ret = -ENOMEM;
 		goto error1;
 	}
 	d_aid.output_voltages = kzalloc(sizeof(struct rgb64_t)*(d_aid.iv_top+1), GFP_KERNEL);
 	if (!d_aid.output_voltages) {
-		pr_err("failed to allocate output_voltages\n");
+		pr_no_err("failed to allocate output_voltages\n");
 		ret = -ENOMEM;
 		goto error2;
 	}
 	d_aid.m_voltage = kzalloc(sizeof(struct rgb64_t)*d_aid.iv_max, GFP_KERNEL);
 	if (!d_aid.m_voltage) {
-		pr_err("failed to allocate m_voltage\n");
+		pr_no_err("failed to allocate m_voltage\n");
 		ret = -ENOMEM;
 		goto error3;
 	}
@@ -342,7 +342,7 @@ int dynamic_aid(struct dynamic_aid_param_t param, int **gamma)
 	if (ret)
 		goto error4;
 
-	pr_info("Dynamic Aid Finished !\n");
+	pr_no_info("Dynamic Aid Finished !\n");
 
 error4:
 	kfree(d_aid.m_voltage);

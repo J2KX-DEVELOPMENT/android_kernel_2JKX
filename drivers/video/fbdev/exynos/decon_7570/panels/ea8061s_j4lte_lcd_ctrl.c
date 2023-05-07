@@ -518,7 +518,7 @@ static int init_gamma(struct lcd_info *lcd)
 	/* allocate memory for local gamma table */
 	gamma = kcalloc(IBRIGHTNESS_MAX, sizeof(int *), GFP_KERNEL);
 	if (!gamma) {
-		pr_err("failed to allocate gamma table\n");
+		pr_no_err("failed to allocate gamma table\n");
 		ret = -ENOMEM;
 		goto err_alloc_gamma_table;
 	}
@@ -526,7 +526,7 @@ static int init_gamma(struct lcd_info *lcd)
 	for (i = 0; i < IBRIGHTNESS_MAX; i++) {
 		gamma[i] = kcalloc(IV_MAX*CI_MAX, sizeof(int), GFP_KERNEL);
 		if (!gamma[i]) {
-			pr_err("failed to allocate gamma\n");
+			pr_no_err("failed to allocate gamma\n");
 			ret = -ENOMEM;
 			goto err_alloc_gamma;
 		}
@@ -788,7 +788,7 @@ static int panel_dpui_notifier_callback(struct notifier_block *self,
 	int size;
 
 	if (dpui == NULL) {
-		pr_err("%s: dpui is null\n", __func__);
+		pr_no_err("%s: dpui is null\n", __func__);
 		return NOTIFY_DONE;
 	}
 
@@ -1152,11 +1152,11 @@ static ssize_t dpui_show(struct device *dev,
 	update_dpui_log(DPUI_LOG_LEVEL_INFO, DPUI_TYPE_PANEL);
 	ret = get_dpui_log(buf, DPUI_LOG_LEVEL_INFO, DPUI_TYPE_PANEL);
 	if (ret < 0) {
-		pr_err("%s failed to get log %d\n", __func__, ret);
+		pr_no_err("%s failed to get log %d\n", __func__, ret);
 		return ret;
 	}
 
-	pr_info("%s\n", buf);
+	pr_no_info("%s\n", buf);
 	return ret;
 }
 
@@ -1181,11 +1181,11 @@ static ssize_t dpui_dbg_show(struct device *dev,
 	update_dpui_log(DPUI_LOG_LEVEL_DEBUG, DPUI_TYPE_PANEL);
 	ret = get_dpui_log(buf, DPUI_LOG_LEVEL_DEBUG, DPUI_TYPE_PANEL);
 	if (ret < 0) {
-		pr_err("%s failed to get log %d\n", __func__, ret);
+		pr_no_err("%s failed to get log %d\n", __func__, ret);
 		return ret;
 	}
 
-	pr_info("%s\n", buf);
+	pr_no_info("%s\n", buf);
 	return ret;
 }
 
@@ -1334,21 +1334,21 @@ static int dsim_panel_probe(struct dsim_device *dsim)
 
 	dsim->priv.par = lcd = kzalloc(sizeof(struct lcd_info), GFP_KERNEL);
 	if (!lcd) {
-		pr_err("%s: failed to allocate for lcd\n", __func__);
+		pr_no_err("%s: failed to allocate for lcd\n", __func__);
 		ret = -ENOMEM;
 		goto exit;
 	}
 
 	lcd->ld = lcd_device_register("panel", dsim->dev, lcd, NULL);
 	if (IS_ERR(lcd->ld)) {
-		pr_err("%s: failed to register lcd device\n", __func__);
+		pr_no_err("%s: failed to register lcd device\n", __func__);
 		ret = PTR_ERR(lcd->ld);
 		goto exit;
 	}
 
 	lcd->bd = backlight_device_register("panel", dsim->dev, lcd, &panel_backlight_ops, NULL);
 	if (IS_ERR(lcd->bd)) {
-		pr_err("%s: failed to register backlight device\n", __func__);
+		pr_no_err("%s: failed to register backlight device\n", __func__);
 		ret = PTR_ERR(lcd->bd);
 		goto exit;
 	}

@@ -1167,7 +1167,7 @@ int fimc_is_sec_ldo_enable(struct device *dev, char *name, bool on)
 
 	if (on) {
 		if (regulator_is_enabled(regulator)) {
-			pr_warning("%s: regulator is already enabled\n", name);
+			pr_no_warning("%s: regulator is already enabled\n", name);
 			goto exit;
 		}
 
@@ -1178,7 +1178,7 @@ int fimc_is_sec_ldo_enable(struct device *dev, char *name, bool on)
 		}
 	} else {
 		if (!regulator_is_enabled(regulator)) {
-			pr_warning("%s: regulator is already disabled\n", name);
+			pr_no_warning("%s: regulator is already disabled\n", name);
 			goto exit;
 		}
 

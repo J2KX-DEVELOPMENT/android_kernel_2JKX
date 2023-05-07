@@ -409,7 +409,7 @@ static void eax_adma_hw_params(unsigned long dma_period_bytes)
 		di.buf_wr_p[n] += dma_period_bytes * n;
 	}
 
-	pr_info("EAXDMA:DmaAddr=@%x Total=%d PrdSz=%d #Prds=%d dma_area=0x%p\n",
+	pr_no_info("EAXDMA:DmaAddr=@%x Total=%d PrdSz=%d #Prds=%d dma_area=0x%p\n",
 		(u32)di.dma_start, (u32)(di.dma_end - di.dma_start),
 		di.dma_period, DMA_PERIOD_CNT, di.dma_buf);
 out:
@@ -419,17 +419,17 @@ out:
 static void eax_adma_hw_free(struct snd_pcm_substream *substream)
 {
 	mutex_lock(&di.mutex);
-	pr_info("Entered %s ++\n", __func__);
+	pr_no_info("Entered %s ++\n", __func__);
 
 	if (di.running || eax_mixer_any_buf_running()) {
-		pr_info("EAXADMA: some mixer channel is running, (%d), (%d)\n",
+		pr_no_info("EAXADMA: some mixer channel is running, (%d), (%d)\n",
 			di.running, eax_mixer_any_buf_running());
 		goto out;
 	}
 
 	if (di.params_init && test_bit(substream->pcm->device, &di.set_params_bitmap)
 			&& (hweight_long(di.set_params_bitmap) == 1)) {
-		pr_info("EAXADMA: release dma channel : %s\n", di.params->ch_name);
+		pr_no_info("EAXADMA: release dma channel : %s\n", di.params->ch_name);
 		di.params_init = false;
 		if (di.params->ch) {
 			di.params->ops->flush(di.params->ch);
@@ -445,7 +445,7 @@ static void eax_adma_hw_free(struct snd_pcm_substream *substream)
 	di.prepare_done = false;
 out:
 	clear_bit(substream->pcm->device, &di.set_params_bitmap);
-	pr_info("Entered %s --\n", __func__);
+	pr_no_info("Entered %s --\n", __func__);
 	mutex_unlock(&di.mutex);
 }
 
@@ -576,7 +576,7 @@ static int eax_dma_hw_params(struct snd_pcm_substream *substream,
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
 #endif
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
 	runtime->dma_bytes = totbytes;
@@ -631,7 +631,7 @@ static int eax_dma_hw_params(struct snd_pcm_substream *substream,
         dump_count++;
 #endif
 
-	pr_info("EAX:%s:DmaAddr=@%x Total=%d PrdSz=%d #Prds=%d area=0x%p\n",
+	pr_no_info("EAX:%s:DmaAddr=@%x Total=%d PrdSz=%d #Prds=%d area=0x%p\n",
 			(substream->stream == SNDRV_PCM_STREAM_PLAYBACK) ? "P" : "C",
 			(u32)prtd->dma_start, (int)runtime->dma_bytes,
 			params_period_bytes(params), params_periods(params),
@@ -647,7 +647,7 @@ static int eax_dma_hw_free(struct snd_pcm_substream *substream)
 	struct runtime_data *prtd = runtime->private_data;
 #endif
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	snd_pcm_set_runtime_buffer(substream, NULL);
 
@@ -665,7 +665,7 @@ static int eax_dma_prepare(struct snd_pcm_substream *substream)
 	struct runtime_data *prtd = substream->runtime->private_data;
 	int ret = 0;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	mutex_lock(&di.mutex);
 	set_bit(substream->pcm->device, &di.set_params_bitmap) ;
@@ -692,7 +692,7 @@ static int eax_dma_trigger(struct snd_pcm_substream *substream, int cmd)
 	struct runtime_data *prtd = substream->runtime->private_data;
 	int ret = 0;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	spin_lock(&prtd->lock);
 
@@ -721,11 +721,11 @@ static snd_pcm_uframes_t eax_dma_pointer(struct snd_pcm_substream *substream)
 	struct runtime_data *prtd = runtime->private_data;
 	unsigned long res;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	res = prtd->dma_pos - prtd->dma_start;
 
-	pr_debug("Pointer offset: %lu\n", res);
+	pr_no_debug("Pointer offset: %lu\n", res);
 
 	if (res >= snd_pcm_lib_buffer_bytes(substream)) {
 		if (res == snd_pcm_lib_buffer_bytes(substream))
@@ -740,7 +740,7 @@ static int eax_dma_open(struct snd_pcm_substream *substream)
 	struct snd_pcm_runtime *runtime = substream->runtime;
 	struct runtime_data *prtd;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	snd_pcm_hw_constraint_integer(runtime, SNDRV_PCM_HW_PARAM_PERIODS);
 	snd_soc_set_runtime_hwparams(substream, &dma_hardware);
@@ -764,10 +764,10 @@ static int eax_dma_close(struct snd_pcm_substream *substream)
 	struct snd_pcm_runtime *runtime = substream->runtime;
 	struct runtime_data *prtd = runtime->private_data;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	if (!prtd)
-		pr_debug("dma_close called with prtd == NULL\n");
+		pr_no_debug("dma_close called with prtd == NULL\n");
 
 	eax_mixer_remove(prtd);
 	kfree(prtd);
@@ -780,7 +780,7 @@ static int eax_dma_mmap(struct snd_pcm_substream *substream,
 {
 	struct snd_pcm_runtime *runtime = substream->runtime;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	return dma_mmap_writecombine(substream->pcm->card->dev, vma,
 				     runtime->dma_area,
@@ -806,7 +806,7 @@ static int eax_prealloc_buffer(struct snd_pcm *pcm, int stream)
 	struct snd_dma_buffer *buf = &substream->dma_buffer;
 	size_t size = dma_hardware.buffer_bytes_max;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	buf->dev.type = SNDRV_DMA_TYPE_DEV;
 	buf->dev.dev = pcm->card->dev;
@@ -827,7 +827,7 @@ static int eax_dma_new(struct snd_soc_pcm_runtime *rtd)
 	struct snd_pcm *pcm = rtd->pcm;
 	int ret = 0;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	if (!card->dev->dma_mask)
 		card->dev->dma_mask = &eax_dma_mask;
@@ -880,7 +880,7 @@ static void eax_dma_free(struct snd_pcm *pcm)
 	struct snd_dma_buffer *buf;
 	int stream;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	for (stream = 0; stream < 2; stream++) {
 		substream = pcm->streams[stream].substream;
@@ -1108,7 +1108,7 @@ static int eax_mixer_add(struct runtime_data *prtd)
 	list_add(&bi->node, &buf_list);
 	spin_unlock_irqrestore(&mi.lock, flags);
 
-	pr_debug("%s: prtd %p added\n", __func__, prtd);
+	pr_no_debug("%s: prtd %p added\n", __func__, prtd);
 
 	return 0;
 }
@@ -1136,7 +1136,7 @@ static int eax_mixer_remove(struct runtime_data *prtd)
 	list_del(&bi->node);
 	kfree(bi);
 	spin_unlock_irqrestore(&mi.lock, flags);
-	pr_debug("%s: prtd %p removed\n", __func__, prtd);
+	pr_no_debug("%s: prtd %p removed\n", __func__, prtd);
 
 	return 0;
 }

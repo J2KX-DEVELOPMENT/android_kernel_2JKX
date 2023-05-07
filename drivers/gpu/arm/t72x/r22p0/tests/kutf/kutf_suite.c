@@ -458,7 +458,7 @@ static ssize_t kutf_debugfs_run_read(struct file *file, char __user *buf,
 		message_len = strlen(res->message);
 
 	if ((kutf_str_len + 1 + message_len + 1) > len) {
-		pr_err("Not enough space in user buffer for a single result");
+		pr_no_err("Not enough space in user buffer for a single result");
 		return 0;
 	}
 
@@ -576,7 +576,7 @@ static int create_fixture_variant(struct kutf_test_function *test_func,
 
 	test_fix = kmalloc(sizeof(*test_fix), GFP_KERNEL);
 	if (!test_fix) {
-		pr_err("Failed to create debugfs directory when adding fixture\n");
+		pr_no_err("Failed to create debugfs directory when adding fixture\n");
 		err = -ENOMEM;
 		goto fail_alloc;
 	}
@@ -587,7 +587,7 @@ static int create_fixture_variant(struct kutf_test_function *test_func,
 	snprintf(name, sizeof(name), "%d", fixture_index);
 	test_fix->dir = debugfs_create_dir(name, test_func->dir);
 	if (!test_func->dir) {
-		pr_err("Failed to create debugfs directory when adding fixture\n");
+		pr_no_err("Failed to create debugfs directory when adding fixture\n");
 		/* Might not be the right error, we don't get it passed back to us */
 		err = -EEXIST;
 		goto fail_dir;
@@ -596,7 +596,7 @@ static int create_fixture_variant(struct kutf_test_function *test_func,
 	tmp = debugfs_create_file("type", S_IROTH, test_fix->dir, "fixture\n",
 				  &kutf_debugfs_const_string_ops);
 	if (!tmp) {
-		pr_err("Failed to create debugfs file \"type\" when adding fixture\n");
+		pr_no_err("Failed to create debugfs file \"type\" when adding fixture\n");
 		/* Might not be the right error, we don't get it passed back to us */
 		err = -EEXIST;
 		goto fail_file;
@@ -611,7 +611,7 @@ static int create_fixture_variant(struct kutf_test_function *test_func,
 			test_fix,
 			&kutf_debugfs_run_ops);
 	if (!tmp) {
-		pr_err("Failed to create debugfs file \"run\" when adding fixture\n");
+		pr_no_err("Failed to create debugfs file \"run\" when adding fixture\n");
 		/* Might not be the right error, we don't get it passed back to us */
 		err = -EEXIST;
 		goto fail_file;
@@ -652,7 +652,7 @@ void kutf_add_test_with_filters_and_data(
 
 	test_func = kmalloc(sizeof(*test_func), GFP_KERNEL);
 	if (!test_func) {
-		pr_err("Failed to allocate memory when adding test %s\n", name);
+		pr_no_err("Failed to allocate memory when adding test %s\n", name);
 		goto fail_alloc;
 	}
 
@@ -660,14 +660,14 @@ void kutf_add_test_with_filters_and_data(
 
 	test_func->dir = debugfs_create_dir(name, suite->dir);
 	if (!test_func->dir) {
-		pr_err("Failed to create debugfs directory when adding test %s\n", name);
+		pr_no_err("Failed to create debugfs directory when adding test %s\n", name);
 		goto fail_dir;
 	}
 
 	tmp = debugfs_create_file("type", S_IROTH, test_func->dir, "test\n",
 				  &kutf_debugfs_const_string_ops);
 	if (!tmp) {
-		pr_err("Failed to create debugfs file \"type\" when adding test %s\n", name);
+		pr_no_err("Failed to create debugfs file \"type\" when adding test %s\n", name);
 		goto fail_file;
 	}
 
@@ -675,7 +675,7 @@ void kutf_add_test_with_filters_and_data(
 	tmp = debugfs_create_x32("filters", S_IROTH, test_func->dir,
 				 &test_func->filters);
 	if (!tmp) {
-		pr_err("Failed to create debugfs file \"filters\" when adding test %s\n", name);
+		pr_no_err("Failed to create debugfs file \"filters\" when adding test %s\n", name);
 		goto fail_file;
 	}
 
@@ -683,13 +683,13 @@ void kutf_add_test_with_filters_and_data(
 	tmp = debugfs_create_u32("test_id", S_IROTH, test_func->dir,
 				 &test_func->test_id);
 	if (!tmp) {
-		pr_err("Failed to create debugfs file \"test_id\" when adding test %s\n", name);
+		pr_no_err("Failed to create debugfs file \"test_id\" when adding test %s\n", name);
 		goto fail_file;
 	}
 
 	for (i = 0; i < suite->fixture_variants; i++) {
 		if (create_fixture_variant(test_func, i)) {
-			pr_err("Failed to create fixture %d when adding test %s\n", i, name);
+			pr_no_err("Failed to create fixture %d when adding test %s\n", i, name);
 			goto fail_file;
 		}
 	}
@@ -783,20 +783,20 @@ struct kutf_suite *kutf_create_suite_with_filters_and_data(
 
 	suite = kmalloc(sizeof(*suite), GFP_KERNEL);
 	if (!suite) {
-		pr_err("Failed to allocate memory when creating suite %s\n", name);
+		pr_no_err("Failed to allocate memory when creating suite %s\n", name);
 		goto fail_kmalloc;
 	}
 
 	suite->dir = debugfs_create_dir(name, app->dir);
 	if (!suite->dir) {
-		pr_err("Failed to create debugfs directory when adding test %s\n", name);
+		pr_no_err("Failed to create debugfs directory when adding test %s\n", name);
 		goto fail_debugfs;
 	}
 
 	tmp = debugfs_create_file("type", S_IROTH, suite->dir, "suite\n",
 				  &kutf_debugfs_const_string_ops);
 	if (!tmp) {
-		pr_err("Failed to create debugfs file \"type\" when adding test %s\n", name);
+		pr_no_err("Failed to create debugfs file \"type\" when adding test %s\n", name);
 		goto fail_file;
 	}
 
@@ -891,20 +891,20 @@ struct kutf_application *kutf_create_application(const char *name)
 
 	app = kmalloc(sizeof(*app), GFP_KERNEL);
 	if (!app) {
-		pr_err("Failed to create allocate memory when creating application %s\n", name);
+		pr_no_err("Failed to create allocate memory when creating application %s\n", name);
 		goto fail_kmalloc;
 	}
 
 	app->dir = debugfs_create_dir(name, base_dir);
 	if (!app->dir) {
-		pr_err("Failed to create debugfs direcotry when creating application %s\n", name);
+		pr_no_err("Failed to create debugfs direcotry when creating application %s\n", name);
 		goto fail_debugfs;
 	}
 
 	tmp = debugfs_create_file("type", S_IROTH, app->dir, "application\n",
 				  &kutf_debugfs_const_string_ops);
 	if (!tmp) {
-		pr_err("Failed to create debugfs file \"type\" when creating application %s\n", name);
+		pr_no_err("Failed to create debugfs file \"type\" when creating application %s\n", name);
 		goto fail_file;
 	}
 
@@ -946,13 +946,13 @@ static struct kutf_context *kutf_create_context(
 
 	new_context = kmalloc(sizeof(*new_context), GFP_KERNEL);
 	if (!new_context) {
-		pr_err("Failed to allocate test context");
+		pr_no_err("Failed to allocate test context");
 		goto fail_alloc;
 	}
 
 	new_context->result_set = kutf_create_result_set();
 	if (!new_context->result_set) {
-		pr_err("Failed to create result set");
+		pr_no_err("Failed to create result set");
 		goto fail_result_set;
 	}
 

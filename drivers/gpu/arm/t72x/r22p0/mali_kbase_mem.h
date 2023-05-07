@@ -190,7 +190,7 @@ static inline void kbase_mem_phy_alloc_gpu_unmapped(struct kbase_mem_phy_alloc *
 	/* we only track mappings of NATIVE buffers */
 	if (alloc->type == KBASE_MEM_TYPE_NATIVE)
 		if (0 > atomic_dec_return(&alloc->gpu_mappings)) {
-			pr_err("Mismatched %s:\n", __func__);
+			pr_no_err("Mismatched %s:\n", __func__);
 			dump_stack();
 		}
 }

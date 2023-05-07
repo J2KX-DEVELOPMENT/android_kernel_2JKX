@@ -52,18 +52,18 @@
 
 #define vpp_err(fmt, ...)					\
 	do {							\
-		pr_err(pr_fmt(fmt), ##__VA_ARGS__);		\
+		pr_no_err(pr_fmt(fmt), ##__VA_ARGS__);		\
 		exynos_ss_printk(fmt, ##__VA_ARGS__);		\
 	} while (0)
 
 #define vpp_info(fmt, ...)					\
 	do {							\
-		pr_info(pr_fmt(fmt), ##__VA_ARGS__);		\
+		pr_no_info(pr_fmt(fmt), ##__VA_ARGS__);		\
 	} while (0)
 
 #define vpp_dbg(fmt, ...)					\
 	do {							\
-		pr_debug(pr_fmt(fmt), ##__VA_ARGS__);		\
+		pr_no_debug(pr_fmt(fmt), ##__VA_ARGS__);		\
 	} while (0)
 
 enum vpp_dev_state {

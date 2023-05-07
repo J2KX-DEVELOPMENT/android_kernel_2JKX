@@ -24,9 +24,9 @@
 #include "../decon_notify.h"
 
 static bool log_boot;
-#define dbg_info(fmt, ...)	pr_info(pr_fmt("%s: %3d: %s: " fmt), "dsim", __LINE__, __func__, ##__VA_ARGS__)
+#define dbg_info(fmt, ...)	pr_no_info(pr_fmt("%s: %3d: %s: " fmt), "dsim", __LINE__, __func__, ##__VA_ARGS__)
 #define dbg_warn(fmt, ...)	pr_warn(pr_fmt("%s: %3d: %s: " fmt), "dsim", __LINE__, __func__, ##__VA_ARGS__)
-#define dbg_boot(fmt, ...)	if (unlikely(log_boot)) pr_info(pr_fmt("%s: %3d: %s: " fmt), "dsim", __LINE__, __func__, ##__VA_ARGS__)
+#define dbg_boot(fmt, ...)	if (unlikely(log_boot)) pr_no_info(pr_fmt("%s: %3d: %s: " fmt), "dsim", __LINE__, __func__, ##__VA_ARGS__)
 
 #define LCD_INFO_DTS_NAME	"lcd_info"
 

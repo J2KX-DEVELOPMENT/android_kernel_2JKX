@@ -98,7 +98,7 @@ static int esa_ctl_sa_put(struct snd_kcontrol *kcontrol,
 	int i;
 	int effect_val[SA_MAX_COUNT];
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	for (i = 0; i < SA_MAX_COUNT; i++) {
 		effect_val[i] = ucontrol->value.integer.value[i];
@@ -115,7 +115,7 @@ static int esa_ctl_my_put(struct snd_kcontrol *kcontrol,
 	int i;
 	int effect_val[MYSOUND_MAX_COUNT];
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	for (i = 0; i < MYSOUND_MAX_COUNT; i++) {
 		effect_val[i] = ucontrol->value.integer.value[i];
@@ -132,7 +132,7 @@ static int esa_ctl_ps_put(struct snd_kcontrol *kcontrol,
 	int i;
 	int effect_val[VSP_MAX_COUNT];
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	for (i = 0; i < VSP_MAX_COUNT; i++) {
 		effect_val[i] = ucontrol->value.integer.value[i];
@@ -149,7 +149,7 @@ static int esa_ctl_sb_put(struct snd_kcontrol *kcontrol,
 	int i;
 	int effect_val[LRSM_MAX_COUNT];
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	for (i = 0; i < LRSM_MAX_COUNT; i++) {
 		effect_val[i] = ucontrol->value.integer.value[i];
@@ -166,7 +166,7 @@ static int esa_ctl_bb_put(struct snd_kcontrol *kcontrol,
 	int i;
 	int effect_val[BB_MAX_COUNT];
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	for (i = 0; i < BB_MAX_COUNT; i++) {
 		effect_val[i] = ucontrol->value.integer.value[i];
@@ -183,7 +183,7 @@ static int esa_ctl_eq_put(struct snd_kcontrol *kcontrol,
 	int i;
 	int effect_val[EQ_MAX_COUNT];
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	for (i = 0; i < EQ_MAX_COUNT; i++) {
 		effect_val[i] = ucontrol->value.integer.value[i];
@@ -200,7 +200,7 @@ static int esa_ctl_ms_put(struct snd_kcontrol *kcontrol,
 	int i;
 	int effect_val[MYSPACE_MAX_COUNT];
 
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	for (i = 0; i < MYSPACE_MAX_COUNT; i++) {
 		effect_val[i] = ucontrol->value.integer.value[i];
@@ -216,7 +216,7 @@ static int esa_ctl_sr_put(struct snd_kcontrol *kcontrol,
 {
 	u32 rate = (u32)ucontrol->value.integer.value[0];
 
-	pr_info("%s set sample rate = %dHz\n", __func__, rate);
+	pr_no_info("%s set sample rate = %dHz\n", __func__, rate);
 	esa_compr_set_sample_rate(rate);
 
 	return 0;
@@ -225,7 +225,7 @@ static int esa_ctl_sr_put(struct snd_kcontrol *kcontrol,
 static int esa_ctl_sa_get(struct snd_kcontrol *kcontrol,
 			  struct snd_ctl_elem_value *ucontrol)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return 0;
 }
@@ -233,7 +233,7 @@ static int esa_ctl_sa_get(struct snd_kcontrol *kcontrol,
 static int esa_ctl_my_get(struct snd_kcontrol *kcontrol,
 			  struct snd_ctl_elem_value *ucontrol)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return 0;
 }
@@ -241,7 +241,7 @@ static int esa_ctl_my_get(struct snd_kcontrol *kcontrol,
 static int esa_ctl_ps_get(struct snd_kcontrol *kcontrol,
 			  struct snd_ctl_elem_value *ucontrol)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return 0;
 }
@@ -249,7 +249,7 @@ static int esa_ctl_ps_get(struct snd_kcontrol *kcontrol,
 static int esa_ctl_sb_get(struct snd_kcontrol *kcontrol,
 			  struct snd_ctl_elem_value *ucontrol)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return 0;
 }
@@ -257,7 +257,7 @@ static int esa_ctl_sb_get(struct snd_kcontrol *kcontrol,
 static int esa_ctl_bb_get(struct snd_kcontrol *kcontrol,
 			  struct snd_ctl_elem_value *ucontrol)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return 0;
 }
@@ -265,7 +265,7 @@ static int esa_ctl_bb_get(struct snd_kcontrol *kcontrol,
 static int esa_ctl_eq_get(struct snd_kcontrol *kcontrol,
 			  struct snd_ctl_elem_value *ucontrol)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return 0;
 }
@@ -273,7 +273,7 @@ static int esa_ctl_eq_get(struct snd_kcontrol *kcontrol,
 static int esa_ctl_ms_get(struct snd_kcontrol *kcontrol,
 			  struct snd_ctl_elem_value *ucontrol)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return 0;
 }
@@ -281,7 +281,7 @@ static int esa_ctl_ms_get(struct snd_kcontrol *kcontrol,
 static int esa_ctl_sr_get(struct snd_kcontrol *kcontrol,
 			  struct snd_ctl_elem_value *ucontrol)
 {
-	pr_info("%s\n", __func__);
+	pr_no_info("%s\n", __func__);
 
 	return 0;
 }
@@ -314,7 +314,7 @@ static int compr_volume_put(struct snd_kcontrol *kcontrol,
 
 	volume[0] = ucontrol->value.integer.value[0];
 	volume[1] = ucontrol->value.integer.value[1];
-	pr_info("%s: mc->reg %d left_vol %d right_vol %d\n",
+	pr_no_info("%s: mc->reg %d left_vol %d right_vol %d\n",
 			__func__, mc->reg, volume[0], volume[1]);
 	if (ap)
 		esa_compr_set_volume(ap, volume[0], volume[1]);
@@ -329,7 +329,7 @@ static int compr_volume_get(struct snd_kcontrol *kcontrol,
 		(struct soc_mixer_control *)kcontrol->private_value;
 	uint32_t *volume = aud_vol.volume[mc->reg];
 
-	pr_info("%s: mc->reg %d left_vol %d right_vol %d\n",
+	pr_no_info("%s: mc->reg %d left_vol %d right_vol %d\n",
 		__func__, mc->reg, volume[0], volume[1]);
 	ucontrol->value.integer.value[0] = volume[0];
 	ucontrol->value.integer.value[1] = volume[1];

@@ -150,11 +150,11 @@
 #endif
 
 /* For Debugging */
-#define esa_info(x...)		pr_info("SEIREN: " x)
+#define esa_info(x...)		pr_no_info("SEIREN: " x)
 #define esa_err(x...)		pr_err("SEIREN: ERR: " x)
 
 #ifdef CONFIG_SND_SAMSUNG_SEIREN_DEBUG
-#define esa_debug(x...)		pr_debug("SEIREN: " x)
+#define esa_debug(x...)		pr_no_debug("SEIREN: " x)
 #else
 #define esa_debug(x...)
 #endif

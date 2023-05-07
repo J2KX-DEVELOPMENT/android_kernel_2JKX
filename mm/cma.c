@@ -230,7 +230,7 @@ int __init cma_declare_contiguous(phys_addr_t base,
 #else
 	highmem_start = __pa(high_memory);
 #endif
-	pr_debug("%s(size %pa, base %pa, limit %pa alignment %pa)\n",
+	pr_no_debug("%s(size %pa, base %pa, limit %pa alignment %pa)\n",
 		__func__, &size, &base, &limit, &alignment);
 
 	if (cma_area_count == ARRAY_SIZE(cma_areas)) {
@@ -348,7 +348,7 @@ struct page *cma_alloc(struct cma *cma, int count, unsigned int align)
 	if (!cma || !cma->count)
 		return NULL;
 
-	pr_debug("%s(cma %p, count %d, align %d)\n", __func__, (void *)cma,
+	pr_no_debug("%s(cma %p, count %d, align %d)\n", __func__, (void *)cma,
 		 count, align);
 
 	if (!count)
@@ -387,13 +387,13 @@ struct page *cma_alloc(struct cma *cma, int count, unsigned int align)
 		if (ret != -EBUSY)
 			break;
 
-		pr_debug("%s(): memory range at %p is busy, retrying\n",
+		pr_no_debug("%s(): memory range at %p is busy, retrying\n",
 			 __func__, pfn_to_page(pfn));
 		/* try again with a bit different memory target */
 		start = bitmap_no + mask + 1;
 	}
 
-	pr_debug("%s(): returned %p\n", __func__, page);
+	pr_no_debug("%s(): returned %p\n", __func__, page);
 	return page;
 }
 
@@ -414,7 +414,7 @@ bool cma_release(struct cma *cma, struct page *pages, int count)
 	if (!cma || !pages)
 		return false;
 
-	pr_debug("%s(page %p)\n", __func__, (void *)pages);
+	pr_no_debug("%s(page %p)\n", __func__, (void *)pages);
 
 	pfn = page_to_pfn(pages);
 

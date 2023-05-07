@@ -395,7 +395,7 @@ void lpass_reset(int ip, int op)
 
 void lpass_reset_toggle(int ip)
 {
-	pr_debug("%s: %d\n", __func__, ip);
+	pr_no_debug("%s: %d\n", __func__, ip);
 
 	lpass_reset(ip, LPASS_OP_RESET);
 	udelay(100);
@@ -417,7 +417,7 @@ int lpass_register_subip(struct device *ip_dev, const char *ip_name)
 	atomic_set(&si->use_cnt, 0);
 	list_add(&si->node, &subip_list);
 
-	pr_info("%s: %s(%p) registered\n", __func__, ip_name, ip_dev);
+	pr_no_info("%s: %s(%p) registered\n", __func__, ip_name, ip_dev);
 
 	return 0;
 }
@@ -429,7 +429,7 @@ int lpass_set_gpio_cb(struct device *ip_dev, void (*ip_cb)(struct device *dev))
 	list_for_each_entry(si, &subip_list, node) {
 		if (si->dev == ip_dev) {
 			si->cb = ip_cb;
-			pr_info("%s: %s(cb: %p)\n", __func__,
+			pr_no_info("%s: %s(cb: %p)\n", __func__,
 				si->name, si->cb);
 			return 0;
 		}
@@ -446,7 +446,7 @@ void lpass_get_sync(struct device *ip_dev)
 		if (si->dev == ip_dev) {
 			atomic_inc(&si->use_cnt);
 			atomic_inc(&lpass.use_cnt);
-			pr_info("%s: %s (use:%d)\n", __func__,
+			pr_no_info("%s: %s (use:%d)\n", __func__,
 				si->name, atomic_read(&si->use_cnt));
 			pm_runtime_get_sync(&lpass.pdev->dev);
 		}
@@ -463,7 +463,7 @@ void lpass_put_sync(struct device *ip_dev)
 		if (si->dev == ip_dev) {
 			atomic_dec(&si->use_cnt);
 			atomic_dec(&lpass.use_cnt);
-			pr_info("%s: %s (use:%d)\n", __func__,
+			pr_no_info("%s: %s (use:%d)\n", __func__,
 				si->name, atomic_read(&si->use_cnt));
 			pm_runtime_put_sync(&lpass.pdev->dev);
 		}
@@ -496,7 +496,7 @@ void lpass_set_sched(pid_t pid, int mode)
 	if (task) {
 		sched_setscheduler_nocheck(task,
 				SCHED_RR | SCHED_RESET_ON_FORK, &param_fifo);
-		pr_info("%s: [%s] pid = %d, prio = %d\n",
+		pr_no_info("%s: [%s] pid = %d, prio = %d\n",
 				__func__, task->comm, pid, task->prio);
 	} else {
 		pr_err("%s: task not found (pid = %d)\n",
@@ -509,13 +509,13 @@ void lpass_set_sched(pid_t pid, int mode)
 #ifdef USE_EXYNOS_AUD_CPU_HOTPLUG
 void lpass_get_cpu_hotplug(void)
 {
-	pr_debug("%s ++\n", __func__);
+	pr_no_debug("%s ++\n", __func__);
 	cluster0_core1_hotplug_in(true);
 }
 
 void lpass_put_cpu_hotplug(void)
 {
-	pr_debug("%s --\n", __func__);
+	pr_no_debug("%s --\n", __func__);
 	cluster0_core1_hotplug_in(false);
 }
 #endif
@@ -536,7 +536,7 @@ static void lpass_reg_save(void)
 {
 	struct aud_reg *ar;
 
-	pr_debug("Registers of LPASS are saved\n");
+	pr_no_debug("Registers of LPASS are saved\n");
 
 	list_for_each_entry(ar, &reg_list, node)
 		ar->val = readl(ar->reg);
@@ -548,7 +548,7 @@ static void lpass_reg_restore(void)
 {
 	struct aud_reg *ar;
 
-	pr_debug("Registers of LPASS are restore\n");
+	pr_no_debug("Registers of LPASS are restore\n");
 
 	list_for_each_entry(ar, &reg_list, node)
 		writel(ar->val, ar->reg);
@@ -627,7 +627,7 @@ static void ass_enable(void)
 static void lpass_enable(void)
 {
 	if (!lpass.valid) {
-		pr_debug("%s: LPASS is not available", __func__);
+		pr_no_debug("%s: LPASS is not available", __func__);
 		return;
 	}
 
@@ -686,7 +686,7 @@ static void ass_disable(void)
 static void lpass_disable(void)
 {
 	if (!lpass.valid) {
-		pr_debug("%s: LPASS is not available", __func__);
+		pr_no_debug("%s: LPASS is not available", __func__);
 		return;
 	}
 
@@ -882,7 +882,7 @@ static const struct file_operations lpass_proc_fops = {
 #ifdef CONFIG_PM_SLEEP
 static int lpass_suspend(struct device *dev)
 {
-	pr_debug("%s entered\n", __func__);
+	pr_no_debug("%s entered\n", __func__);
 
 #ifdef CONFIG_PM_RUNTIME
 	if (atomic_read(&lpass.use_cnt) > 0)
@@ -895,7 +895,7 @@ static int lpass_suspend(struct device *dev)
 
 static int lpass_resume(struct device *dev)
 {
-	pr_debug("%s entered\n", __func__);
+	pr_no_debug("%s entered\n", __func__);
 
 #ifdef CONFIG_PM_RUNTIME
 	if (atomic_read(&lpass.use_cnt) > 0)
@@ -964,25 +964,25 @@ static void lpass_update_qos(void)
 	if (lpass.cpu_qos != cpu_qos_new) {
 		lpass.cpu_qos = cpu_qos_new;
 		pm_qos_update_request(&lpass.aud_cluster1_qos, lpass.cpu_qos);
-		pr_debug("%s: cpu_qos = %d\n", __func__, lpass.cpu_qos);
+		pr_no_debug("%s: cpu_qos = %d\n", __func__, lpass.cpu_qos);
 	}
 
 	if (lpass.kfc_qos != kfc_qos_new) {
 		lpass.kfc_qos = kfc_qos_new;
 		pm_qos_update_request(&lpass.aud_cluster0_qos, lpass.kfc_qos);
-		pr_debug("%s: kfc_qos = %d\n", __func__, lpass.kfc_qos);
+		pr_no_debug("%s: kfc_qos = %d\n", __func__, lpass.kfc_qos);
 	}
 
 	if (lpass.mif_qos != mif_qos_new) {
 		lpass.mif_qos = mif_qos_new;
 		pm_qos_update_request(&lpass.aud_mif_qos, lpass.mif_qos);
-		pr_debug("%s: mif_qos = %d\n", __func__, lpass.mif_qos);
+		pr_no_debug("%s: mif_qos = %d\n", __func__, lpass.mif_qos);
 	}
 
 	if (lpass.int_qos != int_qos_new) {
 		lpass.int_qos = int_qos_new;
 		pm_qos_update_request(&lpass.aud_int_qos, lpass.int_qos);
-		pr_debug("%s: int_qos = %d\n", __func__, lpass.int_qos);
+		pr_no_debug("%s: int_qos = %d\n", __func__, lpass.int_qos);
 	}
 #endif
 }
@@ -1072,7 +1072,7 @@ static int lpass_probe(struct platform_device *pdev)
 		dev_err(dev, "SFR ioremap failed\n");
 		return -ENOMEM;
 	}
-	pr_info("%s: regs_base = %08X (%08X bytes)\n",
+	pr_no_info("%s: regs_base = %08X (%08X bytes)\n",
 		__func__, (u32)res->start, (u32)resource_size(res));
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
@@ -1087,7 +1087,7 @@ static int lpass_probe(struct platform_device *pdev)
 		return -ENOMEM;
 	}
 	lpass.mem_size = resource_size(res);
-	pr_info("%s: sram_base = %08X (%08X bytes)\n",
+	pr_no_info("%s: sram_base = %08X (%08X bytes)\n",
 		__func__, (u32)res->start, (u32)resource_size(res));
 
 	if (lpass.ver >= LPASS_VER_370200) {
@@ -1102,11 +1102,11 @@ static int lpass_probe(struct platform_device *pdev)
 			dev_err(dev, "SFR ioremap failed\n");
 			return -ENOMEM;
 		}
-		pr_info("%s: regs-s_base = %08X (%08X bytes)\n",
+		pr_no_info("%s: regs-s_base = %08X (%08X bytes)\n",
 			__func__, (u32)res->start, (u32)resource_size(res));
 	} else {
 		lpass.regs_s = lpass.regs;
-		pr_debug("%s: regs-s_base is set as regs", __func__);
+		pr_no_debug("%s: regs-s_base is set as regs", __func__);
 	}
 
 	ret = lpass_get_clk(&pdev->dev, &lpass);
@@ -1146,7 +1146,7 @@ static int lpass_probe(struct platform_device *pdev)
 	lpass.proc_file = proc_create("driver/lpass", 0,
 					NULL, &lpass_proc_fops);
 	if (!lpass.proc_file)
-		pr_info("Failed to register /proc/driver/lpadd\n");
+		pr_no_info("Failed to register /proc/driver/lpadd\n");
 
 	spin_lock_init(&lpass.lock);
 	atomic_set(&lpass.dma_use_cnt, 0);
@@ -1197,7 +1197,7 @@ static int lpass_probe(struct platform_device *pdev)
 
 	exynos_pm_register_notifier(&lpass_lpa_nb);
 
-	pr_info("%s: LPASS driver was registerd successfully\n", __func__);
+	pr_no_info("%s: LPASS driver was registerd successfully\n", __func__);
 	return 0;
 }
 
@@ -1225,7 +1225,7 @@ static int lpass_remove(struct platform_device *pdev)
 #ifdef CONFIG_PM_RUNTIME
 static int lpass_runtime_suspend(struct device *dev)
 {
-	pr_debug("%s entered\n", __func__);
+	pr_no_debug("%s entered\n", __func__);
 
 	lpass_disable();
 
@@ -1234,7 +1234,7 @@ static int lpass_runtime_suspend(struct device *dev)
 
 static int lpass_runtime_resume(struct device *dev)
 {
-	pr_debug("%s entered\n", __func__);
+	pr_no_debug("%s entered\n", __func__);
 
 	lpass_enable();
 
@@ -1320,7 +1320,7 @@ fs_initcall(lpass_driver_init);
 #ifdef CONFIG_PM_RUNTIME
 static int lpass_driver_rpm_begin(void)
 {
-	pr_debug("%s entered\n", __func__);
+	pr_no_debug("%s entered\n", __func__);
 
 	if (is_new_ass())
 		pm_runtime_put_sync(&lpass.pdev->dev);

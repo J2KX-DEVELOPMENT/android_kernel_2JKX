@@ -141,7 +141,7 @@ int fimc_is_clk_gate_set(struct fimc_is_core *core,
 		(gate_ctrl->chk_on_off_cnt[group_id])--; /* for debuging */
 		(gate_ctrl->msk_cnt[group_id])--;
 		if ((gate_ctrl->msk_cnt[group_id]) < 0) {
-			pr_warn("%s msk_cnt[%d] is lower than zero !!\n", __func__, group_id);
+			pr_no_warn("%s msk_cnt[%d] is lower than zero !!\n", __func__, group_id);
 			(gate_ctrl->msk_cnt[group_id]) = 0;
 		}
 		if ((gate_ctrl->msk_cnt[group_id]) == 0)

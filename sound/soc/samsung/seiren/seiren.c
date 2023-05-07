@@ -681,13 +681,13 @@ static void esa_update_qos(void)
 	if (si.int_qos != int_qos_new) {
 		si.int_qos = int_qos_new;
 		pm_qos_update_request(&si.ca5_int_qos, si.int_qos);
-		pr_debug("%s: int_qos = %d\n", __func__, si.int_qos);
+		pr_no_debug("%s: int_qos = %d\n", __func__, si.int_qos);
 	}
 #endif
 	if (si.mif_qos != mif_qos_new) {
 		si.mif_qos = mif_qos_new;
 		pm_qos_update_request(&si.ca5_mif_qos, si.mif_qos);
-		pr_debug("%s: mif_qos = %d\n", __func__, si.mif_qos);
+		pr_no_debug("%s: mif_qos = %d\n", __func__, si.mif_qos);
 	}
 #endif
 	return;
@@ -735,7 +735,7 @@ int esa_effect_write(int type, int *value, int count)
 	}
 
 	for (i = 0; i < effect_count; i++) {
-		pr_debug("effect_value[%d] = %d\n", i, effect_value[i]);
+		pr_no_debug("effect_value[%d] = %d\n", i, effect_value[i]);
 		writel(effect_value[i], effect_addr + 0x10 + (i * 4));
 	}
 
@@ -1295,7 +1295,7 @@ static irqreturn_t esa_isr(int irqno, void *id)
 		wakeup = true;
 		break;
 	case INTR_READY:
-		pr_debug("FW is ready!\n");
+		pr_no_debug("FW is ready!\n");
 		si.fw_ready = true;
 		wakeup = true;
 		break;

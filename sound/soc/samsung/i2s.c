@@ -723,7 +723,7 @@ static int i2s_set_tdm_slot(struct snd_soc_dai *dai,
 			<< TDM_TX_SLOTS_SHIFT;
 		tdm |= ((CONFIG_SND_SOC_I2S_RXSLOT_NUMBER-1) & TDM_RX_SLOTS_MASK)
 			<< TDM_RX_SLOTS_SHIFT;
-		pr_info("tdm mode transmission - tx: %d, rx: %d where txmask: 0x%08X, rxmask: 0x%08X\n",
+		pr_no_info("tdm mode transmission - tx: %d, rx: %d where txmask: 0x%08X, rxmask: 0x%08X\n",
 			CONFIG_SND_SOC_I2S_TXSLOT_NUMBER, CONFIG_SND_SOC_I2S_RXSLOT_NUMBER,
 			tx_mask, rx_mask);
 	} else {
@@ -898,9 +898,9 @@ static int i2s_startup(struct snd_pcm_substream *substream,
 	char dai_name[10];
 
 	i2s_print_dai_name(i2s, dai_name);
-	pr_info("%s : %s --\n", __func__, dai_name);
+	pr_no_info("%s : %s --\n", __func__, dai_name);
 #else
-	pr_info("%s : %s --\n", __func__, is_secondary(i2s)? "sec" : "pri");
+	pr_no_info("%s : %s --\n", __func__, is_secondary(i2s)? "sec" : "pri");
 #endif
 
 #ifdef USE_EXYNOS_AUD_SCHED
@@ -949,9 +949,9 @@ static int i2s_startup(struct snd_pcm_substream *substream,
 	spin_unlock_irqrestore(&lock, flags);
 
 #ifdef CONFIG_SND_SAMSUNG_COMPR
-	pr_info("%s : %s --\n", __func__, dai_name);
+	pr_no_info("%s : %s --\n", __func__, dai_name);
 #else
-	pr_info("%s : %s --\n", __func__, is_secondary(i2s)? "sec" : "pri");
+	pr_no_info("%s : %s --\n", __func__, is_secondary(i2s)? "sec" : "pri");
 #endif
 	return 0;
 }
@@ -967,9 +967,9 @@ static void i2s_shutdown(struct snd_pcm_substream *substream,
 	char dai_name[10];
 
 	i2s_print_dai_name(i2s, dai_name);
-	pr_info("%s : %s --\n", __func__, dai_name);
+	pr_no_info("%s : %s --\n", __func__, dai_name);
 #else
-	pr_info("%s : %s ++\n", __func__, is_secondary(i2s)? "sec" : "pri");
+	pr_no_info("%s : %s ++\n", __func__, is_secondary(i2s)? "sec" : "pri");
 #endif
 	spin_lock_irqsave(&lock, flags);
 
@@ -1012,9 +1012,9 @@ static void i2s_shutdown(struct snd_pcm_substream *substream,
 		lpass_put_cpu_hotplug();
 #endif
 #ifdef CONFIG_SND_SAMSUNG_COMPR
-	pr_info("%s : %s --\n", __func__, dai_name);
+	pr_no_info("%s : %s --\n", __func__, dai_name);
 #else
-	pr_info("%s : %s --\n", __func__, is_secondary(i2s)? "sec" : "pri");
+	pr_no_info("%s : %s --\n", __func__, is_secondary(i2s)? "sec" : "pri");
 #endif
 }
 
@@ -1655,7 +1655,7 @@ static int i2s_runtime_suspend(struct device *dev)
 {
 	struct i2s_dai *i2s = dev_get_drvdata(dev);
 
-	pr_debug("%s entered\n", __func__);
+	pr_no_debug("%s entered\n", __func__);
 
 	i2s_cfg_gpio(i2s, "idle");
 	i2s_reg_save(i2s);
@@ -1671,7 +1671,7 @@ static int i2s_runtime_resume(struct device *dev)
 {
 	struct i2s_dai *i2s = dev_get_drvdata(dev);
 
-	pr_debug("%s entered\n", __func__);
+	pr_no_debug("%s entered\n", __func__);
 
 	lpass_get_sync(dev);
 	clk_prepare_enable(i2s->opclk0);
@@ -1966,7 +1966,7 @@ static int samsung_i2s_probe(struct platform_device *pdev)
 		compr_dai->dma_playback.esa_dma = true;
 		compr_dai->dma_playback.compr_dma = true;
 		compr_dai->dma_playback.sec_dma_dev = &sec_dai->pdev->dev;
-		pr_info("Compress dai : sec_dai = %s\n",
+		pr_no_info("Compress dai : sec_dai = %s\n",
 				dev_name(&sec_dai->pdev->dev));
 
 		compr_dai->pri_dai = pri_dai;

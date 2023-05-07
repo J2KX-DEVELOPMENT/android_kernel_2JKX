@@ -184,13 +184,13 @@ int exynos_mipi_dsi_register_lcd_device(struct mipi_dsim_lcd_device *lcd_dev)
 	struct mipi_dsim_ddi *dsim_ddi;
 
 	if (!lcd_dev->name) {
-		pr_err("dsim_lcd_device name is NULL.\n");
+		pr_no_err("dsim_lcd_device name is NULL.\n");
 		return -EFAULT;
 	}
 
 	dsim_ddi = kzalloc(sizeof(struct mipi_dsim_ddi), GFP_KERNEL);
 	if (!dsim_ddi) {
-		pr_err("failed to allocate dsim_ddi object.\n");
+		pr_no_err("failed to allocate dsim_ddi object.\n");
 		return -ENOMEM;
 	}
 
@@ -245,19 +245,19 @@ int exynos_mipi_dsi_register_lcd_driver(struct mipi_dsim_lcd_driver *lcd_drv)
 	struct mipi_dsim_ddi *dsim_ddi;
 
 	if (!lcd_drv->name) {
-		pr_err("dsim_lcd_driver name is NULL.\n");
+		pr_no_err("dsim_lcd_driver name is NULL.\n");
 		return -EFAULT;
 	}
 
 	dsim_ddi = exynos_mipi_dsi_find_lcd_device(lcd_drv);
 	if (!dsim_ddi) {
-		pr_err("mipi_dsim_ddi object not found.\n");
+		pr_no_err("mipi_dsim_ddi object not found.\n");
 		return -EFAULT;
 	}
 
 	dsim_ddi->dsim_lcd_drv = lcd_drv;
 
-	pr_info("registered panel driver(%s) to mipi-dsi driver.\n",
+	pr_no_info("registered panel driver(%s) to mipi-dsi driver.\n",
 		lcd_drv->name);
 
 	return 0;

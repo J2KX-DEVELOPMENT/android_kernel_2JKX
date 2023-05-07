@@ -12,9 +12,9 @@
 #define MAX_FREQ 900
 #define HIGHSPEED_FREQ  666
 #define HIGHSPEED_LOAD 38
-#define MIN_FREQ 80
+#define MIN_FREQ 350
 #define MAX_FREQ2 900000
-#define MIN_FREQ2 80000
+#define MIN_FREQ2 350000
 
 /*
  * Min frequency shouldn't be higher than 415

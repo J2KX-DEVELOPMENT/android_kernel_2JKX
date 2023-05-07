@@ -48,7 +48,7 @@ const char *kutf_dsprintf(struct kutf_mempool *pool,
 	va_end(args);
 
 	if (len < 0) {
-		pr_err("kutf_dsprintf: Bad format dsprintf format %s\n", fmt);
+		pr_no_err("kutf_dsprintf: Bad format dsprintf format %s\n", fmt);
 		goto fail_format;
 	}
 

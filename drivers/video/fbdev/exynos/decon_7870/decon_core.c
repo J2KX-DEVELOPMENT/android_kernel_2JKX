@@ -185,7 +185,7 @@ static u32 wincon(u32 bits_per_pixel, u32 transp_length, int format)
 		}
 		break;
 	default:
-		pr_err("%d bpp doesn't support\n", bits_per_pixel);
+		pr_no_err("%d bpp doesn't support\n", bits_per_pixel);
 		break;
 	}
 

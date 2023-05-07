@@ -294,7 +294,7 @@ int kutf_helper_receive_named_val(
 		}
 	}
 	if (!name_str) {
-		pr_err("Invalid name part for received string '%s'\n",
+		pr_no_err("Invalid name part for received string '%s'\n",
 				recv_str);
 		return KUTF_HELPER_ERR_INVALID_NAME;
 	}
@@ -320,11 +320,11 @@ int kutf_helper_receive_named_val(
 				recv_sz -= (strval_len + 1);
 				type = KUTF_HELPER_VALTYPE_STR;
 			} else {
-				pr_err("String value contains invalid characters in rest of received string '%s'\n", recv_str);
+				pr_no_err("String value contains invalid characters in rest of received string '%s'\n", recv_str);
 				err = KUTF_HELPER_ERR_CHARS_AFTER_VAL;
 			}
 		} else {
-			pr_err("End of string delimiter not found in rest of received string '%s'\n", recv_str);
+			pr_no_err("End of string delimiter not found in rest of received string '%s'\n", recv_str);
 			err = KUTF_HELPER_ERR_NO_END_DELIMITER;
 		}
 	} else {
@@ -340,7 +340,7 @@ int kutf_helper_receive_named_val(
 			recv_sz -= len_remain;
 		} else {
 			/* special case: not a number, report as such */
-			pr_err("Rest of received string was not a numeric value or quoted string value: '%s'\n", recv_str);
+			pr_no_err("Rest of received string was not a numeric value or quoted string value: '%s'\n", recv_str);
 		}
 	}
 
@@ -349,7 +349,7 @@ int kutf_helper_receive_named_val(
 
 	/* Any remaining characters - error */
 	if (strnlen(recv_str, recv_sz) != 0) {
-		pr_err("Characters remain after value of type %s: '%s'\n",
+		pr_no_err("Characters remain after value of type %s: '%s'\n",
 				get_val_type_name(type), recv_str);
 		return KUTF_HELPER_ERR_CHARS_AFTER_VAL;
 	}
@@ -363,7 +363,7 @@ int kutf_helper_receive_named_val(
 		named_val->u.val_str = strval;
 		break;
 	default:
-		pr_err("Unreachable, fix kutf_helper_receive_named_val\n");
+		pr_no_err("Unreachable, fix kutf_helper_receive_named_val\n");
 		/* Coding error, report as though 'run' file failed */
 		return -EINVAL;
 	}

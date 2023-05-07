@@ -100,7 +100,7 @@ static int exynos_fimc_is_module_pin_control(struct device *dev,
 				}
 
 				if (regulator_is_enabled(regulator)) {
-					pr_warning("%s regulator is already enabled\n", name);
+					pr_no_warning("%s regulator is already enabled\n", name);
 					regulator_put(regulator);
 					return 0;
 				}
@@ -113,7 +113,7 @@ static int exynos_fimc_is_module_pin_control(struct device *dev,
 				}
 			} else {
 				if (!regulator_is_enabled(regulator)) {
-					pr_warning("%s regulator is already disabled\n", name);
+					pr_no_warning("%s regulator is already disabled\n", name);
 					regulator_put(regulator);
 					return 0;
 				}

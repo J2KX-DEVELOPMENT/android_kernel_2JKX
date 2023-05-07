@@ -118,11 +118,11 @@ static void dma_enqueue(struct snd_pcm_substream *substream)
 	unsigned int limit;
 	struct samsung_dma_prep dma_info;
 
-	pr_info("Entered %s\n", __func__);
+	pr_no_info("Entered %s\n", __func__);
 
 	limit = (prtd->dma_end - prtd->dma_start) / prtd->dma_period;
 
-	pr_debug("%s: loaded %d, limit %d\n",
+	pr_no_debug("%s: loaded %d, limit %d\n",
 				__func__, prtd->dma_loaded, limit);
 
 	dma_info.cap = prtd->params->esa_dma ? DMA_CYCLIC :
@@ -142,11 +142,11 @@ static void dma_enqueue(struct snd_pcm_substream *substream)
 	} else {
 		dma_info.infiniteloop = 0;
 		while (prtd->dma_loaded < limit) {
-			pr_debug("dma_loaded: %d\n", prtd->dma_loaded);
+			pr_no_debug("dma_loaded: %d\n", prtd->dma_loaded);
 
 			if ((pos + dma_info.period) > prtd->dma_end) {
 				dma_info.period  = prtd->dma_end - pos;
-				pr_debug("%s: corrected dma len %ld\n",
+				pr_no_debug("%s: corrected dma len %ld\n",
 						__func__, dma_info.period);
 			}
 
@@ -168,7 +168,7 @@ static void audio_buffdone(void *data)
 	struct runtime_data *prtd;
 	dma_addr_t src, dst, pos;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	if (!substream)
 		return;
@@ -215,7 +215,7 @@ static int dma_hw_params(struct snd_pcm_substream *substream,
 	struct samsung_dma_req req;
 	struct samsung_dma_config config;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	/* return if this is a bufferless transfer e.g.
 	 * codec <--> BT codec or GSM modem -- lg FIXME */
@@ -228,14 +228,14 @@ static int dma_hw_params(struct snd_pcm_substream *substream,
 		/* prepare DMA */
 		prtd->params = dma;
 
-		pr_debug("params %p, client %p, channel %d\n", prtd->params,
+		pr_no_debug("params %p, client %p, channel %d\n", prtd->params,
 			prtd->params->client, prtd->params->channel);
 
 		if (prtd->params->esa_dma) {
 			prtd->params->ops = samsung_dma_get_ops();
 			req.cap = DMA_CYCLIC;
 		} else {
-			pr_info("No esa_dma %s\n", __func__);
+			pr_no_info("No esa_dma %s\n", __func__);
 			prtd->params->ops = samsung_dma_get_ops();
 			req.cap = (samsung_dma_has_circular() ?
 				DMA_CYCLIC : DMA_SLAVE);
@@ -248,18 +248,18 @@ static int dma_hw_params(struct snd_pcm_substream *substream,
 		/* config.maxburst = 1; */
 		config.fifo = prtd->params->dma_addr;
 		if (prtd->params->compr_dma) {
-			pr_info("%s: %d\n", __func__, __LINE__);
+			pr_no_info("%s: %d\n", __func__, __LINE__);
 			prtd->params->ch = prtd->params->ops->request(
 				prtd->params->channel, &req,
 				prtd->params->sec_dma_dev,
 				prtd->params->ch_name);
 		} else {
-			pr_info("%s: %d\n", __func__, __LINE__);
+			pr_no_info("%s: %d\n", __func__, __LINE__);
 			prtd->params->ch = prtd->params->ops->request(
 				prtd->params->channel, &req, rtd->cpu_dai->dev,
 				prtd->params->ch_name);
 		}
-		pr_info("dma_request: ch %d, req %p, dev %p, ch_name [%s]\n",
+		pr_no_info("dma_request: ch %d, req %p, dev %p, ch_name [%s]\n",
 			prtd->params->channel, &req, rtd->cpu_dai->dev,
 			prtd->params->ch_name);
 		prtd->params->ops->config(prtd->params->ch, &config);
@@ -287,7 +287,7 @@ static int dma_hw_params(struct snd_pcm_substream *substream,
 		prtd->dma_period >>= 1;
 	spin_unlock_irq(&prtd->lock);
 
-	pr_info("ADMA:%s:DmaAddr=@%x Total=%d PrdSz=%d(%d) #Prds=%d dma_area=0x%p\n",
+	pr_no_info("ADMA:%s:DmaAddr=@%x Total=%d PrdSz=%d(%d) #Prds=%d dma_area=0x%p\n",
 		(substream->stream == SNDRV_PCM_STREAM_PLAYBACK) ? "P" : "C",
 		(u32)prtd->dma_start, (u32)runtime->dma_bytes,
 		params_period_bytes(params),(u32) prtd->dma_period,
@@ -300,7 +300,7 @@ static int dma_hw_free(struct snd_pcm_substream *substream)
 {
 	struct runtime_data *prtd = substream->runtime->private_data;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	snd_pcm_set_runtime_buffer(substream, NULL);
 
@@ -319,7 +319,7 @@ static int dma_prepare(struct snd_pcm_substream *substream)
 	struct runtime_data *prtd = substream->runtime->private_data;
 	int ret = 0;
 
-	pr_info("Entered %s\n", __func__);
+	pr_no_info("Entered %s\n", __func__);
 
 	/* return if this is a bufferless transfer e.g.
 	 * codec <--> BT codec or GSM modem -- lg FIXME */
@@ -344,7 +344,7 @@ static int dma_trigger(struct snd_pcm_substream *substream, int cmd)
 	struct runtime_data *prtd = substream->runtime->private_data;
 	int ret = 0;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	spin_lock(&prtd->lock);
 
@@ -381,11 +381,11 @@ static snd_pcm_uframes_t dma_pointer(struct snd_pcm_substream *substream)
 	struct runtime_data *prtd = runtime->private_data;
 	unsigned long res;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	res = prtd->dma_pos - prtd->dma_start;
 
-	pr_debug("Pointer offset: %lu\n", res);
+	pr_no_debug("Pointer offset: %lu\n", res);
 
 	/* we seem to be getting the odd error from the pcm library due
 	 * to out-of-bounds pointers. this is maybe due to the dma engine
@@ -406,7 +406,7 @@ static int dma_open(struct snd_pcm_substream *substream)
 	struct snd_pcm_runtime *runtime = substream->runtime;
 	struct runtime_data *prtd;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	prtd = kzalloc(sizeof(struct runtime_data), GFP_KERNEL);
 	if (prtd == NULL)
@@ -420,7 +420,7 @@ static int dma_open(struct snd_pcm_substream *substream)
 	runtime->private_data = prtd;
 	snd_soc_set_runtime_hwparams(substream, &prtd->hw);
 
-	pr_info("%s: prtd = %p\n", __func__, prtd);
+	pr_no_info("%s: prtd = %p\n", __func__, prtd);
 
 	return 0;
 }
@@ -430,14 +430,14 @@ static int dma_close(struct snd_pcm_substream *substream)
 	struct snd_pcm_runtime *runtime = substream->runtime;
 	struct runtime_data *prtd = runtime->private_data;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	if (!prtd) {
-		pr_info("dma_close called with prtd == NULL\n");
+		pr_no_info("dma_close called with prtd == NULL\n");
 		return -EINVAL;
 	}
 
-	pr_info("%s: prtd = %p, irq_cnt %u\n",
+	pr_no_info("%s: prtd = %p, irq_cnt %u\n",
 			__func__, prtd, prtd->irq_cnt);
 	kfree(prtd);
 
@@ -453,7 +453,7 @@ static int dma_mmap(struct snd_pcm_substream *substream,
 	struct dma_iova *di;
 #endif
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 #ifdef CONFIG_SND_SAMSUNG_IOMMU
 	list_for_each_entry(di, &iova_list, node) {
@@ -484,7 +484,7 @@ static int preallocate_dma_buffer(struct snd_pcm *pcm, int stream)
 	struct snd_dma_buffer *buf = &substream->dma_buffer;
 	size_t size = dma_hardware.buffer_bytes_max;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	buf->dev.type = SNDRV_DMA_TYPE_DEV;
 	buf->dev.dev = pcm->card->dev;
@@ -529,7 +529,7 @@ static int preallocate_dma_buffer_of(struct snd_pcm *pcm, int stream,
 	int ret;
 #endif
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 #ifndef CONFIG_SOC_EXYNOS7870
 	if (of_property_read_u32(np, dma_prop_addr[stream], &val))
@@ -587,10 +587,10 @@ static int preallocate_dma_buffer_of(struct snd_pcm *pcm, int stream,
 			}
 			sram_rx_buf->area = ioremap(sram_rx_buf->addr, sram_rx_buf->bytes);
 			if (!sram_rx_buf->area) {
-				pr_info("Failed to map RX-SRAM into kernel virtual\n");
+				pr_no_info("Failed to map RX-SRAM into kernel virtual\n");
 				return -ENOMEM;
 			}
-			pr_info("Audio RX-SRAM Information, pa = %pa, size = %zx, kva = %p\n",
+			pr_no_info("Audio RX-SRAM Information, pa = %pa, size = %zx, kva = %p\n",
 			&sram_rx_buf->addr, sram_rx_buf->bytes, sram_rx_buf->area);
 		}
 	}
@@ -621,7 +621,7 @@ static int preallocate_dma_buffer_of(struct snd_pcm *pcm, int stream,
 		di->va = buf->area;
 		list_add(&di->node, &iova_list);
 
-		pr_info("%s: DmaAddr-iommu %08X dma_buf_pa %08X\n",
+		pr_no_info("%s: DmaAddr-iommu %08X dma_buf_pa %08X\n",
 				__func__, (u32)dma_addr, (u32)dma_buf_pa);
 	} else {
 		buf->area = ioremap(buf->addr, size);
@@ -679,7 +679,7 @@ static int preallocate_dma_buffer_of(struct snd_pcm *pcm, int stream,
 			di_uhqa->va = dram_uhqa_tx_buf->area;
 			list_add(&di_uhqa->node, &iova_list);
 
-			pr_info("Audio TX-UHQA-BUF Information, pa = %pa, size = %zx, kva = %p\n",
+			pr_no_info("Audio TX-UHQA-BUF Information, pa = %pa, size = %zx, kva = %p\n",
 				&dram_uhqa_tx_buf->addr, dram_uhqa_tx_buf->bytes,
 				dram_uhqa_tx_buf->area);
 		}
@@ -707,7 +707,7 @@ static void dma_free_dma_buffers(struct snd_pcm *pcm)
 	struct runtime_data *prtd;
 	int stream;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	for (stream = 0; stream < 2; stream++) {
 		substream = pcm->streams[stream].substream;
@@ -739,7 +739,7 @@ static int dma_new(struct snd_soc_pcm_runtime *rtd)
 	struct device_node *np = rtd->cpu_dai->dev->of_node;
 	int ret = 0;
 
-	pr_debug("Entered %s\n", __func__);
+	pr_no_debug("Entered %s\n", __func__);
 
 	if (!card->dev->dma_mask)
 		card->dev->dma_mask = &dma_mask;

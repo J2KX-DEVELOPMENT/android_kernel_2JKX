@@ -64,7 +64,7 @@ static int s3c24xx_uda134x_startup(struct snd_pcm_substream *substream)
 #endif
 
 	mutex_lock(&clk_lock);
-	pr_debug("%s %d\n", __func__, clk_users);
+	pr_no_debug("%s %d\n", __func__, clk_users);
 	if (clk_users == 0) {
 		xtal = clk_get(&s3c24xx_uda134x_snd_device->dev, "xtal");
 		if (IS_ERR(xtal)) {
@@ -111,7 +111,7 @@ static int s3c24xx_uda134x_startup(struct snd_pcm_substream *substream)
 static void s3c24xx_uda134x_shutdown(struct snd_pcm_substream *substream)
 {
 	mutex_lock(&clk_lock);
-	pr_debug("%s %d\n", __func__, clk_users);
+	pr_no_debug("%s %d\n", __func__, clk_users);
 	clk_users -= 1;
 	if (clk_users == 0) {
 		clk_put(xtal);
@@ -158,10 +158,10 @@ static int s3c24xx_uda134x_hw_params(struct snd_pcm_substream *substream,
 		clk_source = S3C24XX_CLKSRC_PCLK;
 		div = bi % 33;
 	}
-	pr_debug("%s desired rate %lu, %d\n", __func__, rate, bi);
+	pr_no_debug("%s desired rate %lu, %d\n", __func__, rate, bi);
 
 	clk = (fs_mode == S3C2410_IISMOD_384FS ? 384 : 256) * rate;
-	pr_debug("%s will use: %s %s %d sysclk %d err %ld\n", __func__,
+	pr_no_debug("%s will use: %s %s %d sysclk %d err %ld\n", __func__,
 		 fs_mode == S3C2410_IISMOD_384FS ? "384FS" : "256FS",
 		 clk_source == S3C24XX_CLKSRC_MPLL ? "MPLLin" : "PCLK",
 		 div, clk, err);

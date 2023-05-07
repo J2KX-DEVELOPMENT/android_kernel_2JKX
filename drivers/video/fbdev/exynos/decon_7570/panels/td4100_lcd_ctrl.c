@@ -642,21 +642,21 @@ static int dsim_panel_probe(struct dsim_device *dsim)
 
 	dsim->priv.par = lcd = kzalloc(sizeof(struct lcd_info), GFP_KERNEL);
 	if (!lcd) {
-		pr_err("%s: failed to allocate for lcd\n", __func__);
+		pr_no_err("%s: failed to allocate for lcd\n", __func__);
 		ret = -ENOMEM;
 		goto probe_err;
 	}
 
 	dsim->lcd = lcd->ld = lcd_device_register("panel", dsim->dev, lcd, NULL);
 	if (IS_ERR(lcd->ld)) {
-		pr_err("%s: failed to register lcd device\n", __func__);
+		pr_no_err("%s: failed to register lcd device\n", __func__);
 		ret = PTR_ERR(lcd->ld);
 		goto probe_err;
 	}
 
 	lcd->bd = backlight_device_register("panel", dsim->dev, lcd, &panel_backlight_ops, NULL);
 	if (IS_ERR(lcd->bd)) {
-		pr_err("%s: failed to register backlight device\n", __func__);
+		pr_no_err("%s: failed to register backlight device\n", __func__);
 		ret = PTR_ERR(lcd->bd);
 		goto probe_err;
 	}

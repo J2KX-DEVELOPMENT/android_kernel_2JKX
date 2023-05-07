@@ -71,17 +71,17 @@ static void vpp_dump_cfw_register(void)
 	/* FIXME */
 	return;
 	smc_val = exynos_smc(0x810000DE, MEM_FAULT_VPP_MASTER, 0, 0);
-	pr_err("=== vpp_master:0x%x\n", smc_val);
+	pr_no_err("=== vpp_master:0x%x\n", smc_val);
 	smc_val = exynos_smc(0x810000DE, MEM_FAULT_VPP_CFW, 0, 0);
-	pr_err("=== vpp_cfw:0x%x\n", smc_val);
+	pr_no_err("=== vpp_cfw:0x%x\n", smc_val);
 	smc_val = exynos_smc(0x810000DE, MEM_FAULT_PROT_EXCEPT_0, 0, 0);
-	pr_err("=== vpp_except_0:0x%x\n", smc_val);
+	pr_no_err("=== vpp_except_0:0x%x\n", smc_val);
 	smc_val = exynos_smc(0x810000DE, MEM_FAULT_PROT_EXCEPT_1, 0, 0);
-	pr_err("=== vpp_except_1:0x%x\n", smc_val);
+	pr_no_err("=== vpp_except_1:0x%x\n", smc_val);
 	smc_val = exynos_smc(0x810000DE, MEM_FAULT_PROT_EXCEPT_2, 0, 0);
-	pr_err("=== vpp_except_2:0x%x\n", smc_val);
+	pr_no_err("=== vpp_except_2:0x%x\n", smc_val);
 	smc_val = exynos_smc(0x810000DE, MEM_FAULT_PROT_EXCEPT_3, 0, 0);
-	pr_err("=== vpp_except_3:0x%x\n", smc_val);
+	pr_no_err("=== vpp_except_3:0x%x\n", smc_val);
 }
 
 static void vpp_dump_registers(struct vpp_dev *vpp)
@@ -878,7 +878,7 @@ static int vpp_probe(struct platform_device *pdev)
 
 	vpp->id = of_alias_get_id(dev->of_node, "vpp");
 
-	pr_info("###%s:VPP%d probe : start\n", __func__, vpp->id);
+	pr_no_info("###%s:VPP%d probe : start\n", __func__, vpp->id);
 	ret = of_property_read_u32(dev->of_node, "#pb-id-cells",
 			&vpp->pbuf_num);
 	if (ret) {

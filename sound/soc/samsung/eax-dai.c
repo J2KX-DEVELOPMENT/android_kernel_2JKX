@@ -148,7 +148,7 @@ int eax_dai_register(struct snd_soc_dai *dai,
 		int (*dai_suspend)(struct snd_soc_dai *dai),
 		int (*dai_resume)(struct snd_soc_dai *dai))
 {
-	pr_debug("%s: dai %p, dai_ops %p\n", __func__, dai, dai_ops);
+	pr_no_debug("%s: dai %p, dai_ops %p\n", __func__, dai, dai_ops);
 
 	ei.master = true;
 	ei.master_dai = dai;
@@ -364,14 +364,14 @@ static void eax_dai_shutdown(struct snd_pcm_substream *substream,
 
 static int eax_dai_probe(struct snd_soc_dai *dai)
 {
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	return 0;
 }
 
 static int eax_dai_remove(struct snd_soc_dai *dai)
 {
-	pr_debug("%s\n", __func__);
+	pr_no_debug("%s\n", __func__);
 
 	return 0;
 }

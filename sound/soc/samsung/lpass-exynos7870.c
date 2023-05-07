@@ -305,7 +305,7 @@ int lpass_register_subip(struct device *ip_dev, const char *ip_name)
 	atomic_set(&si->use_cnt, 0);
 	list_add(&si->node, &subip_list);
 
-	pr_info("%s: %s(%p) registered\n", __func__, ip_name, ip_dev);
+	pr_no_info("%s: %s(%p) registered\n", __func__, ip_name, ip_dev);
 
 	return 0;
 }
@@ -317,7 +317,7 @@ int lpass_set_gpio_cb(struct device *ip_dev, void (*ip_cb)(struct device *dev))
 	list_for_each_entry(si, &subip_list, node) {
 		if (si->dev == ip_dev) {
 			si->cb = ip_cb;
-			pr_info("%s: %s(cb: %p)\n", __func__,
+			pr_no_info("%s: %s(cb: %p)\n", __func__,
 				si->name, si->cb);
 			return 0;
 		}
@@ -618,7 +618,7 @@ static int lpass_probe(struct platform_device *pdev)
 	lpass.proc_file = proc_create("driver/lpass", 0,
 					NULL, &lpass_proc_fops);
 	if (!lpass.proc_file)
-		pr_info("Failed to register /proc/driver/lpadd\n");
+		pr_no_info("Failed to register /proc/driver/lpadd\n");
 
 	spin_lock_init(&lpass.lock);
 	atomic_set(&lpass.use_cnt, 0);
@@ -736,7 +736,7 @@ subsys_initcall(lpass_driver_init);
 #ifdef CONFIG_PM_RUNTIME
 static int lpass_driver_rpm_begin(void)
 {
-	pr_debug("%s entered\n", __func__);
+	pr_no_debug("%s entered\n", __func__);
 
 	pm_runtime_put_sync(&lpass.pdev->dev);
 
