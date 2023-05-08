@@ -798,7 +798,7 @@ static int mif_handle_notification(struct notifier_block *nb,
 	struct modem_ctl *mc;
 	muic_attached_dev_t attached_dev = *(muic_attached_dev_t *)data;
 
-	pr_err("%s: action=%lu attached_dev=%d\n", __func__, action, (int)attached_dev);
+	pr_no_err("%s: action=%lu attached_dev=%d\n", __func__, action, (int)attached_dev);
 
 	mc = container_of(nb, struct modem_ctl, uart_notifier);
 
@@ -1077,14 +1077,14 @@ int init_modemctl_device(struct modem_ctl *mc, struct modem_data *pdata)
 #ifdef CONFIG_SEC_SYSFS
 	modemif_switch = sec_device_create(NULL, "switch");
 	if (IS_ERR(modemif_switch)) {
-		pr_err("%s Failed to create device(switch)!\n", __func__);
+		pr_no_err("%s Failed to create device(switch)!\n", __func__);
 		ret = -ENODEV;
 	}
 
 	/* create sysfs group */
 	ret = sysfs_create_group(&modemif_switch->kobj, &modemif_sysfs_group);
 	if (ret) {
-		pr_err("%s: failed to create modemif sysfs attribute group\n",
+		pr_no_err("%s: failed to create modemif sysfs attribute group\n",
 			__func__);
 	}
 	dev_set_drvdata(modemif_switch, mc);

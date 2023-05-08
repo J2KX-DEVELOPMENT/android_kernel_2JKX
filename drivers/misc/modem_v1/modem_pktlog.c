@@ -35,7 +35,7 @@ void pktlog_copy_buf(struct pktlog_data *pktlog, int type, void *buf)
 	pkt = alloc_skb(PKTLOG_MAX_LEN,
 			int_interrupt() ? GFP_ATOMIC : GFP_KERNEL);
 	if (!pkt) {
-		pr_err("%s: fail to alloc skb for pktlog buf\n", __func__);
+		pr_no_err("%s: fail to alloc skb for pktlog buf\n", __func__);
 		return;
 	}
 	pkt->tstamp = ktime_get_real();
@@ -64,7 +64,7 @@ void pktlog_queue_skb(struct pktlog_data *pktlog, unsigned char dir,
 
 	pkt = skb_clone(skb, in_interrupt() ? GFP_ATOMIC : GFP_KERNEL);
 	if (!pkt) {
-		pr_err("%s: fail to skb_clone for pktlog buf\n", __func__);
+		pr_no_err("%s: fail to skb_clone for pktlog buf\n", __func__);
 		return;
 	}
 	pkt->tstamp = timespec_to_ktime(current_kernel_time());
@@ -86,12 +86,12 @@ static int pktlog_open(struct inode *inode, struct file *filp)
 	struct pktlog_data *pktlog = filp->private_data;
 
 	if (!pktlog) {
-		pr_err("%s: Invalid pktlog data\n", __func__);
+		pr_no_err("%s: Invalid pktlog data\n", __func__);
 		return -EINVAL;
 	}
 
 	if (atomic_inc_return(&pktlog->opened) >= 2) {
-		pr_err("%s: Not support multi user oepn(%d)\n", __func__,
+		pr_no_err("%s: Not support multi user oepn(%d)\n", __func__,
 			atomic_read(&pktlog->opened));
 		atomic_dec(&pktlog->opened);
 		return -EINVAL;
@@ -99,7 +99,7 @@ static int pktlog_open(struct inode *inode, struct file *filp)
 	pktlog->file_hdr.snaplen = pktlog->snaplen;
 	pktlog->copy_file_header = true;
 
-	pr_info("%s: qmax = %d open by %s\n", __func__, pktlog->qmax,
+	pr_no_info("%s: qmax = %d open by %s\n", __func__, pktlog->qmax,
 			current->comm);
 	return 0;
 }
@@ -108,7 +108,7 @@ static int pktlog_release(struct inode *inode, struct file *filp)
 {
 	struct pktlog_data *pktlog = filp->private_data;
 
-	pr_info("%s: qmax = %d close by %s- %d\n", __func__, pktlog->qmax,
+	pr_no_info("%s: qmax = %d close by %s- %d\n", __func__, pktlog->qmax,
 			current->comm, atomic_dec_return(&pktlog->opened));
 	return 0;
 }
@@ -118,7 +118,7 @@ static unsigned int pktlog_poll(struct file *filp, struct poll_table_struct *wai
 	struct pktlog_data *pktlog = filp->private_data;
 
 	if (!pktlog) {
-		pr_err("%s: Invalid pktlog data\n", __func__);
+		pr_no_err("%s: Invalid pktlog data\n", __func__);
 		return POLLERR;
 	}
 
@@ -142,7 +142,7 @@ static ssize_t pktlog_read(struct file *filp, char *buf, size_t count,
 	unsigned payload_len, cplen = 0;
 
 	if (!pktlog) {
-		pr_err("%s: Invalid pktlog data\n", __func__);
+		pr_no_err("%s: Invalid pktlog data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -281,7 +281,7 @@ struct pktlog_data *create_pktlog(char *name)
 
 	pktlog = kzalloc(sizeof(struct pktlog_data), GFP_KERNEL);
 	if (!pktlog) {
-		pr_err("%s: pktlog data alloc fail\n", __func__);
+		pr_no_err("%s: pktlog data alloc fail\n", __func__);
 		return NULL;
 	}
 
@@ -298,26 +298,26 @@ struct pktlog_data *create_pktlog(char *name)
 
 	ret = misc_register(&pktlog->misc);
 	if (ret < 0) {
-		pr_err("%s: fail to register misc device '%s'\n", __func__,
+		pr_no_err("%s: fail to register misc device '%s'\n", __func__,
 			pktlog->misc.name);
 		goto free_exit;
 	}
 
 	ret = device_create_file(pktlog->misc.this_device, &attr_qmax);
 	if (ret) {
-		pr_err("%s: fail to create qmax sysfs file: %s\n", __func__,
+		pr_no_err("%s: fail to create qmax sysfs file: %s\n", __func__,
 				name);
 		goto free_exit;
 	}
 
 	ret = device_create_file(pktlog->misc.this_device, &attr_snaplen);
 	if (ret) {
-		pr_err("%s: fail to create snaplen sysfs file: %s\n", __func__,
+		pr_no_err("%s: fail to create snaplen sysfs file: %s\n", __func__,
 				name);
 		goto free_exit;
 	}
 	init_pcap_fileheader(pktlog);
-	pr_info("%s: probed - %s\n", __func__, name);
+	pr_no_info("%s: probed - %s\n", __func__, name);
 
 	return pktlog;
 

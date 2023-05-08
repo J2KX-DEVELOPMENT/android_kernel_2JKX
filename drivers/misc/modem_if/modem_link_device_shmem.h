@@ -785,7 +785,7 @@ static inline void print_req_ack(struct shmem_link_device *shmd, int dev,
 	space = circ_get_space(qsize, in, out);
 	ts2utc(&mst->ts, &utc);
 
-	pr_info("%s: [%02d:%02d:%02d.%06d] REQ_ACK: %s->%s: %s.%d {in:%d out:%d rcvd:%d space:%d}\n",
+	pr_no_info("%s: [%02d:%02d:%02d.%06d] REQ_ACK: %s->%s: %s.%d {in:%d out:%d rcvd:%d space:%d}\n",
 		MIF_TAG, utc.hour, utc.min, utc.sec, us, mc->name, ld->name,
 		get_dev_name(dev), req_ack_rcvd, in, out, rcvd, space);
 }
@@ -827,7 +827,7 @@ static inline void print_res_ack(struct shmem_link_device *shmd, int dev,
 	space = circ_get_space(qsize, in, out);
 	ts2utc(&mst->ts, &utc);
 
-	pr_info("%s: [%02d:%02d:%02d.%06d] RES_ACK: %s->%s: %s.%d {in:%d out:%d rcvd:%d space:%d}\n",
+	pr_no_info("%s: [%02d:%02d:%02d.%06d] RES_ACK: %s->%s: %s.%d {in:%d out:%d rcvd:%d space:%d}\n",
 		MIF_TAG, utc.hour, utc.min, utc.sec, us, ld->name, mc->name,
 		get_dev_name(dev), req_ack_rcvd, in, out, rcvd, space);
 }

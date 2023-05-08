@@ -340,17 +340,17 @@ void print_mem_status(struct link_device *ld, struct mem_status *mst)
 	int us = ns2us(mst->ts.tv_nsec);
 
 	ts2utc(&mst->ts, &utc);
-	pr_info("%s: %s: [%02d:%02d:%02d.%06d] ",
+	pr_no_info("%s: %s: [%02d:%02d:%02d.%06d] ",
 			MIF_TAG, ld->name, utc.hour, utc.min, utc.sec, us);
-	pr_info("[%s] ACC{%X %d} ", get_dir_str(mst->dir),
+	pr_no_info("[%s] ACC{%X %d} ", get_dir_str(mst->dir),
 			mst->magic, mst->access);
-	pr_info("FMT{TI:%u TO:%u RI:%u RO:%u} ",
+	pr_no_info("FMT{TI:%u TO:%u RI:%u RO:%u} ",
 		mst->head[IPC_FMT][TX], mst->tail[IPC_FMT][TX],
 		mst->head[IPC_FMT][RX], mst->tail[IPC_FMT][RX]);
-	pr_info("RAW{TI:%u TO:%u RI:%u RO:%u} ",
+	pr_no_info("RAW{TI:%u TO:%u RI:%u RO:%u} ",
 		mst->head[IPC_RAW][TX], mst->tail[IPC_RAW][TX],
 		mst->head[IPC_RAW][RX], mst->tail[IPC_RAW][RX]);
-	pr_info("INTR{RX:0x%X TX:0x%X}\n", mst->int2ap, mst->int2cp);
+	pr_no_info("INTR{RX:0x%X TX:0x%X}\n", mst->int2ap, mst->int2cp);
 }
 
 /**
@@ -370,10 +370,10 @@ void print_circ_status(struct link_device *ld, int dev, struct mem_status *mst)
 		return;
 
 	ts2utc(&mst->ts, &utc);
-	pr_info("%s: %s: [%02d:%02d:%02d.%06d] [%s] %s | ",
+	pr_no_info("%s: %s: [%02d:%02d:%02d.%06d] [%s] %s | ",
 		MIF_TAG, ld->name, utc.hour, utc.min, utc.sec, us,
 		get_dir_str(mst->dir), get_dev_name(dev));
-	pr_info("TXQ{in:%u out:%u} RXQ{in:%u out:%u} | INTR{0x%02X}\n",
+	pr_no_info("TXQ{in:%u out:%u} RXQ{in:%u out:%u} | INTR{0x%02X}\n",
 		mst->head[dev][TX], mst->tail[dev][TX],
 		mst->head[dev][RX], mst->tail[dev][RX], mst->int2ap);
 }
@@ -396,9 +396,9 @@ void print_ipc_trace(struct link_device *ld, int dev, struct circ_status *stat,
 
 	ts2utc(ts, &utc);
 
-	pr_info("%s: [%d-%02d-%02d %02d:%02d:%02d.%03d] ", MIF_TAG, utc.year,
+	pr_no_info("%s: [%d-%02d-%02d %02d:%02d:%02d.%03d] ", MIF_TAG, utc.year,
 		utc.mon, utc.day, utc.hour, utc.min, utc.sec, utc.msec);
-	pr_info("%s %s_RXQ {IN:%u OUT:%u LEN:%d}\n",
+	pr_no_info("%s %s_RXQ {IN:%u OUT:%u LEN:%d}\n",
 		ld->name, get_dev_name(dev), stat->in, stat->out, stat->size);
 
 	mif_print_dump(buff, rcvd, 4);

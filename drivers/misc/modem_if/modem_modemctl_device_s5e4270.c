@@ -476,7 +476,7 @@ static void s5e4270_send_cp_wakeup()
 
 static void ap_wake_lock(u16 cmd, void *data)
 {
-	pr_info("[Modem IF] CP2AP wake interrupt is occured.\n");
+	pr_no_info("[Modem IF] CP2AP wake interrupt is occured.\n");
 	struct modem_ctl *mc = (struct modem_ctl *)data;
 
 	if (!wake_lock_active(&mc->mc_wake_lock)) {
@@ -532,7 +532,7 @@ int init_modemctl_device(struct modem_ctl *mc, struct modem_data *pdata)
 	pdev = to_platform_device(mc->dev);
 	mc->irq_phone_active = platform_get_irq(pdev, 0);
 	mc->irq_cp_wdt = platform_get_irq(pdev, 1);
-	pr_info("[Modem IF] Request irq : PHONE_ACTIVE(%d), CP_WDT(%d)\n",
+	pr_no_info("[Modem IF] Request irq : PHONE_ACTIVE(%d), CP_WDT(%d)\n",
 			mc->irq_phone_active, mc->irq_cp_wdt);
 
 	ret = request_irq(mc->irq_phone_active, phone_active_handler,
@@ -558,13 +558,13 @@ int init_modemctl_device(struct modem_ctl *mc, struct modem_data *pdata)
 		mif_err("irq_cp_wdt fail (%d)\n", ret);
 	*/
 
-	pr_info("[Modem IF] Register Mailbox interrupt for CP2AP wakeupl!!!\n");
+	pr_no_info("[Modem IF] Register Mailbox interrupt for CP2AP wakeupl!!!\n");
 	mbox_request_irq(MCU_APWAKE_INT, ap_wake_lock, (void*)mc);
 
-	pr_info("[Modem IF] Register Mailbox interrupt for CP2AP status!!!\n");
+	pr_no_info("[Modem IF] Register Mailbox interrupt for CP2AP status!!!\n");
 	mbox_request_irq(MCU_CP2AP_STAT, cp2ap_status_handler, (void*)mc);
 
-	pr_info("[Modem IF] Register Mailbox interrupt for CP2AP status!!!\n");
+	pr_no_info("[Modem IF] Register Mailbox interrupt for CP2AP status!!!\n");
 	mbox_request_irq(MCU_CP2AP_DVFS_REQ, cp2ap_dvfsreq_handler, (void*)mc);
 
 	s5e4270_set_ap_status(mc);

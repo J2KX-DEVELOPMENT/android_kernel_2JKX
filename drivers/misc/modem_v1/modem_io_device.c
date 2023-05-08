@@ -59,7 +59,7 @@ static ssize_t store_waketime(struct device *dev,
 			miscdev);
 
 	if (!iod) {
-		pr_err("mif: %s: INVALID IO device\n", miscdev->name);
+		pr_no_err("mif: %s: INVALID IO device\n", miscdev->name);
 		return -EINVAL;
 	}
 

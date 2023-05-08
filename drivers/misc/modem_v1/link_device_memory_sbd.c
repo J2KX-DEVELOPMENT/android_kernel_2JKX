@@ -41,10 +41,10 @@ static void print_sbd_config(struct sbd_link_device *sl)
 #ifdef DEBUG_MODEM_IF
 	int i;
 
-	pr_err("mif: SBD_IPC {shmem_base:0x%lX shmem_size:%d}\n",
+	pr_no_err("mif: SBD_IPC {shmem_base:0x%lX shmem_size:%d}\n",
 		(unsigned long)sl->shmem, sl->shmem_size);
 
-	pr_err("mif: SBD_IPC {version:%d num_channels:%d rbps_offset:%d}\n",
+	pr_no_err("mif: SBD_IPC {version:%d num_channels:%d rbps_offset:%d}\n",
 		sl->g_desc->version, sl->g_desc->num_channels,
 		sl->g_desc->rbps_offset);
 
@@ -53,7 +53,7 @@ static void print_sbd_config(struct sbd_link_device *sl)
 		struct sbd_rb_desc *rbd;
 
 		rbd = &sl->g_desc->rb_desc[i][UL];
-		pr_err("mif: RB_DESC[%-2d][UL](offset:%d) = "
+		pr_no_err("mif: RB_DESC[%-2d][UL](offset:%d) = "
 			"{id:%-2d ch:%-3d dir:%s} "
 			"{sbdv_offset:%-5d rb_len:%-3d} "
 			"{buff_size:%-4d payload_offset:%d}\n",
@@ -62,7 +62,7 @@ static void print_sbd_config(struct sbd_link_device *sl)
 			rbd->length, rbd->buff_size, rbd->payload_offset);
 
 		rbd = &sl->g_desc->rb_desc[i][DL];
-		pr_err("mif: RB_DESC[%-2d][DL](offset:%d) = "
+		pr_no_err("mif: RB_DESC[%-2d][DL](offset:%d) = "
 			"{id:%-2d ch:%-3d dir:%s} "
 			"{sbdv_offset:%-5d rb_len:%-3d} "
 			"{buff_size:%d payload_offset:%d}\n",

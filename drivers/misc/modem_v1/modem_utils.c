@@ -338,9 +338,9 @@ static struct log_buff *get_data_logb(void)
 static inline void print_logb(struct log_buff *logb)
 {
 	if (logb->level == 0)
-		pr_err(LOG_TAG "%s", logb->data);
+		pr_no_err(LOG_TAG "%s", logb->data);
 	else
-		pr_info(LOG_TAG "%s", logb->data);
+		pr_no_info(LOG_TAG "%s", logb->data);
 }
 
 static void evt_log_work_func(struct work_struct *ws)
@@ -499,7 +499,7 @@ int pr_buffer(const char *tag, const char *data, size_t data_len,
 	dump2hex(str, (len ? len * 3 : 1), data, len);
 
 	/* don't change this printk to mif_debug for print this as level7 */
-	return pr_info("%s: %s(%ld): %s%s\n", MIF_TAG, tag, (long)data_len,
+	return pr_no_info("%s: %s(%ld): %s%s\n", MIF_TAG, tag, (long)data_len,
 			str, (len == data_len) ? "" : " ...");
 }
 
@@ -930,7 +930,7 @@ void mif_print_dump(const u8 *data, int len, int width)
 	else
 		mif_dump2format4(data, len, buff, LOG_TAG);
 
-	pr_info("%s", buff);
+	pr_no_info("%s", buff);
 
 	kfree(buff);
 }
@@ -1155,7 +1155,7 @@ void print_ipv4_packet(const u8 *ip_pkt, enum direction dir)
 	snprintf(line, LINE_BUFF_SIZE, "%s\n", LINE_SEPARATOR);
 	strcat(buff, line);
 
-	pr_err("%s\n", buff);
+	pr_no_err("%s\n", buff);
 
 	kfree(buff);
 }

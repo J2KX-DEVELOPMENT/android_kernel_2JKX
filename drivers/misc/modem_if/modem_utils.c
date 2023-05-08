@@ -256,7 +256,7 @@ static inline void pr_ipc_msg(int level, u8 ch, struct timespec *ts,
 	dump2hex((str + offset), msg, (len > MAX_HEX_LEN ? MAX_HEX_LEN : len));
 
 	if (level > 0) {
-		pr_err("%s: " HMSU_FMT " %s\n", MIF_TAG,
+		pr_no_err("%s: " HMSU_FMT " %s\n", MIF_TAG,
 			utc.hour, utc.min, utc.sec, utc.msec, str);
 	}
 }
@@ -332,10 +332,10 @@ void pr_ipc(int level, const char *tag, const char *data, size_t len)
 	get_utc_time(&utc);
 	dump2hex(str, data, (len > 32 ? 32 : len));
 	if (level > 0) {
-		pr_err("%s: [%02d:%02d:%02d.%03d] %s: %s\n", MIF_TAG,
+		pr_no_err("%s: [%02d:%02d:%02d.%03d] %s: %s\n", MIF_TAG,
 			utc.hour, utc.min, utc.sec, utc.msec, tag, str);
 	} else {
-		pr_info("%s: [%02d:%02d:%02d.%03d] %s: %s\n", MIF_TAG,
+		pr_no_info("%s: [%02d:%02d:%02d.%03d] %s: %s\n", MIF_TAG,
 			utc.hour, utc.min, utc.sec, utc.msec, tag, str);
 	}
 }
@@ -747,7 +747,7 @@ void mif_print_dump(const char *data, int len, int width)
 	else
 		mif_dump2format4(data, len, buff, LOG_TAG);
 
-	pr_info("%s", buff);
+	pr_no_info("%s", buff);
 
 	kfree(buff);
 }
@@ -972,7 +972,7 @@ void print_ip4_packet(const u8 *ip_pkt, bool tx)
 	snprintf(line, LINE_BUFF_SIZE, "%s\n", LINE_SEPARATOR);
 	strncat(buff, line, strlen(line));
 
-	pr_info("%s", buff);
+	pr_no_info("%s", buff);
 
 	kfree(buff);
 }
