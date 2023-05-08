@@ -24,9 +24,9 @@
 #include <linux/shm_ipc.h>
 #endif
 
-#define MAX_STR_LEN		256
+#define MAX_STR_LEN		16
 #define MAX_NAME_LEN		64
-#define MAX_DUMP_LEN		20
+#define MAX_DUMP_LEN		1
 
 #define SMC_ID_CLK		0x82001011
 #define SSS_CLK_ENABLE	0
@@ -549,6 +549,7 @@ struct modem_boot_spi {
 #define FUNC	(__func__)
 #define CALLER	(__builtin_return_address(0))
 
+#ifndef CONFIG_FK_LOG
 #define mif_err_limited(fmt, ...) \
 	printk_ratelimited(KERN_ERR LOG_TAG "%s: " pr_fmt(fmt), __func__, ##__VA_ARGS__)
 #define mif_err(fmt, ...) \
@@ -560,5 +561,12 @@ struct modem_boot_spi {
 #define mif_trace(fmt, ...) \
 	printk(KERN_DEBUG "mif: %s: %d: called(%pF): " fmt, \
 		__func__, __LINE__, __builtin_return_address(0), ##__VA_ARGS__)
+#else
+#define mif_err_limited(fmt, ...) do {} while(0)
+#define mif_err(fmt, ...) do {} while(0)
+#define mif_debug(fmt, ...) do {} while(0)
+#define mif_info(fmt, ...) do {} while(0)
+#define mif_trace(fmt, ...) do {} while(0)
+#endif
 
 #endif
