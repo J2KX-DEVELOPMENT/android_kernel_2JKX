@@ -97,7 +97,7 @@ void muic_show_debug_info(struct work_struct *work)
 		container_of(work, muic_data_t, usb_work.work);
 
 	mutex_lock(&pmuic->muic_mutex);
-	muic_print_reg_log();
+//	muic_print_reg_log();
 	muic_print_reg_dump(pmuic);
 	mutex_unlock(&pmuic->muic_mutex);
 

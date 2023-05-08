@@ -136,7 +136,7 @@ static int muic_irq_handler_afc(muic_data_t *pmuic, int irq)
 		if (ctrl == 0x1F)
 		{
 			/* CONTROL register is reset to 1F */
-			muic_print_reg_log();
+//			muic_print_reg_log();
 			muic_print_reg_dump(pmuic);
 			pr_err("%s: err muic could have been reseted. Initilize!!\n",
 				__func__);
@@ -229,7 +229,7 @@ static int muic_irq_handler(muic_data_t *pmuic, int irq)
 		((ctrl == MUIC_REG_CTRL_RESET_VALUE) && (irq != -1))) {
 		if (ctrl == MUIC_REG_CTRL_RESET_VALUE) {
 			/* CONTROL register is reset to 1F */
-			muic_print_reg_log();
+//			muic_print_reg_log();
 			muic_print_reg_dump(pmuic);
 			pr_err("%s: err muic could have been reseted. Initilize!!\n",
 				__func__);
