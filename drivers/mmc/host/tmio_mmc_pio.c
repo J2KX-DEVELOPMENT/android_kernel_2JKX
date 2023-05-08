@@ -94,10 +94,10 @@ static int tmio_mmc_next_sg(struct tmio_mmc_host *host)
 		} \
 	} while (0)
 
-static void pr_debug_status(u32 status)
+static void pr_no_debug_status(u32 status)
 {
 	int i = 0;
-	pr_debug("status: %08x = ", status);
+	pr_no_debug("status: %08x = ", status);
 	STATUS_TO_TEXT(CARD_REMOVE, status, i);
 	STATUS_TO_TEXT(CARD_INSERT, status, i);
 	STATUS_TO_TEXT(SIGSTATE, status, i);
@@ -123,7 +123,7 @@ static void pr_debug_status(u32 status)
 }
 
 #else
-#define pr_debug_status(s)  do { } while (0)
+#define pr_no_debug_status(s)  do { } while (0)
 #endif
 
 static void tmio_mmc_enable_sdio_irq(struct mmc_host *mmc, int enable)
@@ -336,7 +336,7 @@ static int tmio_mmc_start_command(struct tmio_mmc_host *host, struct mmc_command
 	case MMC_RSP_R2:   c |= RESP_R2;   break;
 	case MMC_RSP_R3:   c |= RESP_R3;   break;
 	default:
-		pr_debug("Unknown response type %d\n", mmc_resp_type(cmd));
+		pr_no_debug("Unknown response type %d\n", mmc_resp_type(cmd));
 		return -EINVAL;
 	}
 
@@ -424,10 +424,10 @@ static void tmio_mmc_pio_irq(struct tmio_mmc_host *host)
 	unsigned long flags;
 
 	if ((host->chan_tx || host->chan_rx) && !host->force_pio) {
-		pr_err("PIO IRQ in DMA mode!\n");
+		pr_no_err("PIO IRQ in DMA mode!\n");
 		return;
 	} else if (!data) {
-		pr_debug("Spurious PIO IRQ\n");
+		pr_no_debug("Spurious PIO IRQ\n");
 		return;
 	}
 
@@ -438,7 +438,7 @@ static void tmio_mmc_pio_irq(struct tmio_mmc_host *host)
 	if (count > data->blksz)
 		count = data->blksz;
 
-	pr_debug("count: %08x offset: %08x flags %08x\n",
+	pr_no_debug("count: %08x offset: %08x flags %08x\n",
 		 count, host->sg_off, data->flags);
 
 	/* Transfer the data */
@@ -484,7 +484,7 @@ void tmio_mmc_do_data_irq(struct tmio_mmc_host *host)
 	else
 		data->bytes_xfered = 0;
 
-	pr_debug("Completed data request\n");
+	pr_no_debug("Completed data request\n");
 
 	/*
 	 * FIXME: other drivers allow an optional stop command of any given type
@@ -568,7 +568,7 @@ static void tmio_mmc_cmd_irq(struct tmio_mmc_host *host,
 	spin_lock(&host->lock);
 
 	if (!host->cmd) {
-		pr_debug("Spurious CMD irq\n");
+		pr_no_debug("Spurious CMD irq\n");
 		goto out;
 	}
 
@@ -626,8 +626,8 @@ static void tmio_mmc_card_irq_status(struct tmio_mmc_host *host,
 	*status = sd_ctrl_read32(host, CTL_STATUS);
 	*ireg = *status & TMIO_MASK_IRQ & ~host->sdcard_irq_mask;
 
-	pr_debug_status(*status);
-	pr_debug_status(*ireg);
+	pr_no_debug_status(*status);
+	pr_no_debug_status(*ireg);
 
 	/* Clear the status except the interrupt status */
 	sd_ctrl_write32(host, CTL_STATUS, TMIO_MASK_IRQ);
@@ -737,7 +737,7 @@ irqreturn_t tmio_mmc_irq(int irq, void *devid)
 	struct tmio_mmc_host *host = devid;
 	unsigned int ireg, status;
 
-	pr_debug("MMC IRQ begin\n");
+	pr_no_debug("MMC IRQ begin\n");
 
 	tmio_mmc_card_irq_status(host, &ireg, &status);
 	if (__tmio_mmc_card_detect_irq(host, ireg, status))
@@ -756,7 +756,7 @@ static int tmio_mmc_start_data(struct tmio_mmc_host *host,
 {
 	struct tmio_mmc_data *pdata = host->pdata;
 
-	pr_debug("setup data transfer: blocksize %08x  nr_blocks %d\n",
+	pr_no_debug("setup data transfer: blocksize %08x  nr_blocks %d\n",
 		 data->blksz, data->blocks);
 
 	/* Some hardware cannot perform 2 byte requests in 4 bit mode */
@@ -764,7 +764,7 @@ static int tmio_mmc_start_data(struct tmio_mmc_host *host,
 		int blksz_2bytes = pdata->flags & TMIO_MMC_BLKSZ_2BYTES;
 
 		if (data->blksz < 2 || (data->blksz < 4 && !blksz_2bytes)) {
-			pr_err("%s: %d byte block unsupported in 4 bit mode\n",
+			pr_no_err("%s: %d byte block unsupported in 4 bit mode\n",
 			       mmc_hostname(host->mmc), data->blksz);
 			return -EINVAL;
 		}
@@ -792,7 +792,7 @@ static void tmio_mmc_request(struct mmc_host *mmc, struct mmc_request *mrq)
 	spin_lock_irqsave(&host->lock, flags);
 
 	if (host->mrq) {
-		pr_debug("request not null\n");
+		pr_no_debug("request not null\n");
 		if (IS_ERR(host->mrq)) {
 			spin_unlock_irqrestore(&host->lock, flags);
 			mrq->cmd->error = -EAGAIN;

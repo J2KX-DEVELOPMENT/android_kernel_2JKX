@@ -241,20 +241,20 @@ static ssize_t power_ro_lock_store(struct device *dev,
 				EXT_CSD_BOOT_WP_B_PWR_WP_EN,
 				card->ext_csd.part_time);
 	if (ret)
-		pr_err("%s: Locking boot partition ro until next power on failed: %d\n", md->disk->disk_name, ret);
+		pr_no_err("%s: Locking boot partition ro until next power on failed: %d\n", md->disk->disk_name, ret);
 	else
 		card->ext_csd.boot_ro_lock |= EXT_CSD_BOOT_WP_B_PWR_WP_EN;
 
 	mmc_put_card(card);
 
 	if (!ret) {
-		pr_info("%s: Locking boot partition ro until next power on\n",
+		pr_no_info("%s: Locking boot partition ro until next power on\n",
 			md->disk->disk_name);
 		set_disk_ro(md->disk, 1);
 
 		list_for_each_entry(part_md, &md->part, part)
 			if (part_md->area_type == MMC_BLK_DATA_AREA_BOOT) {
-				pr_info("%s: Locking boot partition ro until next power on\n", part_md->disk->disk_name);
+				pr_no_info("%s: Locking boot partition ro until next power on\n", part_md->disk->disk_name);
 				set_disk_ro(part_md->disk, 1);
 			}
 	}
@@ -431,7 +431,7 @@ static int ioctl_do_sanitize(struct mmc_card *card)
 			goto out;
 	}
 
-	pr_debug("%s: %s - SANITIZE IN PROGRESS...\n",
+	pr_no_debug("%s: %s - SANITIZE IN PROGRESS...\n",
 		mmc_hostname(card->host), __func__);
 
 	trace_mmc_blk_erase_start(EXT_CSD_SANITIZE_START, 0, 0);
@@ -441,10 +441,10 @@ static int ioctl_do_sanitize(struct mmc_card *card)
 	trace_mmc_blk_erase_end(EXT_CSD_SANITIZE_START, 0, 0);
 
 	if (err)
-		pr_err("%s: %s - EXT_CSD_SANITIZE_START failed. err=%d\n",
+		pr_no_err("%s: %s - EXT_CSD_SANITIZE_START failed. err=%d\n",
 		       mmc_hostname(card->host), __func__, err);
 
-	pr_debug("%s: %s - SANITIZE COMPLETED\n", mmc_hostname(card->host),
+	pr_no_debug("%s: %s - SANITIZE COMPLETED\n", mmc_hostname(card->host),
 					     __func__);
 out:
 	return err;
@@ -596,7 +596,7 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 		err = ioctl_do_sanitize(card);
 
 		if (err)
-			pr_err("%s: ioctl_do_sanitize() failed. err = %d",
+			pr_no_err("%s: ioctl_do_sanitize() failed. err = %d",
 			       __func__, err);
 
 		goto cmd_rel_host;
@@ -992,7 +992,7 @@ static void mmc_card_debug_log_sysfs_init(struct mmc_card *card)
 	card->error_count.attr.mode = S_IRUGO | S_IWUSR;
 
 	if (device_create_file((disk_to_dev(md->disk)), &card->error_count)) {
-		pr_err("%s: Failed to create err_count sysfs entry\n",
+		pr_no_err("%s: Failed to create err_count sysfs entry\n",
 				mmc_hostname(card->host));
 		return;
 	}
@@ -1049,13 +1049,13 @@ static int card_busy_detect(struct mmc_card *card, unsigned int timeout_ms,
 	do {
 		err = get_card_status(card, &status, 5);
 		if (err) {
-			pr_err("%s: error %d requesting status\n",
+			pr_no_err("%s: error %d requesting status\n",
 			       req->rq_disk->disk_name, err);
 			return err;
 		}
 
 		if (status & CMD_ERRORS) {
-			pr_err("%s: %s: command error reported, status %#x\n",
+			pr_no_err("%s: %s: command error reported, status %#x\n",
 					req->rq_disk->disk_name, __func__, status);
 
 			if (mmc_card_sd(card) && brq)
@@ -1085,7 +1085,7 @@ static int card_busy_detect(struct mmc_card *card, unsigned int timeout_ms,
 		 * leaves the program state.
 		 */
 		if (time_after(jiffies, timeout)) {
-			pr_err("%s: Card stuck in programming state! %s %s\n",
+			pr_no_err("%s: Card stuck in programming state! %s %s\n",
 				mmc_hostname(card->host),
 				req->rq_disk->disk_name, __func__);
 			mmc_card_error_logging(card, brq, status);
@@ -1140,7 +1140,7 @@ static int send_stop(struct mmc_card *card, unsigned int timeout_ms,
 
 	if (!mmc_host_is_spi(host) &&
 		(*stop_status & R1_ERROR)) {
-		pr_err("%s: %s: general error sending stop command, resp %#x\n",
+		pr_no_err("%s: %s: general error sending stop command, resp %#x\n",
 			req->rq_disk->disk_name, __func__, *stop_status);
 		*gen_err |= MMC_BLK_GEN_ERR;
 	}
@@ -1159,18 +1159,18 @@ static int mmc_blk_cmd_error(struct request *req, const char *name, int error,
 	switch (error) {
 	case -EILSEQ:
 		/* response crc error, retry the r/w cmd */
-		pr_err("%s: %s sending %s command, card status %#x\n",
+		pr_no_err("%s: %s sending %s command, card status %#x\n",
 			req->rq_disk->disk_name, "response CRC error",
 			name, status);
 		return ERR_RETRY;
 
 	case -ETIMEDOUT:
-		pr_err("%s: %s sending %s command, card status %#x\n",
+		pr_no_err("%s: %s sending %s command, card status %#x\n",
 			req->rq_disk->disk_name, "timed out", name, status);
 
 		/* If the status cmd initially failed, retry the r/w cmd */
 		if (!status_valid) {
-			pr_err("%s: status not valid, retrying timeout\n", req->rq_disk->disk_name);
+			pr_no_err("%s: status not valid, retrying timeout\n", req->rq_disk->disk_name);
 			return ERR_RETRY;
 		}
 		/*
@@ -1179,17 +1179,17 @@ static int mmc_blk_cmd_error(struct request *req, const char *name, int error,
 		 * have corrected the state problem above.
 		 */
 		if (status & (R1_COM_CRC_ERROR | R1_ILLEGAL_COMMAND)) {
-			pr_err("%s: command error, retrying timeout\n", req->rq_disk->disk_name);
+			pr_no_err("%s: command error, retrying timeout\n", req->rq_disk->disk_name);
 			return ERR_RETRY;
 		}
 
 		/* Otherwise abort the command */
-		pr_err("%s: not retrying timeout\n", req->rq_disk->disk_name);
+		pr_no_err("%s: not retrying timeout\n", req->rq_disk->disk_name);
 		return ERR_ABORT;
 
 	default:
 		/* We don't understand the error code the driver gave us */
-		pr_err("%s: unknown error %d sending read/write command, card status %#x\n",
+		pr_no_err("%s: unknown error %d sending read/write command, card status %#x\n",
 		       req->rq_disk->disk_name, error, status);
 		return ERR_ABORT;
 	}
@@ -1234,7 +1234,7 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 			break;
 
 		prev_cmd_status_valid = false;
-		pr_err("%s: error %d sending status command, %sing\n",
+		pr_no_err("%s: error %d sending status command, %sing\n",
 		       req->rq_disk->disk_name, err, retry ? "retry" : "abort");
 	}
 
@@ -1258,7 +1258,7 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 	if (!mmc_host_is_spi(card->host) && rq_data_dir(req) != READ)
 		if ((status & R1_ERROR) ||
 			(brq->stop.resp[0] & R1_ERROR)) {
-			pr_err("%s: %s: general error sending stop or status command, stop cmd response %#x, card status %#x\n",
+			pr_no_err("%s: %s: general error sending stop or status command, stop cmd response %#x, card status %#x\n",
 			       req->rq_disk->disk_name, __func__,
 			       brq->stop.resp[0], status);
 			*gen_err |= MMC_BLK_GEN_ERR;
@@ -1274,7 +1274,7 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 			DIV_ROUND_UP(brq->data.timeout_ns, 1000000),
 			req, gen_err, &stop_status);
 		if (err) {
-			pr_err("%s: error %d sending stop command\n",
+			pr_no_err("%s: error %d sending stop command\n",
 			       req->rq_disk->disk_name, err);
 			/*
 			 * If the stop cmd also timed out, the card is probably
@@ -1304,7 +1304,7 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 		return ERR_CONTINUE;
 
 	/* Now for stop errors.  These aren't fatal to the transfer. */
-	pr_info("%s: error %d sending stop command, original cmd response %#x, card status %#x\n",
+	pr_no_info("%s: error %d sending stop command, original cmd response %#x, card status %#x\n",
 	       req->rq_disk->disk_name, brq->stop.error,
 	       brq->cmd.resp[0], status);
 
@@ -1540,7 +1540,7 @@ static int mmc_blk_err_check(struct mmc_card *card,
 	 * has been transferred.
 	 */
 	if (brq->cmd.resp[0] & CMD_ERRORS) {
-		pr_err("%s: r/w command failed, status = %#x\n",
+		pr_no_err("%s: r/w command failed, status = %#x\n",
 		       req->rq_disk->disk_name, brq->cmd.resp[0]);
 		return MMC_BLK_ABORT;
 	}
@@ -1555,7 +1555,7 @@ static int mmc_blk_err_check(struct mmc_card *card,
 
 		/* Check stop command response */
 		if (brq->stop.resp[0] & R1_ERROR) {
-			pr_err("%s: %s: general error sending stop command, stop cmd response %#x\n",
+			pr_no_err("%s: %s: general error sending stop command, stop cmd response %#x\n",
 			       req->rq_disk->disk_name, __func__,
 			       brq->stop.resp[0]);
 			gen_err |= MMC_BLK_GEN_ERR;
@@ -1572,7 +1572,7 @@ static int mmc_blk_err_check(struct mmc_card *card,
 	}
 
 	if (brq->data.error) {
-		pr_err("%s: error %d transferring data, sector %u, nr %u, cmd response %#x, card status %#x\n",
+		pr_no_err("%s: error %d transferring data, sector %u, nr %u, cmd response %#x, card status %#x\n",
 		       req->rq_disk->disk_name, brq->data.error,
 		       (unsigned)blk_rq_pos(req),
 		       (unsigned)blk_rq_sectors(req),
@@ -1621,7 +1621,7 @@ static int mmc_blk_packed_err_check(struct mmc_card *card,
 	check = mmc_blk_err_check(card, areq);
 	err = get_card_status(card, &status, 0);
 	if (err) {
-		pr_err("%s: error %d sending status command\n",
+		pr_no_err("%s: error %d sending status command\n",
 		       req->rq_disk->disk_name, err);
 		return MMC_BLK_ABORT;
 	}
@@ -1629,14 +1629,14 @@ static int mmc_blk_packed_err_check(struct mmc_card *card,
 	if (status & R1_EXCEPTION_EVENT) {
 		ext_csd = kzalloc(512, GFP_KERNEL);
 		if (!ext_csd) {
-			pr_err("%s: unable to allocate buffer for ext_csd\n",
+			pr_no_err("%s: unable to allocate buffer for ext_csd\n",
 			       req->rq_disk->disk_name);
 			return -ENOMEM;
 		}
 
 		err = mmc_send_ext_csd(card, ext_csd);
 		if (err) {
-			pr_err("%s: error %d sending ext_csd\n",
+			pr_no_err("%s: error %d sending ext_csd\n",
 			       req->rq_disk->disk_name, err);
 			check = MMC_BLK_ABORT;
 			goto free;
@@ -1652,7 +1652,7 @@ static int mmc_blk_packed_err_check(struct mmc_card *card,
 				  ext_csd[EXT_CSD_PACKED_FAILURE_INDEX] - 1;
 				check = MMC_BLK_PARTIAL;
 			}
-			pr_err("%s: packed cmd failed, nr %u, sectors %u, "
+			pr_no_err("%s: packed cmd failed, nr %u, sectors %u, "
 			       "failure index: %d\n",
 			       req->rq_disk->disk_name, packed->nr_entries,
 			       packed->blocks, packed->idx_failure);
@@ -2163,7 +2163,7 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 			 */
 			if ((brq->data.blocks & 0x07) &&
 			    (card->ext_csd.data_sector_size == 4096)) {
-				pr_err("%s: Transfer size is not 4KB sector size aligned\n",
+				pr_no_err("%s: Transfer size is not 4KB sector size aligned\n",
 					req->rq_disk->disk_name);
 				mq_rq = mq->mqrq_cur;
 				goto cmd_abort;
@@ -2212,7 +2212,7 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 			 * were returned by the host controller, it's a bug.
 			 */
 			if (status == MMC_BLK_SUCCESS && ret) {
-				pr_err("%s BUG rq_tot %d d_xfer %d\n",
+				pr_no_err("%s BUG rq_tot %d d_xfer %d\n",
 				       __func__, blk_rq_bytes(req),
 				       brq->data.bytes_xfered);
 				rqc = NULL;
@@ -2264,7 +2264,7 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 		case MMC_BLK_NOMEDIUM:
 			goto cmd_abort;
 		default:
-			pr_err("%s: Unhandled return value (%d)",
+			pr_no_err("%s: Unhandled return value (%d)",
 					req->rq_disk->disk_name, status);
 			goto cmd_abort;
 		}
@@ -2565,7 +2565,7 @@ static int mmc_blk_alloc_part(struct mmc_card *card,
 
 	string_get_size((u64)get_capacity(part_md->disk) << 9, STRING_UNITS_2,
 			cap_str, sizeof(cap_str));
-	pr_info("%s: %s %s partition %u %s\n",
+	pr_no_info("%s: %s %s partition %u %s\n",
 	       part_md->disk->disk_name, mmc_card_id(card),
 	       mmc_card_name(card), part_md->part_type, cap_str);
 	return 0;
@@ -2770,7 +2770,7 @@ static int mmc_blk_probe(struct mmc_card *card)
 
 	string_get_size((u64)get_capacity(md->disk) << 9, STRING_UNITS_2,
 			cap_str, sizeof(cap_str));
-	pr_info("%s: %s %s %s %s\n",
+	pr_no_info("%s: %s %s %s %s\n",
 		md->disk->disk_name, mmc_card_id(card), mmc_card_name(card),
 		cap_str, md->read_only ? "(ro)" : "");
 	ST_LOG("%s: %s %s %s %s\n",
@@ -2852,7 +2852,7 @@ static void mmc_blk_shutdown(struct mmc_card *card)
 	}
 	return;
 suspend_error:
-	pr_err("%s: mmc_queue_suspend returned error = %d\n",
+	pr_no_err("%s: mmc_queue_suspend returned error = %d\n",
 			mmc_hostname(card->host), rc);
 }
 
@@ -2923,7 +2923,7 @@ static int __init mmc_blk_init(void)
 	int res;
 
 	if (perdev_minors != CONFIG_MMC_BLOCK_MINORS)
-		pr_info("mmcblk: using %d minors per device\n", perdev_minors);
+		pr_no_info("mmcblk: using %d minors per device\n", perdev_minors);
 
 	max_devices = 256 / perdev_minors;
 

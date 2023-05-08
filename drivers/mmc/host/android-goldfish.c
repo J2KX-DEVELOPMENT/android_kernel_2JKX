@@ -345,7 +345,7 @@ static irqreturn_t goldfish_mmc_irq(int irq, void *dev_id)
 
 	if (state_changed) {
 		u32 state = GOLDFISH_MMC_READ(host, MMC_STATE);
-		pr_info("%s: Card detect now %d\n", __func__,
+		pr_no_info("%s: Card detect now %d\n", __func__,
 			(state & MMC_STATE_INSERTED));
 		mmc_detect_change(host->mmc, 0);
 	}
@@ -475,7 +475,7 @@ static int goldfish_mmc_probe(struct platform_device *pdev)
 	host = mmc_priv(mmc);
 	host->mmc = mmc;
 
-	pr_err("mmc: Mapping %lX to %lX\n", (long)res->start, (long)res->end);
+	pr_no_err("mmc: Mapping %lX to %lX\n", (long)res->start, (long)res->end);
 	host->reg_base = ioremap(res->start, resource_size(res));
 	if (host->reg_base == NULL) {
 		ret = -ENOMEM;

@@ -2382,7 +2382,7 @@ static void vub300_disconnect(struct usb_interface *interface)
 			vub300->interface = NULL;
 			kref_put(&vub300->kref, vub300_delete);
 			mmc_remove_host(mmc);
-			pr_info("USB vub300 remote SDIO host controller[%d]"
+			pr_no_info("USB vub300 remote SDIO host controller[%d]"
 				" now disconnected", ifnum);
 			return;
 		}
@@ -2435,29 +2435,29 @@ static int __init vub300_init(void)
 {				/* NOT irq */
 	int result;
 
-	pr_info("VUB300 Driver rom wait states = %02X irqpoll timeout = %04X",
+	pr_no_info("VUB300 Driver rom wait states = %02X irqpoll timeout = %04X",
 		firmware_rom_wait_states, 0x0FFFF & firmware_irqpoll_timeout);
 	cmndworkqueue = create_singlethread_workqueue("kvub300c");
 	if (!cmndworkqueue) {
-		pr_err("not enough memory for the REQUEST workqueue");
+		pr_no_err("not enough memory for the REQUEST workqueue");
 		result = -ENOMEM;
 		goto out1;
 	}
 	pollworkqueue = create_singlethread_workqueue("kvub300p");
 	if (!pollworkqueue) {
-		pr_err("not enough memory for the IRQPOLL workqueue");
+		pr_no_err("not enough memory for the IRQPOLL workqueue");
 		result = -ENOMEM;
 		goto out2;
 	}
 	deadworkqueue = create_singlethread_workqueue("kvub300d");
 	if (!deadworkqueue) {
-		pr_err("not enough memory for the EXPIRED workqueue");
+		pr_no_err("not enough memory for the EXPIRED workqueue");
 		result = -ENOMEM;
 		goto out3;
 	}
 	result = usb_register(&vub300_driver);
 	if (result) {
-		pr_err("usb_register failed. Error number %d", result);
+		pr_no_err("usb_register failed. Error number %d", result);
 		goto out4;
 	}
 	return 0;

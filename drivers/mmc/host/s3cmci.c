@@ -308,7 +308,7 @@ static void s3cmci_check_sdio_irq(struct s3cmci_host *host)
 {
 	if (host->sdio_irqen) {
 		if (gpio_get_value(S3C2410_GPE(8)) == 0) {
-			pr_debug("%s: signalling irq\n", __func__);
+			pr_no_debug("%s: signalling irq\n", __func__);
 			mmc_signal_sdio_irq(host->mmc);
 		}
 	}
@@ -405,7 +405,7 @@ static void s3cmci_disable_irq(struct s3cmci_host *host, bool transfer)
 
 	local_irq_save(flags);
 
-	/* pr_debug("%s: transfer %d\n", __func__, transfer); */
+	/* pr_no_debug("%s: transfer %d\n", __func__, transfer); */
 
 	host->irq_disabled = transfer;
 

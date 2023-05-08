@@ -174,7 +174,7 @@ static int mmc_decode_csd(struct mmc_card *card)
 		csd->erase_size = 1;
 		break;
 	default:
-		pr_err("%s: unrecognised CSD structure version %d\n",
+		pr_no_err("%s: unrecognised CSD structure version %d\n",
 			mmc_hostname(card->host), csd_struct);
 		return -EINVAL;
 	}
@@ -198,7 +198,7 @@ static int mmc_decode_scr(struct mmc_card *card)
 
 	scr_struct = UNSTUFF_BITS(resp, 60, 4);
 	if (scr_struct != 0) {
-		pr_err("%s: unrecognised SCR structure version %d\n",
+		pr_no_err("%s: unrecognised SCR structure version %d\n",
 			mmc_hostname(card->host), scr_struct);
 		return -EINVAL;
 	}
@@ -295,7 +295,7 @@ static int mmc_read_switch(struct mmc_card *card)
 
 	status = kmalloc(64, GFP_KERNEL);
 	if (!status) {
-		pr_err("%s: could not allocate a buffer for "
+		pr_no_err("%s: could not allocate a buffer for "
 			"switch capabilities.\n",
 			mmc_hostname(card->host));
 		return -ENOMEM;
@@ -361,7 +361,7 @@ int mmc_sd_switch_hs(struct mmc_card *card)
 
 	status = kmalloc(64, GFP_KERNEL);
 	if (!status) {
-		pr_err("%s: could not allocate a buffer for "
+		pr_no_err("%s: could not allocate a buffer for "
 			"switch capabilities.\n", mmc_hostname(card->host));
 		return -ENOMEM;
 	}
@@ -620,7 +620,7 @@ static int mmc_sd_init_uhs_card(struct mmc_card *card)
 
 	status = kmalloc(64, GFP_KERNEL);
 	if (!status) {
-		pr_err("%s: could not allocate a buffer for "
+		pr_no_err("%s: could not allocate a buffer for "
 			"switch capabilities.\n", mmc_hostname(card->host));
 		return -ENOMEM;
 	}
@@ -1075,7 +1075,7 @@ static void mmc_sd_detect(struct mmc_host *host)
 		mmc_detach_bus(host);
 		mmc_power_off(host);
 		mmc_release_host(host);
-		pr_err("%s: card(tray) removed...\n", __func__);
+		pr_no_err("%s: card(tray) removed...\n", __func__);
 		return;
 	}
 
@@ -1228,7 +1228,7 @@ static int mmc_sd_runtime_suspend(struct mmc_host *host)
 
 	err = _mmc_sd_suspend(host);
 	if (err)
-		pr_err("%s: error %d doing aggessive suspend\n",
+		pr_no_err("%s: error %d doing aggessive suspend\n",
 			mmc_hostname(host), err);
 
 	return err;
@@ -1246,7 +1246,7 @@ static int mmc_sd_runtime_resume(struct mmc_host *host)
 
 	err = _mmc_sd_resume(host);
 	if (err)
-		pr_err("%s: error %d doing aggessive resume\n",
+		pr_no_err("%s: error %d doing aggessive resume\n",
 			mmc_hostname(host), err);
 
 	return 0;
@@ -1359,7 +1359,7 @@ remove_card:
 err:
 	mmc_detach_bus(host);
 
-	pr_err("%s: error %d whilst initialising SD card\n",
+	pr_no_err("%s: error %d whilst initialising SD card\n",
 		mmc_hostname(host), err);
 
 	return err;

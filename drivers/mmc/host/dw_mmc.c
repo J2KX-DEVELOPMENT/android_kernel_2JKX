@@ -263,7 +263,7 @@ static void dw_mci_debug_init(struct dw_mci *host)
 
 			sysfs_err = sysfs_create_file(&(host->slot[0]->mmc->class_dev.kobj),
 						&(dev_attr_dwmci_debug.attr));
-			pr_info("%s: create debug_log sysfs : %s.....\n", __func__,
+			pr_no_info("%s: create debug_log sysfs : %s.....\n", __func__,
 					sysfs_err ? "failed" : "successed");
 			dev_info(host->dev, "host %d debug On\n", host_index);
 		} else {
@@ -310,7 +310,7 @@ static void dw_mci_transferred_cnt_init(struct dw_mci *host, struct mmc_host *mm
 	int sysfs_err = 0;
 	sysfs_err = sysfs_create_file(&(mmc->class_dev.kobj),
 			&(dev_attr_trans_count.attr));
-	pr_info("%s: trans_count: %s.....\n", __func__,
+	pr_no_info("%s: trans_count: %s.....\n", __func__,
 			sysfs_err ? "failed" : "successed");
 }
 
@@ -4195,7 +4195,7 @@ EXPORT_SYMBOL(dw_mci_resume);
 
 static int __init dw_mci_init(void)
 {
-	pr_info("Synopsys Designware Multimedia Card Interface Driver\n");
+	pr_no_info("Synopsys Designware Multimedia Card Interface Driver\n");
 	return 0;
 }
 

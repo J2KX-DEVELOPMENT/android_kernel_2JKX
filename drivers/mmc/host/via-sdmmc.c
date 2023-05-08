@@ -334,16 +334,16 @@ static void via_print_sdchc(struct via_crdr_mmc_host *host)
 {
 	void __iomem *addrbase = host->sdhc_mmiobase;
 
-	pr_debug("SDC MMIO Registers:\n");
-	pr_debug("SDCONTROL=%08x, SDCMDARG=%08x, SDBUSMODE=%08x\n",
+	pr_no_debug("SDC MMIO Registers:\n");
+	pr_no_debug("SDCONTROL=%08x, SDCMDARG=%08x, SDBUSMODE=%08x\n",
 		 readl(addrbase + VIA_CRDR_SDCTRL),
 		 readl(addrbase + VIA_CRDR_SDCARG),
 		 readl(addrbase + VIA_CRDR_SDBUSMODE));
-	pr_debug("SDBLKLEN=%08x, SDCURBLKCNT=%08x, SDINTMASK=%08x\n",
+	pr_no_debug("SDBLKLEN=%08x, SDCURBLKCNT=%08x, SDINTMASK=%08x\n",
 		 readl(addrbase + VIA_CRDR_SDBLKLEN),
 		 readl(addrbase + VIA_CRDR_SDCURBLKCNT),
 		 readl(addrbase + VIA_CRDR_SDINTMASK));
-	pr_debug("SDSTATUS=%08x, SDCLKSEL=%08x, SDEXTCTRL=%08x\n",
+	pr_no_debug("SDSTATUS=%08x, SDCLKSEL=%08x, SDEXTCTRL=%08x\n",
 		 readl(addrbase + VIA_CRDR_SDSTATUS),
 		 readl(addrbase + VIA_CRDR_SDCLKSEL),
 		 readl(addrbase + VIA_CRDR_SDEXTCTRL));
@@ -353,12 +353,12 @@ static void via_print_pcictrl(struct via_crdr_mmc_host *host)
 {
 	void __iomem *addrbase = host->pcictrl_mmiobase;
 
-	pr_debug("PCI Control Registers:\n");
-	pr_debug("PCICLKGATT=%02x, PCISDCCLK=%02x, PCIDMACLK=%02x\n",
+	pr_no_debug("PCI Control Registers:\n");
+	pr_no_debug("PCICLKGATT=%02x, PCISDCCLK=%02x, PCIDMACLK=%02x\n",
 		 readb(addrbase + VIA_CRDR_PCICLKGATT),
 		 readb(addrbase + VIA_CRDR_PCISDCCLK),
 		 readb(addrbase + VIA_CRDR_PCIDMACLK));
-	pr_debug("PCIINTCTRL=%02x, PCIINTSTATUS=%02x\n",
+	pr_no_debug("PCIINTCTRL=%02x, PCIINTSTATUS=%02x\n",
 		 readb(addrbase + VIA_CRDR_PCIINTCTRL),
 		 readb(addrbase + VIA_CRDR_PCIINTSTATUS));
 }
@@ -583,7 +583,7 @@ static void via_sdc_send_command(struct via_crdr_mmc_host *host,
 		cmdctrl |= VIA_CRDR_SDCTRL_RSP_R3;
 		break;
 	default:
-		pr_err("%s: cmd->flag is not valid\n", mmc_hostname(host->mmc));
+		pr_no_err("%s: cmd->flag is not valid\n", mmc_hostname(host->mmc));
 		break;
 	}
 
@@ -838,7 +838,7 @@ static void via_sdc_cmd_isr(struct via_crdr_mmc_host *host, u16 intmask)
 	BUG_ON(intmask == 0);
 
 	if (!host->cmd) {
-		pr_err("%s: Got command interrupt 0x%x even "
+		pr_no_err("%s: Got command interrupt 0x%x even "
 		       "though no command operation was in progress.\n",
 		       mmc_hostname(host->mmc), intmask);
 		return;
@@ -917,7 +917,7 @@ static irqreturn_t via_sdc_isr(int irq, void *dev_id)
 
 	sd_status &= ~(VIA_CRDR_SDSTS_CMD_MASK | VIA_CRDR_SDSTS_DATA_MASK);
 	if (sd_status) {
-		pr_err("%s: Unexpected interrupt 0x%x\n",
+		pr_no_err("%s: Unexpected interrupt 0x%x\n",
 		       mmc_hostname(sdhost->mmc), sd_status);
 		writew(sd_status, addrbase + VIA_CRDR_SDSTATUS);
 	}
@@ -941,7 +941,7 @@ static void via_sdc_timeout(unsigned long ulongdata)
 	spin_lock_irqsave(&sdhost->lock, flags);
 
 	if (sdhost->mrq) {
-		pr_err("%s: Timeout waiting for hardware interrupt."
+		pr_no_err("%s: Timeout waiting for hardware interrupt."
 		       "cmd:0x%x\n", mmc_hostname(sdhost->mmc),
 		       sdhost->mrq->cmd->opcode);
 
@@ -1005,7 +1005,7 @@ static void via_sdc_card_detect(struct work_struct *work)
 	status = readw(addrbase + VIA_CRDR_SDSTATUS);
 	if (!(status & VIA_CRDR_SDSTS_SLOTG)) {
 		if (host->mrq) {
-			pr_err("%s: Card removed during transfer!\n",
+			pr_no_err("%s: Card removed during transfer!\n",
 			       mmc_hostname(host->mmc));
 			host->mrq->cmd->error = -ENOMEDIUM;
 			tasklet_schedule(&host->finish_tasklet);
@@ -1091,7 +1091,7 @@ static int via_sd_probe(struct pci_dev *pcidev,
 	u8  gatt;
 	int ret;
 
-	pr_info(DRV_NAME
+	pr_no_info(DRV_NAME
 		": VIA SDMMC controller found at %s [%04x:%04x] (rev %x)\n",
 		pci_name(pcidev), (int)pcidev->vendor, (int)pcidev->device,
 		(int)pcidev->revision);
@@ -1192,7 +1192,7 @@ static void via_sd_remove(struct pci_dev *pcidev)
 	mmiowb();
 
 	if (sdhost->mrq) {
-		pr_err("%s: Controller removed during "
+		pr_no_err("%s: Controller removed during "
 			"transfer\n", mmc_hostname(sdhost->mmc));
 
 		/* make sure all DMA is stopped */
@@ -1225,7 +1225,7 @@ static void via_sd_remove(struct pci_dev *pcidev)
 	pci_release_regions(pcidev);
 	pci_disable_device(pcidev);
 
-	pr_info(DRV_NAME
+	pr_no_info(DRV_NAME
 		": VIA SDMMC controller at %s [%04x:%04x] has been removed\n",
 		pci_name(pcidev), (int)pcidev->vendor, (int)pcidev->device);
 }

@@ -330,7 +330,7 @@ static int pxamci_cmd_done(struct pxamci_host *host, unsigned int stat)
 		 */
 		if (cpu_is_pxa27x() &&
 		    (cmd->flags & MMC_RSP_136 && cmd->resp[0] & 0x80000000))
-			pr_debug("ignoring CRC from command %d - *risky*\n", cmd->opcode);
+			pr_no_debug("ignoring CRC from command %d - *risky*\n", cmd->opcode);
 		else
 			cmd->error = -EILSEQ;
 	}
@@ -402,7 +402,7 @@ static irqreturn_t pxamci_irq(int irq, void *devid)
 	if (ireg) {
 		unsigned stat = readl(host->base + MMC_STAT);
 
-		pr_debug("PXAMCI: irq %08x stat %08x\n", ireg, stat);
+		pr_no_debug("PXAMCI: irq %08x stat %08x\n", ireg, stat);
 
 		if (ireg & END_CMD_RES)
 			handled |= pxamci_cmd_done(host, stat);
@@ -561,7 +561,7 @@ static void pxamci_dma_irq(int dma, void *devid)
 	if (dcsr & DCSR_ENDINTR) {
 		writel(BUF_PART_FULL, host->base + MMC_PRTBUF);
 	} else {
-		pr_err("%s: DMA error on channel %d (DCSR=%#x)\n",
+		pr_no_err("%s: DMA error on channel %d (DCSR=%#x)\n",
 		       mmc_hostname(host->mmc), dma, dcsr);
 		host->data->error = -EIO;
 		pxamci_data_done(host, 0);

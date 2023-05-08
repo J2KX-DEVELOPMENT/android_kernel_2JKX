@@ -44,9 +44,9 @@
 #define DRIVER_NAME "wbsd"
 
 #define DBG(x...) \
-	pr_debug(DRIVER_NAME ": " x)
+	pr_no_debug(DRIVER_NAME ": " x)
 #define DBGF(f, x...) \
-	pr_debug(DRIVER_NAME " [%s()]: " f, __func__ , ##x)
+	pr_no_debug(DRIVER_NAME " [%s()]: " f, __func__ , ##x)
 
 /*
  * Device resources
@@ -194,7 +194,7 @@ static void wbsd_reset(struct wbsd_host *host)
 {
 	u8 setup;
 
-	pr_err("%s: Resetting chip\n", mmc_hostname(host->mmc));
+	pr_no_err("%s: Resetting chip\n", mmc_hostname(host->mmc));
 
 	/*
 	 * Soft reset of chip (SD/MMC part).
@@ -721,7 +721,7 @@ static void wbsd_finish_data(struct wbsd_host *host, struct mmc_data *data)
 		 * Any leftover data?
 		 */
 		if (count) {
-			pr_err("%s: Incomplete DMA transfer. "
+			pr_no_err("%s: Incomplete DMA transfer. "
 				"%d bytes left.\n",
 				mmc_hostname(host->mmc), count);
 
@@ -1028,7 +1028,7 @@ static void wbsd_tasklet_card(unsigned long param)
 		host->flags &= ~WBSD_FCARD_PRESENT;
 
 		if (host->mrq) {
-			pr_err("%s: Card removed during transfer!\n",
+			pr_no_err("%s: Card removed during transfer!\n",
 				mmc_hostname(host->mmc));
 			wbsd_reset(host);
 
@@ -1714,7 +1714,7 @@ static int wbsd_init(struct device *dev, int base, int irq, int dma,
 
 	mmc_add_host(mmc);
 
-	pr_info("%s: W83L51xD", mmc_hostname(mmc));
+	pr_no_info("%s: W83L51xD", mmc_hostname(mmc));
 	if (host->chip_id != 0)
 		printk(" id %x", (int)host->chip_id);
 	printk(" at 0x%x irq %d", (int)host->base, (int)host->irq);
@@ -1940,9 +1940,9 @@ static int __init wbsd_drv_init(void)
 {
 	int result;
 
-	pr_info(DRIVER_NAME
+	pr_no_info(DRIVER_NAME
 		": Winbond W83L51xD SD/MMC card interface driver\n");
-	pr_info(DRIVER_NAME ": Copyright(c) Pierre Ossman\n");
+	pr_no_info(DRIVER_NAME ": Copyright(c) Pierre Ossman\n");
 
 #ifdef CONFIG_PNP
 

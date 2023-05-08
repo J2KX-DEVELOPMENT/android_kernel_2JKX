@@ -1517,38 +1517,38 @@ static int dw_mci_exynos_request_ext_irq(struct dw_mci *host,
 		if (!sd_detection_cmd_dev) {
 			sd_detection_cmd_dev = sec_device_create(host, "sdcard");
 			if (IS_ERR(sd_detection_cmd_dev))
-				pr_err("Fail to create sysfs dev\n");
+				pr_no_err("Fail to create sysfs dev\n");
 
 			if (device_create_file(sd_detection_cmd_dev,
 						&dev_attr_status) < 0)
-				pr_err("Fail to create status sysfs file\n");
+				pr_no_err("Fail to create status sysfs file\n");
 			if (device_create_file(sd_detection_cmd_dev,
 						&dev_attr_cd_cnt) < 0)
-				pr_err("Fail to create cd_cnt sysfs file\n");
+				pr_no_err("Fail to create cd_cnt sysfs file\n");
 
 			if (device_create_file(sd_detection_cmd_dev,
 						&dev_attr_max_mode) < 0)
-				pr_err("Fail to create max_mode sysfs file\n");
+				pr_no_err("Fail to create max_mode sysfs file\n");
 
 			if (device_create_file(sd_detection_cmd_dev,
 						&dev_attr_current_mode) < 0)
-				pr_err("Fail to create current_mode sysfs file\n");
+				pr_no_err("Fail to create current_mode sysfs file\n");
 		}
 		if (!sd_info_cmd_dev) {
 			sd_info_cmd_dev = sec_device_create(host, "sdinfo");
 			if (IS_ERR(sd_info_cmd_dev))
-				pr_err("Fail to create sysfs dev\n");
+				pr_no_err("Fail to create sysfs dev\n");
 			if (device_create_file(sd_info_cmd_dev,
 						&dev_attr_sd_count) < 0)
-				pr_err("Fail to create status sysfs file\n");
+				pr_no_err("Fail to create status sysfs file\n");
 		}
 		if (!sd_data_cmd_dev) {
 			sd_data_cmd_dev = sec_device_create(host, "sddata");
 			if (IS_ERR(sd_data_cmd_dev))
-				pr_err("Fail to create sysfs dev\n");
+				pr_no_err("Fail to create sysfs dev\n");
 			if (device_create_file(sd_data_cmd_dev,
 						&dev_attr_sd_data) < 0)
-				pr_err("Fail to create status sysfs file\n");
+				pr_no_err("Fail to create status sysfs file\n");
 		}		
 	}
 	
@@ -1576,16 +1576,16 @@ static void dw_mci_exynos_add_sysfs(struct dw_mci *host)
 		if (!mmc_card_dev) {
 			mmc_card_dev = sec_device_create(host, "mmc");
 			if (IS_ERR(mmc_card_dev))
-				pr_err("Fail to create sysfs dev\n");
+				pr_no_err("Fail to create sysfs dev\n");
 
 			if (device_create_file(mmc_card_dev,
 					&dev_attr_mmc_data) < 0)
-				pr_err("%s : Failed to create device file(%s)!\n",
+				pr_no_err("%s : Failed to create device file(%s)!\n",
 					__func__, dev_attr_mmc_data.attr.name);
 
 			if (device_create_file(mmc_card_dev,
 					&dev_attr_mmc_summary) < 0)
-				pr_err("%s : Failed to create device file(%s)!\n",
+				pr_no_err("%s : Failed to create device file(%s)!\n",
 					__func__, dev_attr_mmc_summary.attr.name);
 		}
 	}

@@ -104,7 +104,7 @@ static int mmc_decode_cid(struct mmc_card *card)
 		break;
 
 	default:
-		pr_err("%s: card has unknown MMCA version %d\n",
+		pr_no_err("%s: card has unknown MMCA version %d\n",
 			mmc_hostname(card->host), card->csd.mmca_vsn);
 		return -EINVAL;
 	}
@@ -138,7 +138,7 @@ static int mmc_decode_csd(struct mmc_card *card)
 	 */
 	csd->structure = UNSTUFF_BITS(resp, 126, 2);
 	if (csd->structure == 0) {
-		pr_err("%s: unrecognised CSD structure version %d\n",
+		pr_no_err("%s: unrecognised CSD structure version %d\n",
 			mmc_hostname(card->host), csd->structure);
 		return -EINVAL;
 	}
@@ -199,7 +199,7 @@ static int mmc_get_ext_csd(struct mmc_card *card, u8 **new_ext_csd)
 	 */
 	ext_csd = kmalloc(512, GFP_KERNEL);
 	if (!ext_csd) {
-		pr_err("%s: could not allocate a buffer to "
+		pr_no_err("%s: could not allocate a buffer to "
 			"receive the ext_csd.\n", mmc_hostname(card->host));
 		return -ENOMEM;
 	}
@@ -221,7 +221,7 @@ static int mmc_get_ext_csd(struct mmc_card *card, u8 **new_ext_csd)
 		 * stored in their CSD.
 		 */
 		if (card->csd.capacity == (4096 * 512)) {
-			pr_err("%s: unable to read EXT_CSD "
+			pr_no_err("%s: unable to read EXT_CSD "
 				"on a possible high capacity card. "
 				"Card will be ignored.\n",
 				mmc_hostname(card->host));
@@ -436,7 +436,7 @@ static int mmc_read_ext_csd(struct mmc_card *card, u8 *ext_csd)
 	card->ext_csd.raw_ext_csd_structure = ext_csd[EXT_CSD_STRUCTURE];
 	if (card->csd.structure == 3) {
 		if (card->ext_csd.raw_ext_csd_structure > 2) {
-			pr_err("%s: unrecognised EXT_CSD structure "
+			pr_no_err("%s: unrecognised EXT_CSD structure "
 				"version %d\n", mmc_hostname(card->host),
 					card->ext_csd.raw_ext_csd_structure);
 			err = -EINVAL;
@@ -582,7 +582,7 @@ static int mmc_read_ext_csd(struct mmc_card *card, u8 *ext_csd)
 			card->ext_csd.raw_bkops_status =
 				ext_csd[EXT_CSD_BKOPS_STATUS];
 			if (!card->ext_csd.bkops_en)
-				pr_info("%s: BKOPS_EN bit is not set\n",
+				pr_no_info("%s: BKOPS_EN bit is not set\n",
 					mmc_hostname(card->host));
 		}
 
@@ -1826,7 +1826,7 @@ static int mmc_poweroff_notify(struct mmc_card *card, unsigned int notify_type)
 			EXT_CSD_POWER_OFF_NOTIFICATION,
 			notify_type, timeout, true, false, false);
 	if (err)
-		pr_err("%s: Power Off Notification timed out, %u\n",
+		pr_no_err("%s: Power Off Notification timed out, %u\n",
 		       mmc_hostname(card->host), timeout);
 
 	/* Disable the power off notification after the switch operation. */
@@ -2013,7 +2013,7 @@ static int mmc_resume(struct mmc_host *host)
 		if (!err && (R1_CURRENT_STATE(status) == R1_STATE_TRAN)) {
 			return 0;
 		} else {
-			pr_err("%s: status : 0x%x, err : %d doing resume\n",
+			pr_no_err("%s: status : 0x%x, err : %d doing resume\n",
 					   mmc_hostname(host), status, err);
 			mmc_power_off(host);
 			mmc_card_set_suspended(host->card);	
@@ -2044,7 +2044,7 @@ static int mmc_runtime_suspend(struct mmc_host *host)
 
 	err = _mmc_suspend(host, true);
 	if (err)
-		pr_err("%s: error %d doing aggessive suspend\n",
+		pr_no_err("%s: error %d doing aggessive suspend\n",
 			mmc_hostname(host), err);
 
 	return err;
@@ -2062,7 +2062,7 @@ static int mmc_runtime_resume(struct mmc_host *host)
 
 	err = _mmc_resume(host);
 	if (err)
-		pr_err("%s: error %d doing aggessive resume\n",
+		pr_no_err("%s: error %d doing aggessive resume\n",
 			mmc_hostname(host), err);
 
 	return 0;
@@ -2156,7 +2156,7 @@ remove_card:
 err:
 	mmc_detach_bus(host);
 
-	pr_err("%s: error %d whilst initialising MMC card\n",
+	pr_no_err("%s: error %d whilst initialising MMC card\n",
 		mmc_hostname(host), err);
 
 	return err;

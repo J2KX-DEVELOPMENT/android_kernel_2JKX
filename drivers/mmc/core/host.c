@@ -94,7 +94,7 @@ static void mmc_host_clk_gate_delayed(struct mmc_host *host)
 	unsigned long flags;
 
 	if (!freq) {
-		pr_debug("%s: frequency set to 0 in disable function, "
+		pr_no_debug("%s: frequency set to 0 in disable function, "
 			 "this means the clock is already disabled.\n",
 			 mmc_hostname(host));
 		return;
@@ -127,7 +127,7 @@ static void mmc_host_clk_gate_delayed(struct mmc_host *host)
 		/* This will set host->ios.clock to 0 */
 		mmc_gate_clock(host);
 		spin_lock_irqsave(&host->clk_lock, flags);
-		pr_debug("%s: gated MCI clock\n", mmc_hostname(host));
+		pr_no_debug("%s: gated MCI clock\n", mmc_hostname(host));
 	}
 	spin_unlock_irqrestore(&host->clk_lock, flags);
 	mutex_unlock(&host->clk_gate_mutex);
@@ -164,7 +164,7 @@ void mmc_host_clk_hold(struct mmc_host *host)
 		spin_unlock_irqrestore(&host->clk_lock, flags);
 		mmc_ungate_clock(host);
 		spin_lock_irqsave(&host->clk_lock, flags);
-		pr_debug("%s: ungated MCI clock\n", mmc_hostname(host));
+		pr_no_debug("%s: ungated MCI clock\n", mmc_hostname(host));
 	}
 	host->clk_requests++;
 	spin_unlock_irqrestore(&host->clk_lock, flags);
@@ -278,7 +278,7 @@ static inline void mmc_host_clk_sysfs_init(struct mmc_host *host)
 	host->clkgate_delay_attr.attr.name = "clkgate_delay";
 	host->clkgate_delay_attr.attr.mode = S_IRUGO | S_IWUSR;
 	if (device_create_file(&host->class_dev, &host->clkgate_delay_attr))
-		pr_err("%s: Failed to create clkgate_delay sysfs entry\n",
+		pr_no_err("%s: Failed to create clkgate_delay sysfs entry\n",
 				mmc_hostname(host));
 }
 #else

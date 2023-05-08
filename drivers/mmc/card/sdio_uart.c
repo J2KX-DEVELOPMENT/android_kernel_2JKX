@@ -1087,17 +1087,17 @@ static int sdio_uart_probe(struct sdio_func *func,
 			kfree(port);
 			return -EINVAL;
 		}
-		pr_debug("%s: Register ID = 0x%02x, Exp ID = 0x%02x\n",
+		pr_no_debug("%s: Register ID = 0x%02x, Exp ID = 0x%02x\n",
 		       sdio_func_id(func), tpl->data[2], tpl->data[3]);
 		port->regs_offset = (tpl->data[4] << 0) |
 				    (tpl->data[5] << 8) |
 				    (tpl->data[6] << 16);
-		pr_debug("%s: regs offset = 0x%x\n",
+		pr_no_debug("%s: regs offset = 0x%x\n",
 		       sdio_func_id(func), port->regs_offset);
 		port->uartclk = tpl->data[7] * 115200;
 		if (port->uartclk == 0)
 			port->uartclk = 115200;
-		pr_debug("%s: clk %d baudcode %u 4800-div %u\n",
+		pr_no_debug("%s: clk %d baudcode %u 4800-div %u\n",
 		       sdio_func_id(func), port->uartclk,
 		       tpl->data[7], tpl->data[8] | (tpl->data[9] << 8));
 	} else {
