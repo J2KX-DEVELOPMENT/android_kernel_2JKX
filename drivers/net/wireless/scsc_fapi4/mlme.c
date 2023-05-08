@@ -2680,7 +2680,7 @@ int slsi_mlme_get_sinfo_mib(struct slsi_dev *sdev, struct net_device *dev,
 		values = slsi_mib_decode_get_list(&mibrsp,
 						  (sizeof(getValues) / sizeof(struct slsi_mib_get_entry)), getValues);
 		if (values == NULL) {
-			SLSI_NET_DBG1(dev, SLSI_MLME, "mib decode list failed\n");
+//			SLSI_NET_DBG1(dev, SLSI_MLME, "mib decode list failed\n");
 			kfree(mibrsp.data);
 			return -ENOMEM;
 		}
@@ -2689,19 +2689,19 @@ int slsi_mlme_get_sinfo_mib(struct slsi_dev *sdev, struct net_device *dev,
 			WARN_ON(values[0].type != SLSI_MIB_TYPE_UINT);
 			slsi_mlme_fw_tx_rate_calc((u16)values[0].u.uintValue, &peer->sinfo.txrate);
 			peer->sinfo.filled |= STATION_INFO_TX_BITRATE;
-			SLSI_DBG3(sdev, SLSI_MLME, "SLSI_PSID_UNIFI_TX_DATA_RATE = %d\n",
-				  values[0].u.uintValue);
+//			SLSI_DBG3(sdev, SLSI_MLME, "SLSI_PSID_UNIFI_TX_DATA_RATE = %d\n",
+//				  values[0].u.uintValue);
 		}
 
 		if (values[1].type != SLSI_MIB_TYPE_NONE) {
 			WARN_ON(values[1].type != SLSI_MIB_TYPE_INT);
 			peer->sinfo.signal = (s8)values[1].u.intValue;
 			peer->sinfo.filled |= STATION_INFO_SIGNAL;
-			SLSI_DBG3(sdev, SLSI_MLME, "SLSI_PSID_UNIFI_RSSI = %d\n",
-				  values[1].u.intValue);
+//			SLSI_DBG3(sdev, SLSI_MLME, "SLSI_PSID_UNIFI_RSSI = %d\n",
+//				  values[1].u.intValue);
 		}
 	} else {
-		SLSI_NET_DBG1(dev, SLSI_MLME, "mlme_get_req failed(result:%u)\n", r);
+//		SLSI_NET_DBG1(dev, SLSI_MLME, "mlme_get_req failed(result:%u)\n", r);
 	}
 
 	kfree(mibrsp.data);
