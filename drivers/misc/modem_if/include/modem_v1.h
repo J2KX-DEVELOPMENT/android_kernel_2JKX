@@ -451,6 +451,7 @@ extern void get_utc_time(struct utc_time *utc);
 #define CALLEE	(__func__)
 #define CALLER	(__builtin_return_address(0))
 
+#ifndef CONFIG_FK_LOG
 #define mif_err_limited(fmt, ...) \
 	 printk_ratelimited(KERN_ERR "%s: " pr_fmt(fmt), __func__, ##__VA_ARGS__)
 #define mif_err(fmt, ...) \
@@ -462,5 +463,12 @@ extern void get_utc_time(struct utc_time *utc);
 #define mif_trace(fmt, ...) \
 	printk(KERN_DEBUG "mif: %s: %d: called(%pF): " fmt, \
 		__func__, __LINE__, __builtin_return_address(0), ##__VA_ARGS__)
+#else
+#define mif_err_limited(fmt, ...) do {} while(0)
+#define mif_err(fmt, ...) do {} while(0)
+#define mif_debug(fmt, ...) do {} while(0)
+#define mif_info(fmt, ...) do {} while(0)
+#define mif_trace(fmt, ...) do {} while(0)
+#endif
 
 #endif
