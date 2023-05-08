@@ -98,7 +98,7 @@ void muic_show_debug_info(struct work_struct *work)
 
 	mutex_lock(&pmuic->muic_mutex);
 //	muic_print_reg_log();
-	muic_print_reg_dump(pmuic);
+//	muic_print_reg_dump(pmuic);
 	mutex_unlock(&pmuic->muic_mutex);
 
 	schedule_delayed_work(&pmuic->usb_work, msecs_to_jiffies(60000));
