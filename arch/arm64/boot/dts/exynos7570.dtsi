@@ -242,7 +242,7 @@
 		polling_ms = <0>;
 
 		/* governor data */
-		gov_name = "interactive";
+		gov_name = "performance";
 
 		/* regulator */
 		use_reg = "true";
@@ -250,10 +250,14 @@
 		reg_name = "BUCK1";
 		/* cold, cold_limit, min_cold, max_uV */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		volt_info = <25000 1250000 0 1300000>;
 =======
 		volt_info = <25000 1060000 0 1000000>;
 >>>>>>> 4dc0e07e (Misc kernel improvements)
+=======
+		volt_info = <25000 960000 0 900000>;
+>>>>>>> edb73613 (OC, UV devfreq_int & devfreq_mif, set their governors to performance)
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
@@ -272,7 +276,7 @@
 		use_delay_time = "false";
 
 		/* <initial_freq, default_qos, suspend_freq, min, max, reboot_freq> */
-		freq_info = <577000 577000 577000 415000 577000 415000>;
+		freq_info = <600000 600000 600000 415000 600000 415000>;
 
 		/* PM QoS */
 		boot_qos_timeout = <40>;
@@ -282,7 +286,7 @@
 		polling_ms = <0>;
 
 		/* governor data */
-		gov_name = "interactive";
+		gov_name = "performance";
 
 		/* regulator */
 		use_reg = "true";
@@ -290,10 +294,14 @@
 		reg_name = "BUCK1";
 		/* <cold, cold_limit, min_cold, max_uV> */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		volt_info = <25000 1250000 0 1300000>;
 =======
 		volt_info = <25000 1060000 0 1000000>;
 >>>>>>> 4dc0e07e (Misc kernel improvements)
+=======
+		volt_info = <25000 960000 0 900000>;
+>>>>>>> edb73613 (OC, UV devfreq_int & devfreq_mif, set their governors to performance)
 
 		use_tmu = "true";
 		use_cl_dvfs = "false";
