@@ -624,7 +624,29 @@ static int dvfscpucl0_get_asv_table(unsigned int *table)
 	max_lv = asv_dvfs_cpucl0->table->num_of_lv;
 
 	for (lv = 0; lv < max_lv; lv++)
-		table[lv] = get_asv_voltage(cal_asv_dvfs_cpucl0, lv);
+		// bootloader contains no volt for 2002MHz
+		if (lv == 0) {
+			table[lv] = 1200000;
+		}
+		// bootloader contains no volt for 1924MHz
+		else if (lv == 1) {
+			table[lv] = 1175000;
+		}
+		// bootloader contains no volt for 1794MHz
+		else if (lv == 2) {
+			table[lv] = 1150000;
+		}
+		// bootloader contains no volt for 1***MHz
+		else if (lv == 3) {
+			table[lv] = 1125000;
+		}
+		// bootloader contains no volt for 1***MHz
+		else if (lv == 4) {
+			table[lv] = 1100000;
+		}
+		else {
+			table[lv] = get_asv_voltage(cal_asv_dvfs_cpucl0, lv);
+		}
 
 	return max_lv;
 }
