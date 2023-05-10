@@ -20,6 +20,7 @@ struct inode;
 struct dentry;
 
 struct xattr_handler {
+	const char *name;
 	const char *prefix;
 	int flags;	/* fs private flags passed back to the handlers */
 	size_t (*list)(struct dentry *dentry, char *list, size_t list_size,
@@ -49,6 +50,12 @@ int generic_setxattr(struct dentry *dentry, const char *name, const void *value,
 int generic_removexattr(struct dentry *dentry, const char *name);
 ssize_t vfs_getxattr_alloc(struct dentry *dentry, const char *name,
 			   char **xattr_value, size_t size, gfp_t flags);
+
+static inline const char *xattr_prefix(const struct xattr_handler *handler)
+{
+	return handler->prefix ?: handler->name;
+}
+
 int vfs_xattr_cmp(struct dentry *dentry, const char *xattr_name,
 		  const char *value, size_t size, gfp_t flags);
 

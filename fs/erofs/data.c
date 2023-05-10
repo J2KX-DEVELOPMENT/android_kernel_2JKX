@@ -131,7 +131,7 @@ static inline struct bio *erofs_read_raw_page(struct bio *bio,
 	    /* not continuous */
 	    *last_block + 1 != current_block) {
 submit_bio_retry:
-		submit_bio(bio);
+		submit_bio(READ, bio);
 		bio = NULL;
 	}
 
@@ -238,7 +238,7 @@ has_updated:
 	/* if updated manually, continuous pages has a gap */
 	if (bio)
 submit_bio_out:
-		submit_bio(bio);
+		submit_bio(READ, bio);
 	return err ? ERR_PTR(err) : NULL;
 }
 
@@ -302,7 +302,7 @@ static int erofs_raw_access_readpages(struct file *filp,
 
 	/* the rare case (end in gaps) */
 	if (bio)
-		submit_bio(bio);
+		submit_bio(READ, bio);
 	return 0;
 }
 

@@ -193,6 +193,11 @@ err_out:
 	return ERR_PTR(err);
 }
 
+static inline void inode_nohighmem(struct inode *inode)
+{
+	mapping_set_gfp_mask(inode->i_mapping, GFP_USER);
+}
+
 static int erofs_fill_symlink(struct inode *inode, void *data,
 			      unsigned int m_pofs)
 {
@@ -362,14 +367,14 @@ const struct inode_operations erofs_generic_iops = {
 };
 
 const struct inode_operations erofs_symlink_iops = {
-	.get_link = page_get_link,
+//	.get_link = page_get_link, TODO: fix me
 	.getattr = erofs_getattr,
 	.listxattr = erofs_listxattr,
 	.get_acl = erofs_get_acl,
 };
 
 const struct inode_operations erofs_fast_symlink_iops = {
-	.get_link = simple_get_link,
+//	.get_link = simple_get_link, TODO: fix me
 	.getattr = erofs_getattr,
 	.listxattr = erofs_listxattr,
 	.get_acl = erofs_get_acl,

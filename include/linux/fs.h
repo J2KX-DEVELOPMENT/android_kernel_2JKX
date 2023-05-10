@@ -647,6 +647,8 @@ struct inode {
 		struct pipe_inode_info	*i_pipe;
 		struct block_device	*i_bdev;
 		struct cdev		*i_cdev;
+		char			*i_link;
+		unsigned		i_dir_seq;
 	};
 
 	__u32			i_generation;
@@ -1545,6 +1547,7 @@ struct file_operations {
 	ssize_t (*read_iter) (struct kiocb *, struct iov_iter *);
 	ssize_t (*write_iter) (struct kiocb *, struct iov_iter *);
 	int (*iterate) (struct file *, struct dir_context *);
+	int (*iterate_shared) (struct file *, struct dir_context *);
 	unsigned int (*poll) (struct file *, struct poll_table_struct *);
 	long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long);
 	long (*compat_ioctl) (struct file *, unsigned int, unsigned long);
@@ -1571,6 +1574,7 @@ struct file_operations {
 
 struct inode_operations {
 	struct dentry * (*lookup) (struct inode *,struct dentry *, unsigned int);
+	const char * (*get_link) (struct dentry *, struct inode *, struct delayed_call *);
 	void * (*follow_link) (struct dentry *, struct nameidata *);
 	int (*permission) (struct inode *, int);
 	int (*permission2) (struct vfsmount *, struct inode *, int);

@@ -47,6 +47,12 @@ struct bio {
 	struct bio		*bi_next;	/* request queue link */
 	struct block_device	*bi_bdev;
 	unsigned long		bi_flags;	/* status, command, etc */
+	int			bi_error;
+	unsigned int		bi_opf;		/* bottom bits req flags,
+						 * top bits REQ_OP. Use
+						 * accessors.
+						 */
+
 	unsigned long		bi_rw;		/* bottom bits READ/WRITE,
 						 * top bits priority
 						 */
@@ -262,5 +268,14 @@ enum rq_flag_bits {
 #define REQ_PM			(1ULL << __REQ_PM)
 #define REQ_HASHED		(1ULL << __REQ_HASHED)
 #define REQ_MQ_INFLIGHT		(1ULL << __REQ_MQ_INFLIGHT)
+
+enum req_op {
+	REQ_OP_READ,
+	REQ_OP_WRITE,
+	REQ_OP_DISCARD,		/* request to discard sectors */
+	REQ_OP_SECURE_ERASE,	/* request to securely erase sectors */
+	REQ_OP_WRITE_SAME,	/* write same block many times */
+	REQ_OP_FLUSH,		/* request for cache flush */
+};
 
 #endif /* __LINUX_BLK_TYPES_H */

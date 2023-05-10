@@ -82,6 +82,13 @@ static inline void mapping_set_gfp_mask(struct address_space *m, gfp_t mask)
 				(__force unsigned long)mask;
 }
 
+static inline gfp_t mapping_gfp_constraint(struct address_space *mapping,
+		gfp_t gfp_mask)
+{
+	return mapping_gfp_mask(mapping) & gfp_mask;
+}
+
+
 #ifdef CONFIG_SDP
 static inline void mapping_set_sensitive(struct address_space *mapping)
 {
@@ -257,6 +264,18 @@ static inline struct page *page_cache_alloc(struct address_space *x)
 static inline struct page *page_cache_alloc_cold(struct address_space *x)
 {
 	return __page_cache_alloc(mapping_gfp_mask(x)|__GFP_COLD);
+}
+
+static inline gfp_t readahead_gfp_mask(struct address_space *x)
+{
+#ifdef CONFIG_CMA_REFUSE_PAGE_CACHE
+	return mapping_gfp_mask(x) |
+				  __GFP_COLD | __GFP_NORETRY | __GFP_NOWARN;
+#else
+	return mapping_gfp_mask(x) |
+				  __GFP_COLD | __GFP_NORETRY | __GFP_NOWARN |
+				  __GFP_CMA;
+#endif
 }
 
 static inline struct page *page_cache_alloc_readahead(struct address_space *x)

@@ -547,7 +547,7 @@ static int xattr_entrylist(struct xattr_iter *_it,
 	const struct xattr_handler *h =
 		erofs_xattr_handler(entry->e_name_index);
 
-	if (!h || (h->list && !h->list(it->dentry)))
+	if (!h)
 		return 1;
 
 	prefix = xattr_prefix(h);
