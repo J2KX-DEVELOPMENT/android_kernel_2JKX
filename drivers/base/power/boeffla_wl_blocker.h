@@ -16,8 +16,8 @@
 
 #define BOEFFLA_WL_BLOCKER_VERSION	"1.1.0"
 
-#define LIST_WL_DEFAULT				"wlan_rx_wake;wlan_wake;wlan_ctrl_wake;NETLINK;wlan_txfl_wake;bluetooth_timer;BT_bt_wake;BT_host_wake;mmc0_detect;mmc1_detect;14830000.decon_fb;alarmtimer;wlan_to;PowerManagerService.Display;PowerManagerService.WakeLocks;umts_ipc1"
+#define LIST_WL_DEFAULT				"wlan_rx_wake;wlan_wake;wlan_ctrl_wake;NETLINK;wlan_txfl_wake;bluetooth_timer;BT_bt_wake;BT_host_wake;mmc0_detect;mmc1_detect;14830000.decon_fb;alarmtimer;wlan_to;PowerManagerService.Display;PowerManagerService.WakeLocks;umts_ipc1;14400000.fimc_is;rtc-s2mp"
 
 #define LENGTH_LIST_WL				2048
-#define LENGTH_LIST_WL_DEFAULT		512
+#define LENGTH_LIST_WL_DEFAULT		2048
 #define LENGTH_LIST_WL_SEARCH		LENGTH_LIST_WL + LENGTH_LIST_WL_DEFAULT + 5
