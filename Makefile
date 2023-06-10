@@ -655,7 +655,7 @@ include $(srctree)/arch/$(SRCARCH)/Makefile
 KBUILD_CFLAGS	+= $(call cc-option,-fno-delete-null-pointer-checks,)
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
-KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)  -mcpu=cortex-a53+crc+crypto -mtune=cortex-a53 -march=armv8-a+crc+crypto --param max-inline-insns-auto=4
+KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)  -mcpu=cortex-a53+crc+crypto -mtune=cortex-a53 -march=armv8-a+crc+crypto --param max-inline-insns-auto=1
 else
 KBUILD_CFLAGS	+= -O3  -mcpu=cortex-a53+crc+crypto -mtune=cortex-a53 -march=armv8-a+crc+crypto --param max-inline-insns-auto=4
 KBUILD_CFLAGS += -Wno-maybe-uninitialized -Wno-array-bounds
