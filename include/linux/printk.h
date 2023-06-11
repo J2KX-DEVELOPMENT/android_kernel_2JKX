@@ -233,6 +233,17 @@ extern asmlinkage void dump_stack(void) __cold;
  * and other debug macros are compiled out unless either DEBUG is defined
  * or CONFIG_DYNAMIC_DEBUG is set.
  */
+#ifdef CONFIG_NO_LOG
+#define pr_emerg(fmt, ...) do {} while(0)
+#define pr_alert(fmt, ...) do {} while(0)
+#define pr_crit(fmt, ...) do {} while(0)
+#define pr_err(fmt, ...) do {} while(0)
+#define pr_warning(fmt, ...) do {} while(0)
+#define pr_warn pr_warning
+#define pr_notice(fmt, ...) do {} while(0)
+#define pr_info(fmt, ...) do {} while(0)
+#define pr_cont(fmt, ...) do {} while(0)
+#else
 #define pr_emerg(fmt, ...) \
 	printk(KERN_EMERG pr_fmt(fmt), ##__VA_ARGS__)
 #define pr_alert(fmt, ...) \
@@ -250,6 +261,7 @@ extern asmlinkage void dump_stack(void) __cold;
 	printk(KERN_INFO pr_fmt(fmt), ##__VA_ARGS__)
 #define pr_cont(fmt, ...) \
 	printk(KERN_CONT fmt, ##__VA_ARGS__)
+#endif
 	
 #ifdef CONFIG_FK_LOG
 #define pr_no_notice(fmt, ...) 				\
@@ -356,6 +368,9 @@ extern asmlinkage void dump_stack(void) __cold;
 
 #include <linux/dynamic_debug.h>
 
+#ifdef CONFIG_NO_LOG
+#define pr_debug(fmt, ...) do {} while(0)
+#else
 /* If you are writing a driver, please use dev_dbg instead */
 #if defined(CONFIG_DYNAMIC_DEBUG)
 /* dynamic_pr_debug() uses pr_fmt() internally so we don't need it here */
@@ -367,6 +382,7 @@ extern asmlinkage void dump_stack(void) __cold;
 #else
 #define pr_debug(fmt, ...) \
 	no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+#endif
 #endif
 
 /*

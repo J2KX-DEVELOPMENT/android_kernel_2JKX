@@ -624,6 +624,12 @@ config FK_LOG
 	help
 		Disables logging in vendor drivers for production builds
 
+config NO_LOG
+	bool "NO_LOG"
+	default y if FK_LOG
+	help
+		Disables all pr_ functions
+
 endif # TRACING_SUPPORT
 
 
