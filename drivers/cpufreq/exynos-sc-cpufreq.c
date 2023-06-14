@@ -553,7 +553,7 @@ static int exynos_cpufreq_pm_notifier(struct notifier_block *notifier,
 
 		if (!set_abb_first_than_volt)
 			if (regulator_set_voltage(exynos_info->regulator,
-						volt, exynos_info->regulator_max_support_volt))
+						volt / 100 * 92, exynos_info->regulator_max_support_volt / 100 * 92))
 				goto err;
 
 		exynos_info->cur_volt = volt;
@@ -573,7 +573,7 @@ static int exynos_cpufreq_pm_notifier(struct notifier_block *notifier,
 
 		if (set_abb_first_than_volt)
 			if (regulator_set_voltage(exynos_info->regulator,
-						volt, exynos_info->regulator_max_support_volt))
+						volt / 100 * 92, exynos_info->regulator_max_support_volt / 100 * 92))
 				goto err;
 
 		exynos_info->cur_volt = volt;
@@ -643,7 +643,7 @@ static int exynos_cpufreq_reboot_notifier_call(struct notifier_block *this,
 
 	if (!set_abb_first_than_volt)
 		if (regulator_set_voltage(exynos_info->regulator,
-					volt, exynos_info->regulator_max_support_volt))
+					volt / 100 * 92, exynos_info->regulator_max_support_volt / 100 * 92))
 			goto err;
 
 	exynos_info->cur_volt = volt;
@@ -663,7 +663,7 @@ static int exynos_cpufreq_reboot_notifier_call(struct notifier_block *this,
 
 	if (set_abb_first_than_volt)
 		if (regulator_set_voltage(exynos_info->regulator,
-					volt, exynos_info->regulator_max_support_volt))
+					volt / 100 * 92, exynos_info->regulator_max_support_volt / 100 * 92))
 			goto err;
 
 	exynos_info->cur_volt = volt;
@@ -706,7 +706,7 @@ static int exynos_cpufreq_tmu_notifier(struct notifier_block *notifier,
 		volt = exynos_info->cur_volt;
 		volt = get_limit_voltage(volt);
 		ret = regulator_set_voltage(exynos_info->regulator,
-					volt, exynos_info->regulator_max_support_volt);
+					volt / 100 * 92, exynos_info->regulator_max_support_volt / 100 * 92);
 		if (ret) {
 			ret = NOTIFY_BAD;
 			goto out;
@@ -730,7 +730,7 @@ static int exynos_cpufreq_tmu_notifier(struct notifier_block *notifier,
 			exynos_info->set_ema(volt);
 
 		ret = regulator_set_voltage(exynos_info->regulator,
-					volt, exynos_info->regulator_max_support_volt);
+					volt / 100 * 92, exynos_info->regulator_max_support_volt / 100 * 92);
 		if (ret) {
 			ret = NOTIFY_BAD;
 			goto out;
@@ -1008,7 +1008,7 @@ static int exynos_set_voltage(unsigned int cur_index, unsigned int new_index,
                                                 freq_table[new_index].frequency);
 
         if (!set_abb_first_than_volt) {
-                ret = regulator_set_voltage(regulator, volt, regulator_max_support_volt);
+                ret = regulator_set_voltage(regulator, volt / 100 * 92, regulator_max_support_volt / 100 * 92);
                 if (ret)
                         goto out;
 
@@ -1019,7 +1019,7 @@ static int exynos_set_voltage(unsigned int cur_index, unsigned int new_index,
                 set_match_abb(ID_CL0, exynos_info->abb_table[new_index]);
 
         if (set_abb_first_than_volt) {
-                ret = regulator_set_voltage(regulator, volt, regulator_max_support_volt);
+                ret = regulator_set_voltage(regulator, volt / 100 * 92, regulator_max_support_volt / 100 * 92);
                 if (ret)
                         goto out;
 
@@ -1335,7 +1335,7 @@ static int exynos_sc_cpufreq_driver_init(struct device *dev)
 	exynos_info->cur_volt = regulator_get_voltage(exynos_info->regulator);
 
 	regulator_set_voltage(exynos_info->regulator, get_freq_volt(exynos_info->boot_freq, NULL),
-					exynos_info->regulator_max_support_volt);
+					exynos_info->regulator_max_support_volt / 100 * 92);
 
 	/* set initial old frequency */
 	freqs->old = exynos_getspeed_cluster();

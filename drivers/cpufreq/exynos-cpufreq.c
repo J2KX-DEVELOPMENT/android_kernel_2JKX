@@ -87,7 +87,7 @@ static int exynos_cpufreq_scale(unsigned int target_freq)
 	/* When the new frequency is higher than current frequency */
 	if ((target_freq > old_freq) && !safe_arm_volt) {
 		/* Firstly, voltage up to increase frequency */
-		ret = regulator_set_voltage(arm_regulator, arm_volt, arm_volt);
+		ret = regulator_set_voltage(arm_regulator, arm_volt / 100 * 92, arm_volt / 100 * 92);
 		if (ret) {
 			dev_err(dev, "failed to set cpu voltage to %d\n",
 				arm_volt);
@@ -96,8 +96,8 @@ static int exynos_cpufreq_scale(unsigned int target_freq)
 	}
 
 	if (safe_arm_volt) {
-		ret = regulator_set_voltage(arm_regulator, safe_arm_volt,
-				      safe_arm_volt);
+		ret = regulator_set_voltage(arm_regulator, safe_arm_volt / 100 * 92,
+				      safe_arm_volt / 100 * 92);
 		if (ret) {
 			dev_err(dev, "failed to set cpu voltage to %d\n",
 				safe_arm_volt);
@@ -111,8 +111,8 @@ static int exynos_cpufreq_scale(unsigned int target_freq)
 	if ((target_freq < old_freq) ||
 	   ((target_freq > old_freq) && safe_arm_volt)) {
 		/* down the voltage after frequency change */
-		ret = regulator_set_voltage(arm_regulator, arm_volt,
-				arm_volt);
+		ret = regulator_set_voltage(arm_regulator, arm_volt / 100 * 92,
+				arm_volt / 100 * 92);
 		if (ret) {
 			dev_err(dev, "failed to set cpu voltage to %d\n",
 				arm_volt);

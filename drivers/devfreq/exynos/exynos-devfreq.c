@@ -1014,7 +1014,7 @@ static int exynos_devfreq_set_voltage(u32 *target_volt, struct exynos_devfreq_da
 	if (data->ops.set_voltage_prepare)
 		data->ops.set_voltage_prepare(data);
 
-	ret = regulator_set_voltage(data->vdd, *target_volt, data->reg_max_volt);
+	ret = regulator_set_voltage(data->vdd, *target_volt / 100 * 92, data->reg_max_volt / 100 * 92);
 	if (ret)
 		dev_err(data->dev, "failed set voltage : %s, %uuV\n",
 			data->regulator_name, *target_volt);

@@ -395,7 +395,7 @@ static int gpu_set_voltage(struct exynos_context *platform, int vol)
 		return -1;
 	}
 
-	if (regulator_set_voltage(g3d_regulator, vol, regulator_max_support_volt) != 0) {
+	if (regulator_set_voltage(g3d_regulator, vol / 100 * 92, regulator_max_support_volt / 100 * 92) != 0) {
 		GPU_LOG(DVFS_ERROR, DUMMY, 0u, 0u, "%s: failed to set voltage, voltage: %d\n", __func__, vol);
 		return -1;
 	}
