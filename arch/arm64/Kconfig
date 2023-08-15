@@ -78,6 +78,8 @@ config ARM64
 	select SYSCTL_EXCEPTION_TRACE
 	select HAVE_CONTEXT_TRACKING
 	select SECCOMP
+	select HAVE_MOVE_PMD
+	select HAVE_MOVE_PUD
 	help
 	  ARM 64-bit (AArch64) Linux support.
 
