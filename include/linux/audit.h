@@ -387,6 +387,10 @@ static inline unsigned int audit_get_sessionid(struct task_struct *tsk)
 {
 	return -1;
 }
+static inline int audit_update_lsm_rules(void)
+{
+	return 0;
+}
 static inline void audit_ipc_obj(struct kern_ipc_perm *ipcp)
 { }
 static inline void audit_ipc_set_perm(unsigned long qbytes, uid_t uid,

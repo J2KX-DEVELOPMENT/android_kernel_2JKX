@@ -128,7 +128,6 @@ void panic(const char *fmt, ...)
 	if (!test_taint(TAINT_DIE) && oops_in_progress <= 1)
 		dump_stack();
 #endif
-	sysrq_sched_debug_show();
 #if 0
 	/*
 	 * If we have crashed and we have a crash kernel loaded let it handle
